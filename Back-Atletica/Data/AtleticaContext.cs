@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Back_Atletica.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace Back_Atletica.Data
             string connStr = Env.ConnString;
             optionsBuilder.UseNpgsql(connStr);
         }
+
+        public DbSet<Atletica> Atletica { get; set; }
 
         public void Start()
         {
