@@ -7,7 +7,8 @@ namespace Back_Atletica.Models
 {
     public class Campus
     {
-        public int ID { get; set; }
+        public int CampusId { get; set; }
+        public int FaculdadeId { get; set; }
         public string Cidade { get; set; }
         public string Bairro { get; set; }
         public string Rua { get; set; }
