@@ -14,5 +14,8 @@ namespace Back_Atletica.Models
         public int Numero { get; set; }
         public int Infracoes { get; set; }
         public int Pontos { get; set; }
+        public virtual TimeEscalado TimeEscalado { get; set; }
+        public virtual AtletaModalidade AtletaModalidade { get; set; }
+        public virtual Funcao Funcao { get; set; }
     }
 }

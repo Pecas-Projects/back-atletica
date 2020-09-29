@@ -14,5 +14,15 @@ namespace Back_Atletica.Models
         public string Senha { get; set; }
         public string Descricao { get; set; }
         public string PIN { get; set; }
+        public virtual Campus Campus { get; set; }
+        public IList<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
+        public IList<Curso> Cursos { get; set; }
+        public IList<Publicacao> Publicacoes { get; set; }
+        public IList<Imagem> imagens { get; set; }
+        public IList<Produto> Produtos { get; set; }
+        public IList<Evento> Eventos { get; set; }
+        public IList<Pessoa> Pessoas { get; set; }
+        public IList<TimeEscalado> TimeEscalados { get; set; }
+
     }
 }

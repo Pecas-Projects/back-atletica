@@ -12,5 +12,6 @@ namespace Back_Atletica.Models
         public string Nome { get; set; }
         public string Path { get; set; }
         public string Extensao { get; set; }
+        public virtual Atletica Atletica { get; set; }
     }
 }
