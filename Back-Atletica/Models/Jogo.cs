@@ -12,7 +12,7 @@ namespace Back_Atletica.Models
         public string Categoria { get; set; }
         public DateTime DataHora { get; set; }
         public string Local { get; set; }
-        public int TimeEscaladoId { get; set; }
-        public virtual TimeEscalado TimeEscalado { get; set; }
+        //public int TimeEscaladoId { get; set; }
+        //public virtual TimeEscalado TimeEscalado { get; set; }
     }
 }

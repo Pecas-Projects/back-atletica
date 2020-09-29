@@ -12,5 +12,7 @@ namespace Back_Atletica.Models
 
         public int PessoaId { get; set; }
         public virtual Pessoa Pessoa { get; set; }
+
+        public IList<AtletaModalidade> AtletaModalidades { get; set; }
     }
 }

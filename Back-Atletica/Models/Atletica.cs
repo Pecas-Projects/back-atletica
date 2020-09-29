@@ -18,7 +18,7 @@ namespace Back_Atletica.Models
         public IList<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
         public IList<Curso> Cursos { get; set; }
         public IList<Publicacao> Publicacoes { get; set; }
-        public IList<Imagem> imagens { get; set; }
+        public IList<Imagem> Imagens { get; set; }
         public IList<Produto> Produtos { get; set; }
         public IList<Evento> Eventos { get; set; }
         public IList<Pessoa> Pessoas { get; set; }
