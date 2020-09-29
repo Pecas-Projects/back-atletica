@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Back_Atletica.Repository
 {
-    public interface ICursoRepository
+    public interface IModalidadeRepository
     {
-        HttpRes Create(Curso curso);
+        HttpRes Create(Modalidade modalidade);
 
         HttpRes GetAll();
 
         HttpRes GetById(int id);
 
-        HttpRes GetByNome(string nome);
+        HttpRes Update(Modalidade modalidade);
 
-        HttpRes GetByAtletica(Atletica atletica);
+        HttpRes Delete(int id);
 
-        bool existeCurso(Curso curso);
+        bool existeModalidade(Modalidade modalidade);
     }
 }
