@@ -23,5 +23,15 @@ namespace Back_Atletica.Business.Implementação
         {
             return _AtleticaRepository.Create(atletica);
         }
+
+        HttpRes IAtleticaBusiness.FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        HttpRes IAtleticaBusiness.FindById()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
