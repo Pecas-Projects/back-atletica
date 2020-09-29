@@ -13,7 +13,7 @@ namespace Back_Atletica.Business
 
         HttpRes GetAll();
 
-        HttpRes GetById();
+        HttpRes GetById(int id);
 
         HttpRes GetByName(string nome);
 

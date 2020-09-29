@@ -35,17 +35,12 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes GetByAtletica(string nome)
-        {
-            throw new NotImplementedException();
-        }
-
         public HttpRes GetByAtletica(Atletica atletica)
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes GetById()
+        public HttpRes GetById(int id)
         {
             throw new NotImplementedException();
         }

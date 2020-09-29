@@ -32,10 +32,11 @@ namespace Back_Atletica.Business.Implementação
             return _CursoRepository.GetByAtletica(atletica);
         }
 
-        public HttpRes GetById()
+        public HttpRes GetById(int id)
         {
-            throw new NotImplementedException();
+            return _CursoRepository.GetById(id);
         }
+
 
         public HttpRes GetByName(string nome)
         {
