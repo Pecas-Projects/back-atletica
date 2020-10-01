@@ -12,8 +12,6 @@ namespace Back_Atletica.Models
         public string Sobrenome { get; set; }
         public string WhatsApp { get; set; }
         public string Email { get; set; }
-
-
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
     }

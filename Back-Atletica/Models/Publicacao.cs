@@ -10,10 +10,8 @@ namespace Back_Atletica.Models
         public int PublicacaoId { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-
         public int ImagemId { get; set; }
         public virtual Imagem Imagem { get; set; }
-
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
     }
