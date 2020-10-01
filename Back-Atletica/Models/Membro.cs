@@ -10,7 +10,6 @@ namespace Back_Atletica.Models
         public int MembroId { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-
         public int PessoaId { get; set; }
         public virtual Pessoa Pessoa { get; set; }
     }

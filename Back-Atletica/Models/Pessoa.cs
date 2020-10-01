@@ -18,6 +18,7 @@ namespace Back_Atletica.Models
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
         public virtual Atleta Atletas { get; set; }
+        public virtual Membro Membros { get; set; }
 
     }
 }

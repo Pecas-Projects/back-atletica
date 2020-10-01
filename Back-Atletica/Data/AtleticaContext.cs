@@ -120,6 +120,8 @@ namespace Back_Atletica.Data
               .HasForeignKey(am => am.AtleticaId);
 
 
+
+
             modelBuilder.Entity<AtletaModalidade>().HasKey(am => new { am.AtletaModalidadeId });
 
             modelBuilder.Entity<AtletaModalidade>()
@@ -148,70 +150,6 @@ namespace Back_Atletica.Data
                 .HasOne<Funcao>(amt => amt.Funcao)
                 .WithMany(f => f.AtletaModalidadeTimeEscalados)
                 .HasForeignKey(amt => amt.AtletaModalidadeTimeEscaladoId);
-
-            modelBuilder.Entity<Atletica>()
-                .HasOne<Campus>(a => a.Campus)
-                .WithMany(c => c.Atleticas)
-                .HasForeignKey(a => a.CampusId);
-
-
-
-            modelBuilder.Entity<Evento>()
-                .HasOne<Atletica>(e => e.Atletica)
-                .WithMany(a => a.Eventos)
-                .HasForeignKey(e => e.AtleticaId);
-
-            modelBuilder.Entity<Faculdade>();
-            modelBuilder.Entity<Funcao>();
-
-            modelBuilder.Entity<Imagem>()
-                .HasOne<Atletica>(i => i.Atletica)
-                .WithMany(a => a.Imagens)
-                .HasForeignKey(i => i.AtleticaId);
-
-            modelBuilder.Entity<AtleticaCurso>()
-                .HasOne<Atletica>(am => am.Atletica)
-                .WithMany(a => a.AtleticaCursos)
-                .HasForeignKey(am =>am.AtleticaId);
-
-            modelBuilder.Entity<AtleticaCurso>()
-                .HasOne<Curso>(am => am.Curso)
-                .WithMany(a => a.AtleticaCursos)
-                .HasForeignKey(am => am.CursoId);
-
-            //adicionar one to many de jogo e time escalado
-
-            modelBuilder.Entity<Membro>() //precisa ser conferido
-                .HasOne<Pessoa>(a => a.Pessoa);
-
-            modelBuilder.Entity<Modalidade>();
-
-            modelBuilder.Entity<Pessoa>()
-                .HasOne<Atletica>(p => p.Atletica)
-                .WithMany(a => a.Pessoas)
-                .HasForeignKey(p => p.AtleticaId);
-
-            modelBuilder.Entity<Produto>()
-                .HasOne<Atletica>(p => p.Atletica)
-                .WithMany(a => a.Produtos)
-                .HasForeignKey(p => p.AtleticaId);
-
-            modelBuilder.Entity<Produto>() //precisa conferir
-                .HasOne<Imagem>(p => p.Imagem);
-
-            modelBuilder.Entity<Publicacao>()
-                .HasOne<Atletica>(p => p.Atletica)
-                .WithMany(a => a.Publicacoes)
-                .HasForeignKey(p => p.AtleticaId);
-
-            modelBuilder.Entity<Publicacao>() //precisa conferir
-                .HasOne<Imagem>(p => p.Imagem);
-
-            modelBuilder.Entity<SolicitacaoAtleta>()
-                .HasOne<Atletica>(s => s.Atletica)
-                .WithMany(a => a.SolicitacaoAtletas)
-                .HasForeignKey(s => s.AtleticaId);
-
 
         }
 
