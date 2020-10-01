@@ -39,10 +39,14 @@ namespace Back_Atletica.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Atleta>() //precisa ser conferido
-                .HasOne<Pessoa>(a => a.Pessoa);
+            modelBuilder.Entity<Atleta>().HasKey(am => new { am.AtletaId });
 
-            //modelBuilder.Entity<AtletaModalidade>().HasKey(am => new { am.AtletaId, am.ModalidadeId });
+            //modelBuilder.Entity<Atleta>() //precisa ser conferido
+            //    .HasOne<Pessoa>(a => a.Pessoa)
+            //    .WithOne(e => e.Atleta)
+            //    .HasForeignKey<Pessoa>(e => e.PessoaId);
+
+            modelBuilder.Entity<AtletaModalidade>().HasKey(am => new { am.AtletaModalidadeId });
 
             modelBuilder.Entity<AtletaModalidade>()
                 .HasOne<Atleta>(am => am.Atleta)
@@ -53,6 +57,8 @@ namespace Back_Atletica.Data
                 .HasOne<Modalidade>(m => m.Modalidade)
                 .WithMany(m => m.AtletaModalidades)
                 .HasForeignKey(am => am.ModalidadeId);
+
+            modelBuilder.Entity<AtletaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaModalidadeTimeEscaladoId });
 
             modelBuilder.Entity<AtletaModalidadeTimeEscalado>()
                 .HasOne<AtletaModalidade>(amt => amt.AtletaModalidade)
@@ -93,6 +99,16 @@ namespace Back_Atletica.Data
                 .HasOne<Atletica>(i => i.Atletica)
                 .WithMany(a => a.Imagens)
                 .HasForeignKey(i => i.AtleticaId);
+
+            modelBuilder.Entity<AtleticaCurso>()
+                .HasOne<Atletica>(am => am.Atletica)
+                .WithMany(a => a.AtleticaCursos)
+                .HasForeignKey(am =>am.AtleticaId);
+
+            modelBuilder.Entity<AtleticaCurso>()
+                .HasOne<Curso>(am => am.Curso)
+                .WithMany(a => a.AtleticaCursos)
+                .HasForeignKey(am => am.CursoId);
 
             //adicionar one to many de jogo e time escalado
 

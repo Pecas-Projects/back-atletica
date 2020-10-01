@@ -9,6 +9,6 @@ namespace Back_Atletica.Models
     {
         public int FaculdadeId { get; set; }
         public string Nome { get; set; }
-        public IList<Campus> Campus { get; set; }
+        public ICollection<Campus> Campus { get; set; }
     }
 }

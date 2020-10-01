@@ -10,7 +10,6 @@ namespace Back_Atletica.Models
         public int ID { get; set; }
         public string Nome { get; set; }
         public int Duracao { get; set; }
-        public int AtleticaId { get; set; }
-        public virtual Atletica Atletica { get; set; }
+        public IList<AtleticaCurso> AtleticaCursos { get; set; }
     }
 }

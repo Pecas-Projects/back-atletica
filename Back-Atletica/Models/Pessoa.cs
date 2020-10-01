@@ -15,8 +15,9 @@ namespace Back_Atletica.Models
         public bool Membro { get; set; }
         public DateTime DataMatricula { get; set; }
         public enum Genero { M, F, I }
-
-        public virtual Atletica Atletica { get; set; }
         public int AtleticaId { get; set; }
+        public virtual Atletica Atletica { get; set; }
+        public virtual Atleta Atletas { get; set; }
+
     }
 }
