@@ -12,6 +12,7 @@ namespace Back_Atletica.Models
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
         public int JogoId { get; set; }
+        public virtual Jogo Jogos { get; set; }
         public IList<AtletaModalidadeTimeEscalado> AtletaModalidadeTimeEscalados { get; set; }
     }
 }

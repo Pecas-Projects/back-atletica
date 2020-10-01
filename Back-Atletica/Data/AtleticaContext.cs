@@ -50,14 +50,6 @@ namespace Back_Atletica.Data
                .WithMany(a => a.Atleticas)
                .HasForeignKey(am => am.CampusId);
 
-            /* Campus */
-            modelBuilder.Entity<Campus>().HasKey(am => new { am.CampusId });
-
-            //modelBuilder.Entity<Campus>()
-            //.HasOne<Faculdade>(c => c.Faculdade)
-            //.WithMany(f => f.Campus)
-            //.HasForeignKey(c => c.FaculdadeId);
-
             /* SolicitacaoAtleta*/
             modelBuilder.Entity<SolicitacaoAtleta>().HasKey(am => new { am.SolicitacaoAtletaId });
 
@@ -119,9 +111,12 @@ namespace Back_Atletica.Data
               .WithMany(a => a.TimeEscalados)
               .HasForeignKey(am => am.AtleticaId);
 
+            modelBuilder.Entity<TimeEscalado>()
+              .HasOne<Jogo>(am => am.Jogos)
+              .WithMany(a => a.TimeEscalados)
+              .HasForeignKey(am => am.JogoId);
 
-
-
+            /*AtletaModalidade*/
             modelBuilder.Entity<AtletaModalidade>().HasKey(am => new { am.AtletaModalidadeId });
 
             modelBuilder.Entity<AtletaModalidade>()
@@ -134,6 +129,7 @@ namespace Back_Atletica.Data
                 .WithMany(m => m.AtletaModalidades)
                 .HasForeignKey(am => am.ModalidadeId);
 
+            /* AtletaModalidadeTimeEscalado*/
             modelBuilder.Entity<AtletaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaModalidadeTimeEscaladoId });
 
             modelBuilder.Entity<AtletaModalidadeTimeEscalado>()
