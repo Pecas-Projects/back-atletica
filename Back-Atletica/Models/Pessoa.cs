@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Back_Atletica.Models
 {
-    public enum TiposGenero
+    public enum TiposGeneroPessoa
     {
         M,
         F,
@@ -20,7 +20,7 @@ namespace Back_Atletica.Models
         public bool Atleta { get; set; }
         public bool Membro { get; set; }
         public DateTime DataMatricula { get; set; }
-        public TiposGenero Genero { get; set; }
+        public TiposGeneroPessoa Genero { get; set; }
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
         public virtual Atleta Atletas { get; set; }
