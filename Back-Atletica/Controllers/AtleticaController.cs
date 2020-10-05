@@ -25,37 +25,41 @@ namespace Back_Atletica.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return BadRequest();
+            var resultado = _AtleticaBusiness.BuscarTodos();
+            return resultado.HttpResponse();
         }
 
         [Route("api/Atletica/{id}")]
         [HttpGet]
         public IActionResult Get(int id)
         {
-            return BadRequest();
+            var resultado = _AtleticaBusiness.BuscaPorId(id);
+            return resultado.HttpResponse();
         }
 
         [Route("api/Atletica")]
         [HttpPost]
-        public IActionResult Create([FromBody] Atletica value)
+        public IActionResult Criar([FromBody] Atletica value)
         {
-            var result = _AtleticaBusiness.Create(value);
+            var resultado = _AtleticaBusiness.Criar(value);
 
-            return result.HttpResponse();
+            return resultado.HttpResponse();
         }
 
         [Route("api/Atletica/{id}")]
         [HttpPut]
-        public IActionResult Put(int id, [FromBody] Atletica value)
+        public IActionResult Atualizar(int id, [FromBody] Atletica valor)
         {
-            return BadRequest();
+            var resultado = _AtleticaBusiness.Atualizar(id, valor);
+            return resultado.HttpResponse();
         }
 
         [Route("api/Atletica/{id}")]
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public IActionResult Deletar(int id)
         {
-            return BadRequest();
+            var result = _AtleticaBusiness.Deletar(id);
+            return result.HttpResponse();
         }
     }
 }

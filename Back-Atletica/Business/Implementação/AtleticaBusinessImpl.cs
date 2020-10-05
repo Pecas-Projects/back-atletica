@@ -19,17 +19,42 @@ namespace Back_Atletica.Business.Implementação
             _AtleticaRepository = atleticaRepository;
         }
 
+        public HttpRes Atualizar(int id, Atletica atletica)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscaPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscaPorInstituicao(Faculdade faculdade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscaPorNome(string nome)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscarTodos()
+        {
+            throw new NotImplementedException();
+        }
+
         public HttpRes Create(Atletica atletica)
         {
             return _AtleticaRepository.Create(atletica);
         }
 
-        HttpRes IAtleticaBusiness.FindAll()
+        public HttpRes Criar(Atletica atletica)
         {
             throw new NotImplementedException();
         }
 
-        HttpRes IAtleticaBusiness.FindById()
+        public HttpRes Deletar(int id)
         {
             throw new NotImplementedException();
         }

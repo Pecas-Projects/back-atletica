@@ -17,18 +17,44 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public void Biruliru()
+        public HttpRes Atualizar(int id, Atletica atletica)
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes Create(Atletica atletica)
+        public HttpRes BuscaPorId(int id)
         {
-            _context.Add(atletica);
+            throw new NotImplementedException();
+        }
 
-            _context.SaveChanges();
+        public HttpRes BuscaPorInstituicao(Faculdade faculdade)
+        {
+            throw new NotImplementedException();
+        }
 
-            return new HttpRes(201, atletica);
+        public HttpRes BuscaPorNome(string nome)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscarTodos()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes Criar(Atletica atletica)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes Deletar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool existeAtletica(string nome)
+        {
+            throw new NotImplementedException();
         }
     }
 }
