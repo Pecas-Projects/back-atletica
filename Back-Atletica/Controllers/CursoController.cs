@@ -20,10 +20,12 @@ namespace Back_Atletica.Controllers
             _CursoBusiness = cursoBusiness;
         }
 
+        // POST api/<CursoController>
         [Route("api/Curso")]
+        [HttpPost]
         public IActionResult Create([FromBody] Curso value)
         {
-            var resultado = _CursoBusiness.Create(value);
+            var resultado = _CursoBusiness.Criar(value);
 
             return resultado.HttpResponse();
         }
@@ -31,34 +33,21 @@ namespace Back_Atletica.Controllers
         [Route("api/Cursos")]
         // GET: api/<CursoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var resultado = _CursoBusiness.BuscarTodos();
+
+            return resultado.HttpResponse();
         }
 
         // GET api/<CursoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var resultado = _CursoBusiness.BuscarPorId(id);
+
+            return resultado.HttpResponse();
         }
 
-        // POST api/<CursoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CursoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CursoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

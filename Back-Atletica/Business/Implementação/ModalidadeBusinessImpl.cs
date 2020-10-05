@@ -18,29 +18,29 @@ namespace Back_Atletica.Business.Implementação
         }
 
 
-        public HttpRes Create(Modalidade modalidade)
+        public HttpRes Criar(Modalidade modalidade)
         {
-            return _ModalidadeRepository.Create(modalidade);
+            return _ModalidadeRepository.Criar(modalidade);
         }
 
-        public HttpRes Delete(int id)
+        public HttpRes Deletar(int id)
         {
-            return _ModalidadeRepository.Delete(id);
+            return _ModalidadeRepository.Deletar(id);
         }
 
-        public HttpRes GetAll()
+        public HttpRes BuscarPorTodos()
         {
-            return _ModalidadeRepository.GetAll();
+            return _ModalidadeRepository.BuscarPorTodos();
         }
 
-        public HttpRes GetById(int id)
+        public HttpRes BuscarPorId(int id)
         {
-            return _ModalidadeRepository.GetById(id);
+            return _ModalidadeRepository.BuscarPorId(id);
         }
 
-        public HttpRes Update(Modalidade modalidade)
+        public HttpRes Atualizar(Modalidade modalidade)
         {
-            return _ModalidadeRepository.Update(modalidade);
+            return _ModalidadeRepository.Atualizar(modalidade);
         }
     }
 }

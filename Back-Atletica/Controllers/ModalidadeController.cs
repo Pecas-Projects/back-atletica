@@ -36,16 +36,17 @@ namespace Back_Atletica.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var resultado = _ModalidadeBusiness.GetAll();
+            var resultado = _ModalidadeBusiness.BuscarPorTodos();
             return resultado.HttpResponse();
         }
 
         // GET api/<ModalidadeController>/5
         [Route("api/Modalidade/{id}")]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var resultado = _ModalidadeBusiness.BuscarPorId(id);
+            return resultado.HttpResponse();
         }
 
         // POST api/<ModalidadeController>
@@ -53,27 +54,18 @@ namespace Back_Atletica.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Modalidade modalidade)
         {
-            var resultado = _ModalidadeBusiness.Create(modalidade);
+            var resultado = _ModalidadeBusiness.Criar(modalidade);
 
             return resultado.HttpResponse();
         }
 
-        // PUT api/<ModalidadeController>/5
-        [Route("api/Modalidade/{id}")]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Modalidade modalidade)
-        {
-            var resultado = _ModalidadeBusiness.Update(modalidade);
-
-            return resultado.HttpResponse();
-        }
 
         // DELETE api/<ModalidadeController>/5
         [Route("api/Modalidade")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var resultado = _ModalidadeBusiness.Delete(id);
+            var resultado = _ModalidadeBusiness.Deletar(id);
 
             return resultado.HttpResponse();
         }

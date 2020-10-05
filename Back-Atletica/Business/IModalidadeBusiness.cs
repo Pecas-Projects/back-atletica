@@ -9,14 +9,14 @@ namespace Back_Atletica.Business
 {
     public interface IModalidadeBusiness
     {
-        HttpRes Create(Modalidade modalidade);
+        HttpRes Criar(Modalidade modalidade);
 
-        HttpRes GetAll();
+        HttpRes BuscarPorTodos();
 
-        HttpRes GetById(int id);
+        HttpRes BuscarPorId(int id);
 
-        HttpRes Update(Modalidade modalidade);
+        HttpRes Atualizar(Modalidade modalidade);
 
-        HttpRes Delete(int id);
+        HttpRes Deletar(int id);
     }
 }

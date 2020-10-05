@@ -17,7 +17,7 @@ namespace Back_Atletica.Repository.Implementação
             context = contxt;
         }
 
-        public HttpRes Create(Curso curso)
+        public HttpRes Criar(Curso curso)
         {
             context.Add(curso);
             context.SaveChanges();
@@ -30,27 +30,18 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes GetAll()
+        public HttpRes BuscarTodos()
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes GetByAtletica(Atletica atletica)
+
+        public HttpRes BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpRes GetByNome()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpRes GetByNome(string nome)
+        public HttpRes BuscarPorNome(string nome)
         {
             throw new NotImplementedException();
         }

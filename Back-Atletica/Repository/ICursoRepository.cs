@@ -9,15 +9,14 @@ namespace Back_Atletica.Repository
 {
     public interface ICursoRepository
     {
-        HttpRes Create(Curso curso);
+        HttpRes Criar(Curso curso);
 
-        HttpRes GetAll();
+        HttpRes BuscarTodos();
 
-        HttpRes GetById(int id);
+        HttpRes BuscarPorId(int id);
 
-        HttpRes GetByNome(string nome);
+        HttpRes BuscarPorNome(string nome);
 
-        HttpRes GetByAtletica(Atletica atletica);
 
         bool existeCurso(Curso curso);
     }

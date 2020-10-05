@@ -17,30 +17,25 @@ namespace Back_Atletica.Business.Implementação
             _CursoRepository = cursoRepository;
         }
 
-        public HttpRes Create(Curso curso)
+        public HttpRes Criar(Curso curso)
         {
-            return _CursoRepository.Create(curso);
+            return _CursoRepository.Criar(curso);
         }
 
-        public HttpRes GetAll()
+        public HttpRes BuscarTodos()
         {
-            return _CursoRepository.GetAll();
+            return _CursoRepository.BuscarTodos();
         }
 
-        public HttpRes GetByAtletica(Atletica atletica)
+        public HttpRes BuscarPorId(int id)
         {
-            return _CursoRepository.GetByAtletica(atletica);
-        }
-
-        public HttpRes GetById(int id)
-        {
-            return _CursoRepository.GetById(id);
+            return _CursoRepository.BuscarPorId(id);
         }
 
 
-        public HttpRes GetByName(string nome)
+        public HttpRes BuscarPorNome(string nome)
         {
-            return _CursoRepository.GetByNome(nome);
+            return _CursoRepository.BuscarPorNome(nome);
         }
     }
 }

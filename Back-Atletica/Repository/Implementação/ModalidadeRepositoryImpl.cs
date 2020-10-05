@@ -11,12 +11,12 @@ namespace Back_Atletica.Repository.Implementação
     {
         private IModalidadeRepository _ModalidadeRepository;
 
-        public HttpRes Create(Modalidade modalidade)
+        public HttpRes Criar(Modalidade modalidade)
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes Delete(int id)
+        public HttpRes Deletar(int id)
         {
             throw new NotImplementedException();
         }
@@ -26,19 +26,16 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes GetAll()
+        public HttpRes BuscarPorTodos()
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes GetById(int id)
+        public HttpRes BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public HttpRes Update(Modalidade modalidade)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
