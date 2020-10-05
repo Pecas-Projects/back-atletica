@@ -5,17 +5,11 @@ using System.Threading.Tasks;
 
 namespace Back_Atletica.Models
 {
-    public enum TiposGenero
-    {
-        M,
-        F,
-        MF
-    }
     public class Modalidade
     {
         public int ModalidadeId { get; set; }
         public string Nome { get; set; }
-        public TiposGenero Genero { get; set; }
+        public char Genero { get; set; }
         public string NomeCoordenador { get; set; }
         public IList<AtletaModalidade> AtletaModalidades { get; set; }
     }

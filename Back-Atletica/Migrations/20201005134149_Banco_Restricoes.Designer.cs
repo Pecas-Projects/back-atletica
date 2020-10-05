@@ -3,15 +3,17 @@ using System;
 using Back_Atletica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Back_Atletica.Migrations
 {
     [DbContext(typeof(AtleticaContext))]
-    partial class AtleticaContextModelSnapshot : ModelSnapshot
+    [Migration("20201005134149_Banco_Restricoes")]
+    partial class Banco_Restricoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,7 +162,7 @@ namespace Back_Atletica.Migrations
 
                     b.HasIndex("CursoId");
 
-                    b.ToTable("AtleticaCursos");
+                    b.ToTable("AtleticaCurso");
                 });
 
             modelBuilder.Entity("Back_Atletica.Models.Campus", b =>
@@ -418,8 +420,8 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<char>("Genero")
-                        .HasColumnType("character(1)");
+                    b.Property<int>("Genero")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -451,8 +453,8 @@ namespace Back_Atletica.Migrations
                     b.Property<DateTime>("DataMatricula")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<char>("Genero")
-                        .HasColumnType("character(1)");
+                    b.Property<int>("Genero")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Membro")
                         .HasColumnType("boolean");
