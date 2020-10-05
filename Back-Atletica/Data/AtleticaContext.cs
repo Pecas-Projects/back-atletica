@@ -27,6 +27,7 @@ namespace Back_Atletica.Data
         public DbSet<Publicacao> Publicacoes { get; set; }
         public DbSet<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
         public DbSet<TimeEscalado> TimeEscalados { get; set; }
+        public DbSet<AtleticaCurso> AtleticaCursos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
