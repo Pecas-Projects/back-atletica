@@ -28,6 +28,9 @@ namespace Back_Atletica.Data
         public DbSet<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
         public DbSet<TimeEscalado> TimeEscalados { get; set; }
         public DbSet<AtleticaCurso> AtleticaCursos { get; set; }
+        public DbSet<JogoCategoria> JogoCategorias { get; set; }
+        public DbSet<EventoCategoria> EventoCategorias { get; set; }
+        public DbSet<ProdutoCategoria> ProdutoCategorias { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -174,14 +177,49 @@ namespace Back_Atletica.Data
                 .Property(p => p.Duracao)
                 .IsRequired();
 
-            /* Jogo*/
-            modelBuilder.Entity<Jogo>()
+            /*JogoCategoria */
+            modelBuilder
+                .Entity<JogoCategoria>()
+                .HasIndex(u => u.Nome)
+                    .IsUnique();
+
+            modelBuilder.Entity<JogoCategoria>()
                 .Property(p => p.Nome)
                 .HasMaxLength(45)
                 .IsRequired();
 
+            /*EventoCategoria */
+            modelBuilder
+                .Entity<EventoCategoria>()
+                .HasIndex(u => u.Nome)
+                    .IsUnique();
+
+            modelBuilder.Entity<EventoCategoria>()
+                .Property(p => p.Nome)
+                .HasMaxLength(45)
+                .IsRequired();
+
+            /*ProdutoCategoria */
+            modelBuilder
+                .Entity<ProdutoCategoria>()
+                .HasIndex(u => u.Nome)
+                    .IsUnique();
+
+            modelBuilder.Entity<ProdutoCategoria>()
+                .Property(p => p.Nome)
+                .HasMaxLength(45)
+                .IsRequired();
+
+            /* Jogo*/
+            modelBuilder.Entity<Jogo>().HasKey(am => new { am.JogoId });
+
             modelBuilder.Entity<Jogo>()
-                .Property(p => p.Categoria)
+               .HasOne<JogoCategoria>(am => am.JogoCategoria)
+               .WithMany(a => a.Jogos)
+               .HasForeignKey(am => am.JogoCategoriaId);
+
+            modelBuilder.Entity<Jogo>()
+                .Property(p => p.Nome)
                 .HasMaxLength(45)
                 .IsRequired();
 
@@ -250,6 +288,11 @@ namespace Back_Atletica.Data
               .HasForeignKey(am => am.AtleticaId);
 
             modelBuilder.Entity<Evento>()
+              .HasOne<EventoCategoria>(am => am.EventoCategoria)
+              .WithMany(a => a.Eventos)
+              .HasForeignKey(am => am.EventoCategoriaId);
+
+            modelBuilder.Entity<Evento>()
                 .Property(p => p.Nome)
                 .HasMaxLength(45)
                 .IsRequired();
@@ -265,11 +308,6 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<Evento>()
                 .Property(p => p.DataHora)
-                .IsRequired();
-
-            modelBuilder.Entity<Evento>()
-                .Property(p => p.Categoria)
-                .HasMaxLength(45)
                 .IsRequired();
 
             modelBuilder.Entity<Evento>()
@@ -338,6 +376,13 @@ namespace Back_Atletica.Data
                 .IsRequired();
 
             /* Produto*/
+            modelBuilder.Entity<Produto>().HasKey(am => new { am.ProdutoId });
+
+            modelBuilder.Entity<Produto>()
+               .HasOne<ProdutoCategoria>(am => am.ProdutoCategoria)
+               .WithMany(a => a.Produtos)
+               .HasForeignKey(am => am.ProdutoCategoriaId);
+
             modelBuilder.Entity<Produto>()
                 .Property(p => p.Nome)
                 .HasMaxLength(45)
@@ -346,11 +391,6 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Produto>()
                 .Property(p => p.Descricao)
                 .HasMaxLength(300);
-
-            modelBuilder.Entity<Produto>()
-                .Property(p => p.Categoria)
-                .HasMaxLength(45)
-                .IsRequired();
 
             modelBuilder.Entity<Produto>()
                 .Property(p => p.Preco)
