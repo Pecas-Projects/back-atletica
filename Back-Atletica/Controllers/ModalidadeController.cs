@@ -23,14 +23,6 @@ namespace Back_Atletica.Controllers
         }
 
 
-        // GET: api/<ModalidadeController>
-        [Route("api/Modalidade")]
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return BadRequest();
-        }
-
         // GET api/<ModalidadeController>/5
         [Route("api/Modalidade")]
         [HttpGet]
