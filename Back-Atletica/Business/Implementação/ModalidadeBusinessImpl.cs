@@ -37,10 +37,5 @@ namespace Back_Atletica.Business.Implementação
         {
             return _ModalidadeRepository.BuscarPorId(id);
         }
-
-        public HttpRes Atualizar(Modalidade modalidade)
-        {
-            return _ModalidadeRepository.Atualizar(modalidade);
-        }
     }
 }
