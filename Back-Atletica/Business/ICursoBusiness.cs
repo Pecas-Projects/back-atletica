@@ -10,12 +10,8 @@ namespace Back_Atletica.Business
     public interface ICursoBusiness
     {
         HttpRes Criar(Curso curso);
-
         HttpRes BuscarTodos();
-
         HttpRes BuscarPorId(int id);
-
         HttpRes BuscarPorNome(string nome);
-
     }
 }

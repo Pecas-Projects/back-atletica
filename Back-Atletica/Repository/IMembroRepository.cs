@@ -10,22 +10,13 @@ namespace Back_Atletica.Repository
     public interface IMembroRepository
     {
         HttpRes Criar(Membro membro);
-
         HttpRes BuscarPorNome(string nome);
-
         HttpRes BuscarPorId(int id);
-
         HttpRes BuscarTodos();
-
         HttpRes Atualizar(int id, Membro membro);
-
         HttpRes Deletar(int id);
-
         HttpRes BuscarPorCargo(string nome);
-
         HttpRes BuscarPorDepartamento(string nome);
-
         bool existeMembro(string nome);
-
     }
 }

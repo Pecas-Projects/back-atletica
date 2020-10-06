@@ -10,16 +10,12 @@ namespace Back_Atletica.Repository
     public interface IAtleticaRepository
     {
         HttpRes Criar(Atletica atletica);
-
         HttpRes BuscarTodos();
         HttpRes BuscaPorId(int id);
-
         HttpRes BuscaPorNome(string nome);
         HttpRes BuscaPorInstituicao(Faculdade faculdade);
-
         HttpRes Deletar(int id);
         HttpRes Atualizar(int id, Atletica atletica);
-
         bool existeAtletica(string nome);
     }
 }

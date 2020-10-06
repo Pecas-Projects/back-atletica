@@ -46,7 +46,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Create(Atletica atletica)
         {
-            return _AtleticaRepository.Create(atletica);
+            return _AtleticaRepository.Criar(atletica);
         }
 
         public HttpRes Criar(Atletica atletica)

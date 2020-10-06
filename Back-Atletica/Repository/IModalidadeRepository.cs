@@ -10,13 +10,9 @@ namespace Back_Atletica.Repository
     public interface IModalidadeRepository
     {
         HttpRes Criar(Modalidade modalidade);
-
         HttpRes BuscarPorTodos();
-
         HttpRes BuscarPorId(int id);
-
         HttpRes Deletar(int id);
-
         bool existeModalidade(Modalidade modalidade);
     }
 }
