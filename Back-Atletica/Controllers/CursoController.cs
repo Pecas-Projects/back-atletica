@@ -42,7 +42,7 @@ namespace Back_Atletica.Controllers
 
         // GET api/<CursoController>/5
         [Route("api/Curso/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult Get(int id)
         {
             var resultado = _CursoBusiness.BuscarPorId(id);
@@ -51,7 +51,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Curso/{nome}")]
-        [HttpGet("{nome}")]
+        [HttpGet]
         public IActionResult BuscaPorNome(string nome)
         {
             var resultado = _CursoBusiness.BuscarPorNome(nome);

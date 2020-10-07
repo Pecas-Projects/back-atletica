@@ -34,7 +34,7 @@ namespace Back_Atletica.Controllers
 
         // GET api/<ModalidadeController>/5
         [Route("api/Modalidade/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult Get(int id)
         {
             var resultado = _ModalidadeBusiness.BuscarPorId(id);
@@ -54,7 +54,7 @@ namespace Back_Atletica.Controllers
 
         // DELETE api/<ModalidadeController>/5
         [Route("api/Modalidade")]
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             var resultado = _ModalidadeBusiness.Deletar(id);

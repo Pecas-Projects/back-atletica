@@ -22,14 +22,14 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Membro/{instituicao}")]
-        [HttpGet("{instituicao")]
+        [HttpGet]
         public IActionResult BuscarPorInstituicao(string instituicao)
         {
             return BadRequest();
         }
 
         [Route("api/Atletica/{nome}")]
-        [HttpGet("{nome}")]
+        [HttpGet]
         public IActionResult BuscarPorNome(string nome)
         {
             var resultado = _AtleticaBusiness.BuscaPorNome(nome);
