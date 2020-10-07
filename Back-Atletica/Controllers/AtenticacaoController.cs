@@ -24,7 +24,7 @@ namespace Back_Atletica.Controllers
         [HttpPost]
         public IActionResult Registro([FromBody] Atletica value)
         {
-            var result = _AutenticacaoBusiness.Registrar(value);
+            var result = _AutenticacaoBusiness.RegistrarAtletica(value);
 
             return result.HttpResponse();
         }

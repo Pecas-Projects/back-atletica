@@ -9,9 +9,11 @@ namespace Back_Atletica.Repository
 {
     public interface IAutenticacaoRepository
     {
-        HttpRes Registrar(Atletica atletica);
+        HttpRes RegistrarAtletica(Atletica atletica);
+        HttpRes RegistrarMembro(Membro membro);
         HttpRes Login(Atletica atletica);
         HttpRes ResetarSenha(string email);
         string GerarTokenJWT(string email);
+        string GerarPIN();
     }
 }

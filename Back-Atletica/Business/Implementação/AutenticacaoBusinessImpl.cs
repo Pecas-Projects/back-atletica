@@ -22,9 +22,9 @@ namespace Back_Atletica.Business.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes Registrar(Atletica atletica)
+        public HttpRes RegistrarAtletica(Atletica atletica)
         {
-            return _repositorio.Registrar(atletica);
+            return _repositorio.RegistrarAtletica(atletica);
         }
 
         public HttpRes ResetarSenha(string email)

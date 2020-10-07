@@ -20,6 +20,17 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
+        public string GerarPIN()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var result = new string(
+                Enumerable.Repeat(chars, 5)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+            return result;
+        }
+
         public string GerarTokenJWT(string email)
         {
             throw new NotImplementedException();
@@ -30,7 +41,7 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes Registrar(Atletica atletica)
+        public HttpRes RegistrarAtletica(Atletica atletica)
         {
             Env hash = new Env();
 
@@ -39,6 +50,7 @@ namespace Back_Atletica.Repository.Implementação
                 string encrip = hash.Encriptografia(atletica.Senha);
 
                 atletica.Senha = encrip;
+                atletica.PIN = GerarPIN();
 
                 _context.Add(atletica);
 
@@ -52,6 +64,11 @@ namespace Back_Atletica.Repository.Implementação
 
                 return new HttpRes(400, ex.InnerException.Message);
             }
+        }
+
+        public HttpRes RegistrarMembro(Membro membro)
+        {
+            throw new NotImplementedException();
         }
 
         public HttpRes ResetarSenha(string email)
