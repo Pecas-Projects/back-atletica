@@ -68,7 +68,33 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RegistrarMembro(Membro membro)
         {
-            throw new NotImplementedException();
+            Env hash = new Env();
+
+            try
+            {
+                Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.PIN.Equals(membro.Pessoa.Atletica.PIN));
+
+                if(atletica == null)
+                {
+                    return new HttpRes(404, "Atletica não encontrada");
+                }
+
+                membro.Senha = hash.Encriptografia(membro.Senha);
+                membro.Pessoa.Atletica = atletica;
+
+                _context.Add(membro);
+
+                _context.SaveChanges();
+
+                return new HttpRes(201, membro);
+
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes ResetarSenha(string email)

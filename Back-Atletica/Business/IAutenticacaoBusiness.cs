@@ -10,6 +10,7 @@ namespace Back_Atletica.Business
     public interface IAutenticacaoBusiness
     {
         HttpRes RegistrarAtletica(Atletica atletica);
+        HttpRes RegistrarMembro(Membro membro);
         HttpRes Login(Atletica atletica);
         HttpRes ResetarSenha(string email);
     }

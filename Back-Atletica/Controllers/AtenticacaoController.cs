@@ -20,11 +20,20 @@ namespace Back_Atletica.Controllers
             _AutenticacaoBusiness = business;
         }
 
-        [Route("api/Auth/Registro")]
+        [Route("api/Registro/Atletica")]
         [HttpPost]
-        public IActionResult Registro([FromBody] Atletica value)
+        public IActionResult RegistroAtletica([FromBody] Atletica value)
         {
             var result = _AutenticacaoBusiness.RegistrarAtletica(value);
+
+            return result.HttpResponse();
+        }
+
+        [Route("api/Registro/Membro")]
+        [HttpPost]
+        public IActionResult RegistroMembro([FromBody] Membro value)
+        {
+            var result = _AutenticacaoBusiness.RegistrarMembro(value);
 
             return result.HttpResponse();
         }
