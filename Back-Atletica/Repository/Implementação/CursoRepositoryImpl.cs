@@ -64,8 +64,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
+            Curso curso = new Curso();
 
-            throw new NotImplementedException();
+            try
+            {
+                curso = context.Cursos.Find(id);
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, curso);
         }
 
         public HttpRes BuscarPorNome(string nome)
