@@ -47,7 +47,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            var cursos = context.Cursos.ToList<Curso>();
+            var cursos = new List<Curso>();
+
+            try
+            {
+                cursos = context.Cursos.ToList<Curso>();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
 
             return new HttpRes(200, cursos);
         }
