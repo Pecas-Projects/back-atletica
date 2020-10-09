@@ -19,25 +19,43 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Curso curso)
         {
-            context.Add(curso);
-            context.SaveChanges();
+            if (!existeCurso(curso))
+            {
+                context.Add(curso);
+                context.SaveChanges();
 
-            return new HttpRes(201, curso);
+                return new HttpRes(201, curso);
+            }
+
+            return new HttpRes(400, "O curso já existe!");
         }
 
         public bool existeCurso(Curso curso)
         {
-            throw new NotImplementedException();
+            bool existe = false;
+
+            try
+            {
+                existe = context.Cursos.Any(c => c.Nome == curso.Nome);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+            return existe;
         }
 
         public HttpRes BuscarTodos()
         {
-            throw new NotImplementedException();
+            var cursos = context.Cursos.ToList<Curso>();
+
+            return new HttpRes(200, cursos);
         }
 
 
         public HttpRes BuscarPorId(int id)
         {
+
             throw new NotImplementedException();
         }
 
