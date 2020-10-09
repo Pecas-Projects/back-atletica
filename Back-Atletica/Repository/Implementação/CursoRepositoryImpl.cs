@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorNome(string nome)
         {
-            throw new NotImplementedException();
+            var cursos = new List<Curso>();
+
+            try
+            {
+                cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper())).ToList();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, cursos);
         }
     }
 }
