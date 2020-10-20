@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +34,15 @@ namespace Back_Atletica.Controllers
         public IActionResult RegistroMembro([FromBody] Membro value)
         {
             var result = _AutenticacaoBusiness.RegistrarMembro(value);
+
+            return result.HttpResponse();
+        }
+
+        [Route("api/Login/Atletica")]
+        [HttpPost]
+        public IActionResult LoginAtletica([FromBody] Atletica value)
+        {
+            var result = _AutenticacaoBusiness.Login(value);
 
             return result.HttpResponse();
         }
