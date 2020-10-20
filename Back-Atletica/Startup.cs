@@ -67,6 +67,18 @@ namespace Back_Atletica
                   };
               });
 
+  
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Olympos Api"
+                });
+
+            }
+           );
+
             services.AddHttpContextAccessor();
 
             services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
@@ -84,7 +96,16 @@ namespace Back_Atletica
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
             //app.UseHttpsRedirection();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Olympos Api V1");
+                c.RoutePrefix = string.Empty;
+            }
+            );
 
             app.UseRouting();
 
