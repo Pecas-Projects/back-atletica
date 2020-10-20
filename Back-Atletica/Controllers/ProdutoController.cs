@@ -28,7 +28,7 @@ namespace Back_Produto.Controllers
         }
 
         [Route("api/Produto/{atleticaId}")]
-        [HttpGet("{atleticaId}")]
+        [HttpGet]
         public IActionResult BuscarPorAtletica(int atleticaId)
         {
             var resultado = _ProdutoBusiness.BuscarPorAtletica(atleticaId);
@@ -36,7 +36,7 @@ namespace Back_Produto.Controllers
         }
 
         [Route("api/Produto/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult BuscarPorId(int id)
         {
             var resultado = _ProdutoBusiness.BuscarPorId(id);
@@ -44,7 +44,7 @@ namespace Back_Produto.Controllers
         }
 
         [Route("api/Produto/{atleticaId}/{nome}")]
-        [HttpGet("{atleticaId}/{nome}")]
+        [HttpGet]
         public IActionResult BuscarPorNome(int atleticaId, string nome)
         {
             var resultado = _ProdutoBusiness.BuscarPorNome(atleticaId, nome);
@@ -52,7 +52,7 @@ namespace Back_Produto.Controllers
         }
 
         [Route("api/Produto/{atleticaId}/{categoria}")]
-        [HttpGet("{atleticaId}/{categoria}")]
+        [HttpGet]
         public IActionResult BuscarPorCategoria(int atleticaId, string categoria)
         {
             var resultado = _ProdutoBusiness.BuscarPorCategoria(atleticaId, categoria);

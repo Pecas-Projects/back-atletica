@@ -22,7 +22,7 @@ namespace Back_Atletica.Controllers
 
         
         [Route("api/Membro/{cargo}")]
-        [HttpGet("{cargo}")]
+        [HttpGet]
         public IActionResult BuscarPorCargo(string cargo)
         {
             var resultado = _MembroBusiness.BuscarPorCargo(cargo);
@@ -31,7 +31,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Membro/{departamento}")]
-        [HttpGet("{departamento}")]
+        [HttpGet]
         public IActionResult BuscarPorDepartamento(string departamento)
         {
             var resultado = _MembroBusiness.BuscarPorDepartamento(departamento);
@@ -40,7 +40,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Membro/{nome}")]
-        [HttpGet("{nome}")]
+        [HttpGet]
         public IActionResult BuscarPorNome(string nome) {
             var resultado = _MembroBusiness.BuscarPorNome(nome);
 
@@ -60,7 +60,7 @@ namespace Back_Atletica.Controllers
 
         // GET api/<MembroController>/5
         [Route("api/Membro/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult Get(int id)
         {
             var resultado = _MembroBusiness.BuscarPorId(id);
@@ -80,7 +80,7 @@ namespace Back_Atletica.Controllers
 
         // PUT api/<MembroController>/5
         [Route("api/Membro/{id}")]
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] Membro membro)
         {
             var resultado = _MembroBusiness.Atualizar(id, membro);
@@ -90,7 +90,7 @@ namespace Back_Atletica.Controllers
 
         // DELETE api/<MembroController>/5
         [Route("api/Membro/{id}")]
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             var resultado = _MembroBusiness.Deletar(id);

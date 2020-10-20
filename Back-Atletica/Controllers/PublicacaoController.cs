@@ -28,7 +28,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Publicacao/{atleticaId}")]
-        [HttpGet("{atleticaId}")]
+        [HttpGet]
         public IActionResult BuscarPorAtletica(int atleticaId)
         {
             var resultado = _PublicacaoBusiness.BuscarPorAtletica(atleticaId);
@@ -36,7 +36,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Route("api/Publicacao/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult BuscarPorId(int id)
         {
             var resultado = _PublicacaoBusiness.BuscarPorId(id);
