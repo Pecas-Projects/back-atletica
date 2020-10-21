@@ -22,14 +22,20 @@ namespace Back_Atletica.Business.Implementação
             return _MembroRepository.Atualizar(id, membro);
         }
 
-        public HttpRes BuscarPorCargo(string nome)
+        public HttpRes BuscarPorCargo(int atleticaId, string nome)
         {
-            return _MembroRepository.BuscarPorCargo(nome);
+            return _MembroRepository.BuscarPorCargo(atleticaId, nome);
+        }
+
+
+        public HttpRes BuscarPorDepartamento(int atleticaId, string nome)
+        {
+            return _MembroRepository.BuscarPorDepartamento(atleticaId, nome);
         }
 
         public HttpRes BuscarPorDepartamento(string nome)
         {
-            return _MembroRepository.BuscarPorDepartamento(nome);
+            throw new NotImplementedException();
         }
 
         public HttpRes BuscarPorId(int id)
@@ -37,14 +43,24 @@ namespace Back_Atletica.Business.Implementação
             return _MembroRepository.BuscarPorId(id);
         }
 
+        public HttpRes BuscarPorNome(int atleticaId, string nome)
+        {
+            return _MembroRepository.BuscarPorNome(atleticaId, nome);
+        }
+
         public HttpRes BuscarPorNome(string nome)
         {
-            return _MembroRepository.BuscarPorNome(nome);
+            throw new NotImplementedException();
         }
 
         public HttpRes BuscarTodos()
         {
             return _MembroRepository.BuscarTodos();
+        }
+
+        public HttpRes BuscarTodos(int atleticaId)
+        {
+            return _MembroRepository.BuscarTodos(atleticaId);
         }
 
         public HttpRes Criar(Membro membro)
