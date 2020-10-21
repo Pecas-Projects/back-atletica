@@ -42,9 +42,9 @@ namespace Back_Atletica.Business.Implementação
             return _ProdutoRepository.BuscarPorNome(atleticaId, nome);
         }
 
-        HttpRes IProdutoBusiness.BuscarPorCategoria(int atleticaId, string categoria)
+        HttpRes IProdutoBusiness.BuscarPorCategoria(int atleticaId, int categoriaId)
         {
-            return _ProdutoRepository.BuscarPorCategoria(atleticaId, categoria);
+            return _ProdutoRepository.BuscarPorCategoria(atleticaId, categoriaId);
         }
 
         HttpRes IProdutoBusiness.Atualizar(int id, Produto produto)
