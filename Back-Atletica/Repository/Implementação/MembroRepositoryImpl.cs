@@ -27,17 +27,34 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes BuscarPorDepartamento(string nome)
+        public HttpRes BuscarPorCargo(int atleticaId, string nome)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscarPorDepartamento(int atleticaId, string nome)
         {
             throw new NotImplementedException();
         }
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            Membro membro = new Membro();
+
+            try
+            {
+                membro = context.Membros.Find(id);
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, membro);
         }
 
-        public HttpRes BuscarPorNome(string nome)
+
+        public HttpRes BuscarPorNome(int atleticaId, string nome)
         {
             throw new NotImplementedException();
         }
@@ -49,6 +66,22 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 membros = context.Membros.ToList<Membro>();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, membros);
+        }
+
+        public HttpRes BuscarTodos(int atleticaId)
+        {
+            var membros = new List<Membro>();
+
+            try
+            {
+                membros = context.Membros.Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
             }
             catch
             {
