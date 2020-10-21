@@ -51,11 +51,11 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Produto/{atleticaId}/{categoria}")]
+        [Route("api/ProdutoCategoria/{atleticaId}/{categoriaId}")]
         [HttpGet]
-        public IActionResult BuscarPorCategoria(int atleticaId, string categoria)
+        public IActionResult BuscarPorCategoria(int atleticaId, int categoriaId)
         {
-            var resultado = _ProdutoBusiness.BuscarPorCategoria(atleticaId, categoria);
+            var resultado = _ProdutoBusiness.BuscarPorCategoria(atleticaId, categoriaId);
             return resultado.HttpResponse();
         }
 
