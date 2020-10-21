@@ -122,7 +122,36 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            if (!existeMembro(id))
+            {
+                return new HttpRes(404, "Não existe nenhum membro com este id");
+            }
+
+            var membro = new Membro();
+            var pessoa = new Pessoa();
+            try
+            {
+                membro = context.Membros.Find(id);
+                pessoa = context.Pessoas.Where(p => p.PessoaId == membro.PessoaId).FirstOrDefault();
+                
+                if (pessoa.Atleta)
+                {
+                    pessoa.Membro = false;
+                }
+                else
+                {
+                    context.Pessoas.Remove(pessoa);
+                }
+
+                context.Membros.Remove(membro);
+                context.SaveChanges();
+            }
+            catch
+            {
+                return new HttpRes(400, "Algo deu errado!");
+            }
+
+            return new HttpRes(204);
         }
 
         public bool existeMembro(Membro membro)
