@@ -71,7 +71,13 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorNome(int atleticaId, string nome)
         {
-            throw new NotImplementedException();
+            var produtos = _context.Produtos
+                .Where(p => p.AtleticaId.Equals(atleticaId) && EF.Functions.Like(p.Nome.ToUpper(), "%" + nome.ToUpper() + "%"))
+                .OrderBy(p => EF.Functions.Like(p.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
+                EF.Functions.Like(p.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
+                .ToList();
+
+            return new HttpRes(200, produtos);
         }
 
         public HttpRes Criar(Produto produto)
