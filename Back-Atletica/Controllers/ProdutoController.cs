@@ -51,7 +51,7 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Produto/{atleticaId}/{categoriaId}")]
+        [Route("api/ProdutoCategoria/{atleticaId}/{categoriaId}")]
         [HttpGet]
         public IActionResult BuscarPorCategoria(int atleticaId, int categoriaId)
         {
