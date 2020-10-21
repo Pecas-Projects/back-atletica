@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,30 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Membro membro)
         {
-            throw new NotImplementedException();
+            if (id != membro.MembroId)
+            {
+                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+            }
+
+            context.Entry(membro).State = EntityState.Modified;
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!existeMembro(id))
+                {
+                    return new HttpRes(404, "Não existe nenhum produto com este id");
+                }
+                else
+                {
+                    return new HttpRes(400, "Ocorreu algum erro durante a atualização!");
+                }
+            }
+
+            return new HttpRes(200, membro);
         }
 
         public HttpRes BuscarPorCargo(string nome)
@@ -108,6 +132,22 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 existe = context.Membros.Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+
+            return existe;
+        }
+
+        public bool existeMembro(int membroId)
+        {
+            bool existe = false;
+
+            try
+            {
+                existe = context.Membros.Any(m => m.MembroId == membroId);
             }
             catch
             {

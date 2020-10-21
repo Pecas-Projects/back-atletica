@@ -19,5 +19,6 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorCargo(int atleticaId, string nome);
         HttpRes BuscarPorDepartamento(int atleticaId, string nome);
         bool existeMembro(Membro membro);
+        bool existeMembro(int membroId);
     }
 }
