@@ -66,7 +66,12 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            var produto = _context.Produtos.Find(id);
+            if (produto == null)
+            {
+                return new HttpRes(404, "Não existe nenhum produto com este id");
+            }
+            return new HttpRes(200, produto);
         }
 
         public HttpRes BuscarPorNome(int atleticaId, string nome)
@@ -74,7 +79,7 @@ namespace Back_Atletica.Repository.Implementação
             var produtos = _context.Produtos
                 .Where(p => p.AtleticaId.Equals(atleticaId) && EF.Functions.Like(p.Nome.ToUpper(), "%" + nome.ToUpper() + "%"))
                 .OrderBy(p => EF.Functions.Like(p.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
-                EF.Functions.Like(p.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
+                    EF.Functions.Like(p.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
                 .ToList();
 
             return new HttpRes(200, produtos);
