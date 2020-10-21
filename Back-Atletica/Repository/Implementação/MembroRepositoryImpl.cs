@@ -44,7 +44,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            throw new NotImplementedException();
+            var membros = new List<Membro>();
+
+            try
+            {
+                membros = context.Membros.ToList<Membro>();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, membros);
         }
 
         public HttpRes Criar(Membro membro)
@@ -57,9 +68,20 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public bool existeMembro(string nome)
+        public bool existeMembro(Membro membro)
         {
-            throw new NotImplementedException();
+            bool existe = false;
+
+            try
+            {
+                existe = context.Membros.Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+
+            return existe;
         }
     }
 }
