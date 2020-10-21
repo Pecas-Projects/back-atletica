@@ -48,7 +48,11 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorAtletica(int atleticaId)
         {
-            throw new NotImplementedException();
+            var produtos = _context.Produtos
+                .Where(p => p.AtleticaId.Equals(atleticaId))
+                .ToList();
+
+            return new HttpRes(200, produtos);
         }
 
         public HttpRes BuscarPorCategoria(int atleticaId, int categoriaId)
