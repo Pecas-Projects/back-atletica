@@ -1,4 +1,5 @@
-﻿using Back_Atletica.Models;
+﻿using Back_Atletica.Data;
+using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace Back_Atletica.Repository.Implementação
 {
     public class MembroRepositoryImpl : IMembroRepository
     {
+        AtleticaContext context;
+
+        public MembroRepositoryImpl(AtleticaContext contxt)
+        {
+            context = contxt;
+        }
+
         public HttpRes Atualizar(int id, Membro membro)
         {
             throw new NotImplementedException();
