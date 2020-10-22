@@ -19,7 +19,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Login(Atletica atletica)
         {
-            throw new NotImplementedException();
+            return _repositorio.Login(atletica);
         }
 
         public HttpRes RegistrarAtletica(Atletica atletica)

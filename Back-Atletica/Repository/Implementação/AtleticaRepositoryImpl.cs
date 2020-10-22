@@ -44,7 +44,10 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Atletica atletica)
         {
-            throw new NotImplementedException();
+            _context.Atleticas.Add(atletica);
+            _context.SaveChanges();
+
+            return new HttpRes(200, atletica);
         }
 
         public HttpRes Deletar(int id)

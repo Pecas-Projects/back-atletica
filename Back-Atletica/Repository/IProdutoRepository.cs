@@ -13,9 +13,9 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorAtletica(int atleticaId);
         HttpRes BuscarPorId(int id);
         HttpRes BuscarPorNome(int atleticaId, string nome);
-        HttpRes BuscarPorCategoria(int atleticaId, string categoria);
+        HttpRes BuscarPorCategoria(int atleticaId, int categoriaId);
         HttpRes Atualizar(int id, Produto produto);
         HttpRes Deletar(int id);
-        bool existeProduto(Produto produto);
+        bool existeProduto(int id);
     }
 }

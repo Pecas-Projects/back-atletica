@@ -44,14 +44,9 @@ namespace Back_Atletica.Business.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes Create(Atletica atletica)
-        {
-            return _AtleticaRepository.Criar(atletica);
-        }
-
         public HttpRes Criar(Atletica atletica)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.Criar(atletica);
         }
 
         public HttpRes Deletar(int id)

@@ -13,7 +13,8 @@ namespace Back_Atletica.Models
         public string Local { get; set; }
         public DateTime DataHora { get; set; }
         public double PrecoIngresso { get; set; }
-        public string Categoria { get; set; }
+        public int EventoCategoriaId { get; set; }
+        public virtual EventoCategoria EventoCategoria { get; set; }
         public string Cor { get; set; }
         public int AtleticaId { get; set; }
         public virtual Atletica  Atletica { get; set; }

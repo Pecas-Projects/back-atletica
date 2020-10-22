@@ -1,8 +1,8 @@
 using Back_Atletica.Business;
-using Back_Atletica.Business.Implementação;
+using Back_Atletica.Business.ImplementaÃ§Ã£o;
 using Back_Atletica.Data;
 using Back_Atletica.Repository;
-using Back_Atletica.Repository.Implementação;
+using Back_Atletica.Repository.ImplementaÃ§Ã£o;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -67,13 +67,31 @@ namespace Back_Atletica
                   };
               }); */
 
-            services.AddHttpContextAccessor();
+  
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Olympos Api"
+                });
 
-            /*services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
-            services.AddScoped<IAutenticacaoRepository, AutenticacaoRepositoryImpl>(); */
+            }
+           );
+
+            services.AddHttpContextAccessor();
 
             services.AddScoped<ICursoBusiness, CursoBusinessImpl>();
             services.AddScoped<ICursoRepository, CursoRepositoryImpl>();
+            services.AddScoped<IProdutoBusiness, ProdutoBusinessImpl>();
+            services.AddScoped<IProdutoRepository, ProdutoRepositoryImpl>();
+            services.AddScoped<IAtleticaBusiness, AtleticaBusinessImpl>();
+            services.AddScoped<IAtleticaRepository, AtleticaRepositoryImpl>();
+            services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
+            services.AddScoped<IAutenticacaoRepository, AutenticacaoRepositoryImpl>();
+            services.AddScoped<IMembroBusiness, MembroBusinessImpl>();
+            services.AddScoped<IMembroRepository, MembroRepositoryImpl>();
+
 
         }
 
@@ -87,7 +105,16 @@ namespace Back_Atletica
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
             //app.UseHttpsRedirection();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Olympos Api V1");
+                c.RoutePrefix = string.Empty;
+            }
+            );
 
             app.UseRouting();
 

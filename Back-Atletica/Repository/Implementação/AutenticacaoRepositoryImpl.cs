@@ -7,6 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -38,7 +42,48 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Login(Atletica atletica)
         {
-            throw new NotImplementedException();
+            Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
+
+            if (atleticaDados == null) return new HttpRes(400, "Email ou senha incorretos");
+
+            atleticaDados.Senha = "";
+
+            var token = GerarToken(atleticaDados, "Login");
+
+            var loginDados = new
+            {
+                Atletica = atleticaDados,
+                token = token
+            };
+
+            return new HttpRes(200, "Logado com sucesso", loginDados);
+        }
+
+        private object GerarToken(Atletica atletica, string tipo)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret));
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, atletica.AtleticaId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, atletica.Email),
+                new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: Env.Issuer,
+                audience: Env.Issuer,
+                claims,
+                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
+                signingCredentials: credentials
+                );
+
+            var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
+            return encodetoken;
+
         }
 
         public HttpRes RegistrarAtletica(Atletica atletica)

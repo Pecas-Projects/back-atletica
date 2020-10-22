@@ -22,29 +22,29 @@ namespace Back_Atletica.Business.Implementação
             return _MembroRepository.Atualizar(id, membro);
         }
 
-        public HttpRes BuscarPorCargo(string nome)
-        {
-            return _MembroRepository.BuscarPorCargo(nome);
-        }
-
-        public HttpRes BuscarPorDepartamento(string nome)
-        {
-            return _MembroRepository.BuscarPorDepartamento(nome);
-        }
-
         public HttpRes BuscarPorId(int id)
         {
             return _MembroRepository.BuscarPorId(id);
         }
 
+        public HttpRes BuscarPorNome(int atleticaId, string nome)
+        {
+            return _MembroRepository.BuscarPorNome(atleticaId, nome);
+        }
+
         public HttpRes BuscarPorNome(string nome)
         {
-            return _MembroRepository.BuscarPorNome(nome);
+            throw new NotImplementedException();
         }
 
         public HttpRes BuscarTodos()
         {
             return _MembroRepository.BuscarTodos();
+        }
+
+        public HttpRes BuscarTodos(int atleticaId)
+        {
+            return _MembroRepository.BuscarTodos(atleticaId);
         }
 
         public HttpRes Criar(Membro membro)
