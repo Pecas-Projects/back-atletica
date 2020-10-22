@@ -48,7 +48,12 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorId(int id)
         {
-            throw new NotImplementedException();
+            var atletica = _context.Atleticas.Find(id);
+            if (atletica == null)
+            {
+                return new HttpRes(404, "Não existe nenhuma atlética com este id");
+            }
+            return new HttpRes(200, atletica);
         }
 
         public HttpRes BuscaPorInstituicao(Faculdade faculdade)
