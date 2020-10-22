@@ -21,7 +21,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Atualizar(int id, Atletica atletica)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.Atualizar(id, atletica);
         }
 
         public HttpRes BuscaPorId(int id)
