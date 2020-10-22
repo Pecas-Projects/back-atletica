@@ -48,7 +48,12 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorAtletica(int atleticaId)
         {
-            throw new NotImplementedException();
+            var publicacoes = _context.Publicacoes
+                .Where(p => p.Atletica.AtleticaId.Equals(atleticaId))
+                .Include("Imagem")
+                .ToList();
+
+            return new HttpRes(200, publicacoes);
         }
 
         public HttpRes BuscarPorId(int id)
