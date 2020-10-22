@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,31 +20,79 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Curso curso)
         {
-            context.Add(curso);
-            context.SaveChanges();
+            if (!existeCurso(curso))
+            {
+                context.Add(curso);
+                context.SaveChanges();
 
-            return new HttpRes(201, curso);
+                return new HttpRes(201, curso);
+            }
+
+            return new HttpRes(400, "O curso já existe!");
         }
 
         public bool existeCurso(Curso curso)
         {
-            throw new NotImplementedException();
+            bool existe = false;
+
+            try
+            {
+                existe = context.Cursos.Any(c => c.Nome == curso.Nome);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+            return existe;
         }
 
         public HttpRes BuscarTodos()
         {
-            throw new NotImplementedException();
+            var cursos = new List<Curso>();
+
+            try
+            {
+                cursos = context.Cursos.ToList<Curso>();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, cursos);
         }
 
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            Curso curso = new Curso();
+
+            try
+            {
+                curso = context.Cursos.Find(id);
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, curso);
         }
 
         public HttpRes BuscarPorNome(string nome)
         {
-            throw new NotImplementedException();
+            var cursos = new List<Curso>();
+
+            try
+            {
+                cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper())).ToList();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, cursos);
         }
     }
 }

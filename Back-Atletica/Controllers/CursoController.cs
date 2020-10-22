@@ -50,7 +50,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Curso/{nome}")]
+        [Route("api/Cursos/{nome}")]
         [HttpGet]
         public IActionResult BuscaPorNome(string nome)
         {
