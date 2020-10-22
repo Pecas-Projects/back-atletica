@@ -42,7 +42,20 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            var publicacao = _context.Publicacoes.Find(id);
+            if (publicacao == null)
+            {
+                return new HttpRes(404, "Não existe nenhum publicação com este id");
+            }
+            // Remove a imagem da publicação também
+            Imagem img = new Imagem { ImagemId = publicacao.ImagemId };
+            _context.Imagens.Attach(img);
+            _context.Imagens.Remove(img);
+
+            _context.Publicacoes.Remove(publicacao);
+            _context.SaveChanges();
+
+            return new HttpRes(204);
         }
 
         public bool existePublicacao(int id)
