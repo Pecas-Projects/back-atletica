@@ -76,7 +76,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            var atletica = _context.Atleticas.Find(id);
+            if (atletica == null)
+            {
+                return new HttpRes(404, "Não existe nenhum atletica com este id");
+            }
+
+            _context.Atleticas.Remove(atletica);
+            _context.SaveChanges();
+
+            return new HttpRes(204);
         }
 
         public bool existeAtletica(string nome)

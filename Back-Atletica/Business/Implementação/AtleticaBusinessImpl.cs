@@ -51,7 +51,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.Deletar(id);
         }
     }
 }
