@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,30 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Publicacao publicacao)
         {
-            throw new NotImplementedException();
+            if (id != publicacao.PublicacaoId)
+            {
+                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+            }
+
+            _context.Entry(publicacao).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!existePublicacao(id))
+                {
+                    return new HttpRes(404, "Não existe nenhum publicação com este id");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return new HttpRes(200, publicacao);
         }
 
         public HttpRes BuscarPorAtletica(int atleticaId)
