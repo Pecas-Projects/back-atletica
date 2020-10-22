@@ -14,6 +14,6 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorId(int id);
         HttpRes Atualizar(int id, Publicacao publicacao);
         HttpRes Deletar(int id);
-        bool existePublicacao(Publicacao publicacao);
+        bool existePublicacao(int id);
     }
 }

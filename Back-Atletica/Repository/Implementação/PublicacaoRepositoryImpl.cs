@@ -1,4 +1,5 @@
-﻿using Back_Atletica.Models;
+﻿using Back_Atletica.Data;
+using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace Back_Atletica.Repository.Implementação
 {
     public class PublicacaoRepositoryImpl : IPublicacaoRepository
     {
+        AtleticaContext _context;
+
+        public PublicacaoRepositoryImpl(AtleticaContext context)
+        {
+            _context = context;
+        }
+
         public HttpRes Atualizar(int id, Publicacao publicacao)
         {
             throw new NotImplementedException();
@@ -34,9 +42,9 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public bool existePublicacao(Publicacao publicacao)
+        public bool existePublicacao(int id)
         {
-            throw new NotImplementedException();
+            return _context.Publicacoes.Any(p => p.PublicacaoId == id);
         }
     }
 }
