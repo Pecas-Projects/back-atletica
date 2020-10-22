@@ -81,6 +81,8 @@ namespace Back_Atletica
 
             services.AddHttpContextAccessor();
 
+            services.AddScoped<IProdutoBusiness, ProdutoBusinessImpl>();
+            services.AddScoped<IProdutoRepository, ProdutoRepositoryImpl>();
             services.AddScoped<IAtleticaBusiness, AtleticaBusinessImpl>();
             services.AddScoped<IAtleticaRepository, AtleticaRepositoryImpl>();
             services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
