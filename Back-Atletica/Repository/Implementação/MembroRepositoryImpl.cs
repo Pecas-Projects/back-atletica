@@ -65,7 +65,30 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorNome(int atleticaId, string nome)
         {
-            throw new NotImplementedException();
+            var membros = new List<Membro>();
+
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
+
+            if (!atletica.existeAtletica(atleticaId))
+            {
+                return new HttpRes(404, "Não existe nenhuma atlética com este id");
+            }
+
+            try
+            {
+                membros = context.Membros.Where(m => m.Pessoa.AtleticaId == atleticaId &&
+                    (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
+                    m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
+                    (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower().Contains(nome.ToLower())
+                    )).ToList();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, membros);
+
         }
 
         public HttpRes BuscarTodos()
