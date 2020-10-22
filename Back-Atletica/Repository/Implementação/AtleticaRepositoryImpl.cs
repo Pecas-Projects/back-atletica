@@ -88,11 +88,6 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(204);
         }
 
-        public bool existeAtletica(string nome)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool existeAtletica(int id)
         {
             return _context.Atleticas.Any(a => a.AtleticaId == id);
