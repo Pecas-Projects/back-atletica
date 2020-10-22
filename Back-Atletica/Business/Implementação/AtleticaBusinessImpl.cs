@@ -41,7 +41,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes BuscarTodos()
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscarTodos();
         }
 
         public HttpRes Criar(Atletica atletica)
