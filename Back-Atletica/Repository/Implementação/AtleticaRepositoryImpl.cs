@@ -56,9 +56,13 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, atletica);
         }
 
-        public HttpRes BuscaPorInstituicao(Faculdade faculdade)
+        public HttpRes BuscaPorInstituicao(int faculdadeId)
         {
-            throw new NotImplementedException();
+            var atleticas = _context.Atleticas
+                .Where(a => a.Campus.FaculdadeId.Equals(faculdadeId))
+                .ToList();
+
+            return new HttpRes(200, atleticas);
         }
 
         public HttpRes BuscaPorNome(string nome)

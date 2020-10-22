@@ -21,11 +21,12 @@ namespace Back_Atletica.Controllers
             _AtleticaBusiness = atleticaBusiness;
         }
 
-        [Route("api/Membro/{instituicao}")]
+        [Route("api/AtleticaFaculdade/{faculdadeId}")]
         [HttpGet]
-        public IActionResult BuscarPorInstituicao(string instituicao)
+        public IActionResult BuscarPorInstituicao(int faculdadeId)
         {
-            return BadRequest();
+            var resultado = _AtleticaBusiness.BuscaPorInstituicao(faculdadeId);
+            return resultado.HttpResponse();
         }
 
         [Route("api/AtleticaNome/{nome}")]
@@ -33,7 +34,6 @@ namespace Back_Atletica.Controllers
         public IActionResult BuscarPorNome(string nome)
         {
             var resultado = _AtleticaBusiness.BuscaPorNome(nome);
-
             return resultado.HttpResponse();
         }
 
@@ -58,7 +58,6 @@ namespace Back_Atletica.Controllers
         public IActionResult Criar([FromBody] Atletica value)
         {
             var resultado = _AtleticaBusiness.Criar(value);
-
             return resultado.HttpResponse();
         }
 

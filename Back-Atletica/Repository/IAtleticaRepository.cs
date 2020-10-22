@@ -13,7 +13,7 @@ namespace Back_Atletica.Repository
         HttpRes BuscarTodos();
         HttpRes BuscaPorId(int id);
         HttpRes BuscaPorNome(string nome);
-        HttpRes BuscaPorInstituicao(Faculdade faculdade);
+        HttpRes BuscaPorInstituicao(int faculdadeId);
         HttpRes Deletar(int id);
         HttpRes Atualizar(int id, Atletica atletica);
         bool existeAtletica(int id);

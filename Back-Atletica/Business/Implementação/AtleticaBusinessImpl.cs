@@ -29,9 +29,9 @@ namespace Back_Atletica.Business.Implementação
             return _AtleticaRepository.BuscaPorId(id);
         }
 
-        public HttpRes BuscaPorInstituicao(Faculdade faculdade)
+        public HttpRes BuscaPorInstituicao(int faculdadeId)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscaPorInstituicao(faculdadeId);
         }
 
         public HttpRes BuscaPorNome(string nome)
