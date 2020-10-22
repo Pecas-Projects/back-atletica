@@ -28,7 +28,7 @@ namespace Back_Atletica.Controllers
             return BadRequest();
         }
 
-        [Route("api/Atletica/{nome}")]
+        [Route("api/AtleticaNome/{nome}")]
         [HttpGet]
         public IActionResult BuscarPorNome(string nome)
         {

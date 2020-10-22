@@ -36,7 +36,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes BuscaPorNome(string nome)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscaPorNome(nome);
         }
 
         public HttpRes BuscarTodos()
