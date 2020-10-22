@@ -27,7 +27,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Publicacao/{atleticaId}")]
+        [Route("api/PublicacaoAtletica/{atleticaId}")]
         [HttpGet]
         public IActionResult BuscarPorAtletica(int atleticaId)
         {
