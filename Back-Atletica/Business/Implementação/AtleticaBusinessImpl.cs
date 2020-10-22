@@ -21,27 +21,27 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Atualizar(int id, Atletica atletica)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.Atualizar(id, atletica);
         }
 
         public HttpRes BuscaPorId(int id)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscaPorId(id);
         }
 
-        public HttpRes BuscaPorInstituicao(Faculdade faculdade)
+        public HttpRes BuscaPorInstituicao(int faculdadeId)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscaPorInstituicao(faculdadeId);
         }
 
         public HttpRes BuscaPorNome(string nome)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscaPorNome(nome);
         }
 
         public HttpRes BuscarTodos()
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.BuscarTodos();
         }
 
         public HttpRes Criar(Atletica atletica)
@@ -51,7 +51,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            return _AtleticaRepository.Deletar(id);
         }
     }
 }
