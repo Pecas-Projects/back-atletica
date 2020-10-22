@@ -1,8 +1,8 @@
 using Back_Atletica.Business;
-using Back_Atletica.Business.Implementação;
+using Back_Atletica.Business.ImplementaÃ§Ã£o;
 using Back_Atletica.Data;
 using Back_Atletica.Repository;
-using Back_Atletica.Repository.Implementação;
+using Back_Atletica.Repository.ImplementaÃ§Ã£o;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,7 +52,7 @@ namespace Back_Atletica
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+          /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
               {
                   options.TokenValidationParameters = new TokenValidationParameters
@@ -65,7 +65,7 @@ namespace Back_Atletica
                       ValidAudience = Env.Issuer,
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret))
                   };
-              });
+              }); */
 
   
             services.AddSwaggerGen(c =>
@@ -81,12 +81,17 @@ namespace Back_Atletica
 
             services.AddHttpContextAccessor();
 
+            services.AddScoped<ICursoBusiness, CursoBusinessImpl>();
+            services.AddScoped<ICursoRepository, CursoRepositoryImpl>();
             services.AddScoped<IProdutoBusiness, ProdutoBusinessImpl>();
             services.AddScoped<IProdutoRepository, ProdutoRepositoryImpl>();
             services.AddScoped<IAtleticaBusiness, AtleticaBusinessImpl>();
             services.AddScoped<IAtleticaRepository, AtleticaRepositoryImpl>();
             services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
             services.AddScoped<IAutenticacaoRepository, AutenticacaoRepositoryImpl>();
+            services.AddScoped<IMembroBusiness, MembroBusinessImpl>();
+            services.AddScoped<IMembroRepository, MembroRepositoryImpl>();
+
 
         }
 

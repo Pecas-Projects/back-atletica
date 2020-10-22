@@ -21,28 +21,11 @@ namespace Back_Atletica.Controllers
         }
 
         
-        [Route("api/Membro/{cargo}")]
+        
+        [Route("api/Membro/{atleticaId}/nome={nome}")]
         [HttpGet]
-        public IActionResult BuscarPorCargo(string cargo)
-        {
-            var resultado = _MembroBusiness.BuscarPorCargo(cargo);
-
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/Membro/{departamento}")]
-        [HttpGet]
-        public IActionResult BuscarPorDepartamento(string departamento)
-        {
-            var resultado = _MembroBusiness.BuscarPorDepartamento(departamento);
-
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/Membro/{nome}")]
-        [HttpGet]
-        public IActionResult BuscarPorNome(string nome) {
-            var resultado = _MembroBusiness.BuscarPorNome(nome);
+        public IActionResult BuscarPorNome(int atleticaId, string nome) {
+            var resultado = _MembroBusiness.BuscarPorNome(atleticaId, nome);
 
             return resultado.HttpResponse();
         
@@ -54,6 +37,16 @@ namespace Back_Atletica.Controllers
         public IActionResult BuscarTodos()
         {
             var resultado = _MembroBusiness.BuscarTodos();
+
+            return resultado.HttpResponse();
+        }
+
+        // GET: api/<MembroController>
+        [Route("api/Membro/Atletica/{atleticaId}")]
+        [HttpGet]
+        public IActionResult BuscarTodos(int atleticaId)
+        {
+            var resultado = _MembroBusiness.BuscarTodos(atleticaId);
 
             return resultado.HttpResponse();
         }
