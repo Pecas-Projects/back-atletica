@@ -34,7 +34,10 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Publicacao publicacao)
         {
-            throw new NotImplementedException();
+            _context.Publicacoes.Add(publicacao);
+            _context.SaveChanges();
+
+            return new HttpRes(200, publicacao);
         }
 
         public HttpRes Deletar(int id)
