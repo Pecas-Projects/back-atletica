@@ -16,7 +16,5 @@ namespace Back_Atletica.Business
         HttpRes BuscarTodos();
         HttpRes Atualizar(int id, Membro membro);
         HttpRes Deletar(int id);
-        HttpRes BuscarPorCargo(int atleticaId, string nome);
-        HttpRes BuscarPorDepartamento(int atleticaId, string nome);
     }
 }

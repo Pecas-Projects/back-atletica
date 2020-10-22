@@ -22,22 +22,6 @@ namespace Back_Atletica.Business.Implementação
             return _MembroRepository.Atualizar(id, membro);
         }
 
-        public HttpRes BuscarPorCargo(int atleticaId, string nome)
-        {
-            return _MembroRepository.BuscarPorCargo(atleticaId, nome);
-        }
-
-
-        public HttpRes BuscarPorDepartamento(int atleticaId, string nome)
-        {
-            return _MembroRepository.BuscarPorDepartamento(atleticaId, nome);
-        }
-
-        public HttpRes BuscarPorDepartamento(string nome)
-        {
-            throw new NotImplementedException();
-        }
-
         public HttpRes BuscarPorId(int id)
         {
             return _MembroRepository.BuscarPorId(id);

@@ -46,21 +46,6 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, membro);
         }
 
-        public HttpRes BuscarPorCargo(string nome)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpRes BuscarPorCargo(int atleticaId, string nome)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpRes BuscarPorDepartamento(int atleticaId, string nome)
-        {
-            throw new NotImplementedException();
-        }
-
         public HttpRes BuscarPorId(int id)
         {
             Membro membro = new Membro();

@@ -21,25 +21,8 @@ namespace Back_Atletica.Controllers
         }
 
         
-        [Route("api/Membro/{atleticaId}/{cargo}")]
-        [HttpGet]
-        public IActionResult BuscarPorCargo(int atleticaId, string cargo)
-        {
-            var resultado = _MembroBusiness.BuscarPorCargo(atleticaId, cargo);
-
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/Membro/{atleticaId}/{departamento}")]
-        [HttpGet]
-        public IActionResult BuscarPorDepartamento(int atleticaId, string departamento)
-        {
-            var resultado = _MembroBusiness.BuscarPorDepartamento(atleticaId, departamento);
-
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/Membro/{nome}")]
+        
+        [Route("api/Membro/{atleticaId}/nome={nome}")]
         [HttpGet]
         public IActionResult BuscarPorNome(int atleticaId, string nome) {
             var resultado = _MembroBusiness.BuscarPorNome(atleticaId, nome);
