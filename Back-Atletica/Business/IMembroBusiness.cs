@@ -10,12 +10,11 @@ namespace Back_Atletica.Business
     public interface IMembroBusiness
     {
         HttpRes Criar(Membro membro);
-        HttpRes BuscarPorNome(string nome);
+        HttpRes BuscarPorNome(int atleticaId, string nome);
         HttpRes BuscarPorId(int id);
+        HttpRes BuscarTodos(int atleticaId);
         HttpRes BuscarTodos();
         HttpRes Atualizar(int id, Membro membro);
         HttpRes Deletar(int id);
-        HttpRes BuscarPorCargo(string nome);
-        HttpRes BuscarPorDepartamento(string nome);
     }
 }

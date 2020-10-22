@@ -87,6 +87,8 @@ namespace Back_Atletica
             services.AddScoped<IAtleticaRepository, AtleticaRepositoryImpl>();
             services.AddScoped<IAutenticacaoBusiness, AutenticacaoBusinessImpl>();
             services.AddScoped<IAutenticacaoRepository, AutenticacaoRepositoryImpl>();
+            services.AddScoped<IMembroBusiness, MembroBusinessImpl>();
+            services.AddScoped<IMembroRepository, MembroRepositoryImpl>();
 
         }
 
