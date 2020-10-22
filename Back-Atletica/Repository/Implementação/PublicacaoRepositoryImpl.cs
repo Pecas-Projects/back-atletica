@@ -53,7 +53,12 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            var publicacao = _context.Publicacoes.Find(id);
+            if (publicacao == null)
+            {
+                return new HttpRes(404, "Não existe nenhuma publicação com este id");
+            }
+            return new HttpRes(200, publicacao);
         }
 
         public HttpRes Criar(Publicacao publicacao)
