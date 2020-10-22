@@ -59,5 +59,21 @@ namespace Back_Atletica.Repository.Implementação
         {
             throw new NotImplementedException();
         }
+
+        public bool existeAtletica(int id)
+        {
+            bool existe = false;
+
+            try
+            {
+                existe = _context.Atleticas.Any(a => a.AtleticaId == id);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+
+            return existe;
+        }
     }
 }
