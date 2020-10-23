@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Back_Atletica.Models
 {
-    public class AtletaModalidadeTimeEscalado
+    public class AtletaAtleticaModalidadeTimeEscalado
     {
-        public int AtletaModalidadeTimeEscaladoId { get; set; }
+        public int AtletaAtleticaModalidadeTimeEscaladoId { get; set; }
         public int TimeEscaladoId { get; set; }
         public TimeEscalado TimeEscalado { get; set; }
-        public int AtletaModalidadeId { get; set; }
-        public AtletaModalidade AtletaModalidade { get; set; }
+        public int AtletaAtleticaModalidadeId { get; set; }
+        public AtletaAtleticaModalidade AtletaAtleticaModalidade { get; set; }
         public int FuncaoId { get; set; }
         public Funcao Funcao { get; set; }
         public int Numero { get; set; }

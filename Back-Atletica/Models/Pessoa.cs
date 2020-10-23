@@ -11,8 +11,7 @@ namespace Back_Atletica.Models
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Whatsapp { get; set; }
-        public bool Atleta { get; set; }
-        public bool Membro { get; set; }
+        public string Tipo { get; set; }
         public DateTime DataMatricula { get; set; }
         public char Genero { get; set; }
         public int AtleticaId { get; set; }

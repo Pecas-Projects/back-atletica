@@ -145,11 +145,11 @@ namespace Back_Atletica.Repository.Implementação
                 membro = context.Membros.Find(id);
                 pessoa = context.Pessoas.Where(p => p.PessoaId == membro.PessoaId).FirstOrDefault();
                 
-                if (pessoa.Atleta)
+                if(pessoa.Tipo == "AM")
                 {
-                    pessoa.Membro = false;
+                    pessoa.Tipo = "A";
                 }
-                else
+                else if(pessoa.Tipo == "M")
                 {
                     context.Pessoas.Remove(pessoa);
                 }
