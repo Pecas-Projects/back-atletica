@@ -27,7 +27,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            var modalidade = _context.Modalidades.Find(id);
+            if (modalidade == null)
+            {
+                return new HttpRes(404, "Não existe nenhum modalidade com este id");
+            }
+
+            _context.Modalidades.Remove(modalidade);
+            _context.SaveChanges();
+
+            return new HttpRes(204);
         }
 
         public HttpRes BuscarPorTodos()

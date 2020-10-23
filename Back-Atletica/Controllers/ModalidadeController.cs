@@ -53,7 +53,7 @@ namespace Back_Atletica.Controllers
 
 
         // DELETE api/<ModalidadeController>/5
-        [Route("api/Modalidade")]
+        [Route("api/Modalidade/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
