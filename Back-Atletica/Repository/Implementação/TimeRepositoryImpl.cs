@@ -29,7 +29,19 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos(int atleticaId)
         {
-            throw new NotImplementedException();
+            var times = new List<TimeEscalado>();
+
+            try
+            {
+                times = context.TimeEscalados.Where(t => t.AtleticaId == atleticaId)
+                    .ToList();
+            }
+            catch
+            {
+                return new HttpRes(404, "Erro ao conectar com o banco!");
+            }
+
+            return new HttpRes(200, times);
         }
 
         public HttpRes CriarTime(TimeEscalado time)
