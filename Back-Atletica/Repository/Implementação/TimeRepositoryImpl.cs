@@ -89,7 +89,27 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int timeId)
         {
-            throw new NotImplementedException();
+            if (!existeTime(timeId))
+            {
+                return new HttpRes(404, "Não existe nenhum Time Escalado com este id");
+            }
+
+            TimeEscalado timeEscalado = new TimeEscalado();
+
+            try
+            {
+                timeEscalado = context.TimeEscalados.Find(timeId);
+
+                context.TimeEscalados.Remove(timeEscalado);
+                context.SaveChanges();             
+                
+            }
+            catch
+            {
+                return new HttpRes(400, "Algo deu errado!");
+            }
+
+            return new HttpRes(204);
         }
 
         public bool existeTime(int timeId)
