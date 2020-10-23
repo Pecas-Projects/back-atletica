@@ -63,7 +63,7 @@ namespace Back_Atletica.Controllers
         // DELETE api/<TimeController>/5
         [Route("api/Time/{id}")]
         [HttpDelete]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var resultado = _TimeBusiness.Deletar(id);
 
