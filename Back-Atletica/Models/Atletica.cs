@@ -23,6 +23,7 @@ namespace Back_Atletica.Models
         public ICollection<Pessoa> Pessoas { get; set; }
         public ICollection<TimeEscalado> TimeEscalados { get; set; }
         public IList<AtleticaCurso> AtleticaCursos { get; set; }
+        public IList<AtleticaModalidade> AtleticaModalidades { get; set; }
 
     }
 }

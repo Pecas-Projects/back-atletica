@@ -7,9 +7,8 @@ namespace Back_Atletica.Models
 {
     public class Curso
     {
-        public int ID { get; set; }
+        public int CursoId { get; set; }
         public string Nome { get; set; }
-        public int Duracao { get; set; }
         public IList<AtleticaCurso> AtleticaCursos { get; set; }
     }
 }

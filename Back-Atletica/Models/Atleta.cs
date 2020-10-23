@@ -11,6 +11,6 @@ namespace Back_Atletica.Models
         public bool Ativo { get; set; }
         public int PessoaId { get; set; }
         public virtual Pessoa Pessoa { get; set; }
-        public IList<AtletaModalidade> AtletaModalidades { get; set; }
+        public IList<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
     }
 }
