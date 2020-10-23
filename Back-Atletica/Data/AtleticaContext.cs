@@ -339,6 +339,7 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<Modalidade>()
                 .Property(p => p.Genero)
+                .HasMaxLength(2)
                 .IsRequired();
 
             /* Pessoa */
