@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
+using static Back_Atletica.Utils.RequestModels.AutenticacaoModel;
+using Back_Atletica.Utils.RequestModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,27 +24,36 @@ namespace Back_Atletica.Controllers
 
         [Route("api/Registro/Atletica")]
         [HttpPost]
-        public IActionResult RegistroAtletica([FromBody] Atletica value)
+        public IActionResult RegistroAtletica([FromBody] RegistroAtleticaModel value)
         {
-            var result = _AutenticacaoBusiness.RegistrarAtletica(value);
+
+            Atletica atletica = value.Transform();
+
+            var result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
 
             return result.HttpResponse();
         }
 
-        [Route("api/Registro/Membro")]
+        [Route("api/Registro/Membro/{Atletica_Pin}")]
         [HttpPost]
-        public IActionResult RegistroMembro([FromBody] Membro value)
+        public IActionResult RegistroMembro([FromBody] RegistroMembroModel value, string Atletica_Pin)
         {
-            var result = _AutenticacaoBusiness.RegistrarMembro(value);
+            Membro membro = value.Transform();
+
+            membro.Pessoa.Atletica.PIN = Atletica_Pin;
+
+            var result = _AutenticacaoBusiness.RegistrarMembro(membro);
 
             return result.HttpResponse();
         }
 
         [Route("api/Login/Atletica")]
         [HttpPost]
-        public IActionResult LoginAtletica([FromBody] Atletica value)
+        public IActionResult LoginAtletica([FromBody] LoginAtleticaModel value)
         {
-            var result = _AutenticacaoBusiness.Login(value);
+            Atletica data = value.Transform();
+
+            var result = _AutenticacaoBusiness.Login(data);
 
             return result.HttpResponse();
         }
