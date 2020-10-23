@@ -174,10 +174,6 @@ namespace Back_Atletica.Data
                 .HasMaxLength(45)
                 .IsRequired();
 
-            modelBuilder.Entity<Curso>()
-                .Property(p => p.Duracao)
-                .IsRequired();
-
             /*JogoCategoria */
             modelBuilder
                 .Entity<JogoCategoria>()
