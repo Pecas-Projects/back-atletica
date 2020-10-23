@@ -10,7 +10,6 @@ namespace Back_Atletica.Models
         public int ModalidadeId { get; set; }
         public string Nome { get; set; }
         public char Genero { get; set; }
-        public string NomeCoordenador { get; set; }
         public IList<AtleticaModalidade> AtleticaModalidades { get; set; }
     }
 }

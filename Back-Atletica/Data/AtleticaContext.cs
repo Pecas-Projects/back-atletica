@@ -341,10 +341,6 @@ namespace Back_Atletica.Data
                 .Property(p => p.Genero)
                 .IsRequired();
 
-            modelBuilder.Entity<Modalidade>()
-                .Property(p => p.NomeCoordenador)
-                .HasMaxLength(45);
-
             /* Pessoa */
             modelBuilder.Entity<Pessoa>().HasKey(am => new { am.PessoaId });
 
