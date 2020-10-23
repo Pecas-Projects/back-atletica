@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,10 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper())).ToList();
+                cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper()))
+                    .OrderBy(c => EF.Functions.Like(c.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
+                    EF.Functions.Like(c.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
+                    .ToList();
             }
             catch
             {
