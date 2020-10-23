@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
+using Back_Atletica.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,10 +59,13 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/Atletica/{id}")]
         [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] Atletica valor)
         {
+            var userId = HttpToken.GetUserId(HttpContext);
+
             var resultado = _AtleticaBusiness.Atualizar(id, valor);
             return resultado.HttpResponse();
         }
