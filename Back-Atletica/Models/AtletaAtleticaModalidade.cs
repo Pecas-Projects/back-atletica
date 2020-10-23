@@ -12,6 +12,6 @@ namespace Back_Atletica.Models
         public Atleta Atleta { get; set; }
         public int AtleticaModalidadeId { get; set; }
         public AtleticaModalidade AtleticaModalidade { get; set; }
-        public IList<AtletaModalidadeTimeEscalado> AtletaModalidadeTimeEscalados { get; set; }
+        public IList<AtletaAtleticaModalidadeTimeEscalado> AtletaAtleticaModalidadeTimeEscalados { get; set; }
     }
 }

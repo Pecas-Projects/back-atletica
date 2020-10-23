@@ -11,7 +11,7 @@ namespace Back_Atletica.Data
     {
         public DbSet<Atleta> Atletas { get; set; }
         public DbSet<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
-        public DbSet<AtletaModalidadeTimeEscalado> AtletaModalidadeTimesEscalados { get; set; }
+        public DbSet<AtletaAtleticaModalidadeTimeEscalado> AtletaModalidadeTimesEscalados { get; set; }
         public DbSet<Atletica> Atleticas { get; set; }
         public DbSet<Campus> Campus { get; set; }
         public DbSet<Curso> Cursos { get; set; }
@@ -459,23 +459,23 @@ namespace Back_Atletica.Data
                 .Property(p => p.NomeCoordenador)
                 .HasMaxLength(45);
 
-            /* AtletaModalidadeTimeEscalado*/
-            modelBuilder.Entity<AtletaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaModalidadeTimeEscaladoId });
+            /* AtletaAtleticaModalidadeTimeEscalado*/
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaAtleticaModalidadeTimeEscaladoId });
 
-            modelBuilder.Entity<AtletaModalidadeTimeEscalado>()
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
                 .HasOne<AtletaAtleticaModalidade>(amt => amt.AtletaAtleticaModalidade)
-                .WithMany(am => am.AtletaModalidadeTimeEscalados)
+                .WithMany(am => am.AtletaAtleticaModalidadeTimeEscalados)
                 .HasForeignKey(amt => amt.AtletaAtleticaModalidadeId);
 
-            modelBuilder.Entity<AtletaModalidadeTimeEscalado>()
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
                 .HasOne<TimeEscalado>(t => t.TimeEscalado)
-                .WithMany(t => t.AtletaModalidadeTimeEscalados)
+                .WithMany(t => t.AtletaAtleticaModalidadeTimeEscalados)
                 .HasForeignKey(amt => amt.TimeEscaladoId);
 
-            modelBuilder.Entity<AtletaModalidadeTimeEscalado>()
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
                 .HasOne<Funcao>(amt => amt.Funcao)
-                .WithMany(f => f.AtletaModalidadeTimeEscalados)
-                .HasForeignKey(amt => amt.AtletaModalidadeTimeEscaladoId);
+                .WithMany(f => f.AtletaAtleticaModalidadeTimeEscalados)
+                .HasForeignKey(amt => amt.AtletaAtleticaModalidadeTimeEscaladoId);
 
         }
 
