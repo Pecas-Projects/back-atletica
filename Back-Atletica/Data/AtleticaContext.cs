@@ -11,7 +11,7 @@ namespace Back_Atletica.Data
     {
         public DbSet<Atleta> Atletas { get; set; }
         public DbSet<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
-        public DbSet<AtletaAtleticaModalidadeTimeEscalado> AtletaModalidadeTimesEscalados { get; set; }
+        public DbSet<AtletaAtleticaModalidadeTimeEscalado> AtletaAtleticaModalidadeTimesEscalados { get; set; }
         public DbSet<Atletica> Atleticas { get; set; }
         public DbSet<Campus> Campus { get; set; }
         public DbSet<Curso> Cursos { get; set; }
