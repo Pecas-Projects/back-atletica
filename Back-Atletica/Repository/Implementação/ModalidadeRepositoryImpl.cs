@@ -1,4 +1,5 @@
-﻿using Back_Atletica.Models;
+﻿using Back_Atletica.Data;
+using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,19 @@ namespace Back_Atletica.Repository.Implementação
 {
     public class ModalidadeRepositoryImpl : IModalidadeRepository
     {
-        private IModalidadeRepository _ModalidadeRepository;
+        AtleticaContext _context;
+
+        public ModalidadeRepositoryImpl(AtleticaContext context)
+        {
+            _context = context;
+        }
 
         public HttpRes Criar(Modalidade modalidade)
         {
-            throw new NotImplementedException();
+            _context.Modalidades.Add(modalidade);
+            _context.SaveChanges();
+
+            return new HttpRes(200, modalidade);
         }
 
         public HttpRes Deletar(int id)
