@@ -11,6 +11,6 @@ namespace Back_Atletica.Models
         public string Nome { get; set; }
         public char Genero { get; set; }
         public string NomeCoordenador { get; set; }
-        public IList<AtletaModalidade> AtletaModalidades { get; set; }
+        public IList<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
     }
 }

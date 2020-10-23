@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Back_Atletica.Models
 {
-    public class AtletaModalidade
+    public class AtletaAtleticaModalidade
     {
-        public int AtletaModalidadeId { get; set; }
+        public int AtletaAtleticaModalidadeId { get; set; }
         public int AtletaId { get; set; }
         public Atleta Atleta { get; set; }
         public int ModalidadeId { get; set; }
