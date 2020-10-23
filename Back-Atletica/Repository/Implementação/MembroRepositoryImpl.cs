@@ -80,7 +80,10 @@ namespace Back_Atletica.Repository.Implementação
                     (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
                     m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
                     (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower().Contains(nome.ToLower())
-                    )).ToList();
+                    ))
+                    .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
+                    EF.Functions.Like(m.Pessoa.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
+                    .ToList();
             }
             catch
             {
