@@ -37,7 +37,12 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            var modalidade = _context.Modalidades.Find(id);
+            if (modalidade == null)
+            {
+                return new HttpRes(404, "Não existe nenhuma modalidade com este id");
+            }
+            return new HttpRes(200, modalidade);
         }
 
         public bool existeModalidade(int id)
