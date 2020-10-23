@@ -356,6 +356,11 @@ namespace Back_Atletica.Data
                 .IsRequired();
 
             modelBuilder.Entity<Pessoa>()
+                .Property(p => p.Tipo)
+                .HasMaxLength(2)
+                .IsRequired();
+
+            modelBuilder.Entity<Pessoa>()
                 .Property(p => p.Sobrenome)
                 .HasMaxLength(45)
                 .IsRequired();
@@ -367,10 +372,6 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Pessoa>()
                 .Property(p => p.Sobrenome)
                 .HasMaxLength(45)
-                .IsRequired();
-
-            modelBuilder.Entity<Pessoa>()
-                .Property(p => p.Atleta)
                 .IsRequired();
 
             /* Produto*/
