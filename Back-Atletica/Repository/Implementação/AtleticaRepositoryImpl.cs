@@ -20,35 +20,39 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Atletica atletica)
         {
-            if (id != atletica.AtleticaId)
+            if (atletica == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+                return new HttpRes(400, "Verifique os dados enviados");
             }
-
-            _context.Entry(atletica).State = EntityState.Modified;
 
             try
             {
+                //if (!existeAtletica(id)) return new HttpRes(404, "Não existe nenhum atlética com este id");
+
+                Atletica atleticaDate = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
+
+               if(atleticaDate == null ) return new HttpRes(404, "Atletica não encontrada");
+
+                atletica.AtleticaId = id;
+                atletica.CampusId = atleticaDate.CampusId;
+
+                _context.Entry(atleticaDate).CurrentValues.SetValues(atletica);
+
                 _context.SaveChanges();
+
+                return new HttpRes(200, atletica);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!existeAtletica(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum atlética com este id");
-                }
-                else
-                {
-                    throw;
-                }
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
-            return new HttpRes(200, atletica);
         }
 
         public HttpRes BuscaPorId(int id)
         {
-            var atletica = _context.Atleticas.Find(id);
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
             if (atletica == null)
             {
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -58,7 +62,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorInstituicao(int faculdadeId)
         {
-            var atleticas = _context.Atleticas
+            List<Atletica> atleticas = _context.Atleticas
                 .Where(a => a.Campus.FaculdadeId.Equals(faculdadeId))
                 .ToList();
 
@@ -88,13 +92,13 @@ namespace Back_Atletica.Repository.Implementação
 
             return new HttpRes(200, atletica);
         }
-
+ 
         public HttpRes Deletar(int id)
         {
-            var atletica = _context.Atleticas.Find(id);
+            var atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
             if (atletica == null)
             {
-                return new HttpRes(404, "Não existe nenhum atletica com este id");
+                return new HttpRes(404, "Atletica não encontrada");
             }
 
             _context.Atleticas.Remove(atletica);
