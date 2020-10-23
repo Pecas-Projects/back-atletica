@@ -41,7 +41,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorTodos()
         {
-            throw new NotImplementedException();
+            return new HttpRes(200, _context.Modalidades.ToList());
         }
 
         public HttpRes BuscarPorId(int id)
