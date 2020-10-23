@@ -30,11 +30,6 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public bool existeModalidade(Modalidade modalidade)
-        {
-            throw new NotImplementedException();
-        }
-
         public HttpRes BuscarPorTodos()
         {
             throw new NotImplementedException();
@@ -45,6 +40,9 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-
+        public bool existeModalidade(int id)
+        {
+            return _context.Modalidades.Any(a => a.ModalidadeId == id);
+        }
     }
 }
