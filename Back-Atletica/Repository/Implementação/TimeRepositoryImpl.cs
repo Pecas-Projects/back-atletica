@@ -70,7 +70,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public bool existeTime(int timeId)
         {
-            throw new NotImplementedException();
+            bool existe = false;
+
+            try
+            {
+                existe = context.TimeEscalados.Any(t => t.TimeEscaladoId == timeId);
+            }
+            catch
+            {
+                Console.WriteLine("Ocorreu algum erro!");
+            }
+
+            return existe;
         }
     }
 }
