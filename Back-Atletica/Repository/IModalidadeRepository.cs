@@ -13,6 +13,6 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorTodos();
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
-        bool existeModalidade(Modalidade modalidade);
+        bool existeModalidade(int id);
     }
 }
