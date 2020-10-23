@@ -34,7 +34,10 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes CriarTime(TimeEscalado time)
         {
-            throw new NotImplementedException();
+            context.TimeEscalados.Add(time);
+            context.SaveChanges();
+
+            return new HttpRes(200, time);
         }
 
         public HttpRes Deletar(int timeId)
