@@ -19,12 +19,12 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes Atualizar(int timeId, TimeEscalado time)
         {
-            throw new NotImplementedException();
+            return _TimeRepository.Atualizar(timeId, time);
         }
 
         public HttpRes BuscarPorId(int timeId)
         {
-            throw new NotImplementedException();
+            return _TimeRepository.BuscarPorId(timeId);
         }
 
         public HttpRes BuscarTodos(int atleticaId)
@@ -34,12 +34,12 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes CriarTime(TimeEscalado time)
         {
-            throw new NotImplementedException();
+            return _TimeRepository.CriarTime(time);
         }
 
         public HttpRes Deletar(int timeId)
         {
-            throw new NotImplementedException();
+            return _TimeRepository.Deletar(timeId);
         }
     }
 }
