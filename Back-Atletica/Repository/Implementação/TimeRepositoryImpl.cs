@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,30 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int timeId, TimeEscalado time)
         {
-            throw new NotImplementedException();
+            if(timeId != time.TimeEscaladoId)
+            {
+                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+            }
+
+            context.Entry(time).State = EntityState.Modified;
+
+            try 
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!existeTime(timeId))
+                {
+                    return new HttpRes(404, "Não existe nenhum produto com este id");
+                }
+                else
+                {
+                    return new HttpRes(400, "Ocorreu algum erro durante a atualização!");
+                }
+            }
+
+            return new HttpRes(202, time);
         }
 
         public HttpRes BuscarPorId(int timeId)
