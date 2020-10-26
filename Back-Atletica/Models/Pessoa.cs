@@ -10,6 +10,7 @@ namespace Back_Atletica.Models
         public int PessoaId { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
+        public string Email { get; set; }
         public string Whatsapp { get; set; }
         public string Tipo { get; set; }
         public DateTime DataMatricula { get; set; }

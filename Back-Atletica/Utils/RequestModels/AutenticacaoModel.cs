@@ -36,8 +36,6 @@ namespace Back_Atletica.Utils.RequestModels
 
         public class RegistroMembroModel
         {
-            [Required]
-            public string Email { get; set; }
 
             [Required]
             public string Senha { get; set; }
@@ -49,7 +47,6 @@ namespace Back_Atletica.Utils.RequestModels
             {
                 Membro membro = new Membro
                 {
-                    Email = this.Email,
                     Senha = this.Senha,
                     Pessoa = this.Pessoa.Transform()
                 };
@@ -65,6 +62,8 @@ namespace Back_Atletica.Utils.RequestModels
         public string Nome { get; set; }
         [Required]
         public string Sobrenome { get; set; }
+        [Required]
+        public string Email { get; set; }
         public string Whatsapp { get; set; }
         public string Tipo { get; set; }
         public char Genero { get; set; }
@@ -75,6 +74,7 @@ namespace Back_Atletica.Utils.RequestModels
             {
                 Nome = this.Nome,
                 Sobrenome = this.Sobrenome,
+                Email = Email,
                 Whatsapp = this.Whatsapp,
                 Tipo = this.Tipo,
                 Genero = this.Genero

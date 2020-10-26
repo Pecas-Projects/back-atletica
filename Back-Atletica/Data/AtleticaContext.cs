@@ -236,11 +236,11 @@ namespace Back_Atletica.Data
                 .IsRequired();
 
             modelBuilder
-                .Entity<Membro>()
+                .Entity<Pessoa>()
                 .HasIndex(u => u.Email)
                     .IsUnique();
 
-            modelBuilder.Entity<Membro>()
+            modelBuilder.Entity<Pessoa>()
                 .Property(p => p.Email)
                 .HasMaxLength(254)
                 .IsRequired();
