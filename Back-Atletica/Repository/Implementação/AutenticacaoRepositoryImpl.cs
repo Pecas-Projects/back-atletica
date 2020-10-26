@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -35,20 +36,15 @@ namespace Back_Atletica.Repository.Implementação
             return result;
         }
 
-        public string GerarTokenJWT(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpRes Login(Atletica atletica)
+        public HttpRes LoginAtletica(Atletica atletica)
         {
             Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
 
-            if (atleticaDados == null) return new HttpRes(400, "Email ou senha incorretos");
+            if (atleticaDados == null || !BCrypt.Net.BCrypt.Verify(atletica.Senha, atleticaDados.Senha)) return new HttpRes(400, "Email ou senha incorretos");
 
             atleticaDados.Senha = "";
 
-            var token = GerarToken(atleticaDados, "Login");
+            var token = GerarTokenJWTAtletica(atleticaDados, "Login");
 
             var loginDados = new
             {
@@ -59,7 +55,47 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, "Logado com sucesso", loginDados);
         }
 
-        private object GerarToken(Atletica atletica, string tipo)
+        public HttpRes LoginMembro(Membro membro)
+        {
+            Membro dadosMembro = _context.Membros.Include(m => m.Pessoa).FirstOrDefault(p => p.Pessoa.Email == membro.Pessoa.Email);
+
+            if (dadosMembro == null || !BCrypt.Net.BCrypt.Verify(membro.Senha, dadosMembro.Senha)) return new HttpRes(400, "Email ou senha incorretos");
+
+            membro.Senha = "";
+
+            var token = GerarTokenJWTMembro(dadosMembro, "Login");
+
+
+            return new HttpRes(200, dadosMembro);
+        }
+
+        private object GerarTokenJWTMembro(Membro membro, string tipo)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret));
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, membro.MembroId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, membro.Pessoa.Email),
+                new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: Env.Issuer,
+                audience: Env.Issuer,
+                claims,
+                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
+                signingCredentials: credentials
+                );
+
+            var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
+            return encodetoken;
+        }
+
+        private object GerarTokenJWTAtletica(Atletica atletica, string tipo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret));
 
@@ -146,5 +182,6 @@ namespace Back_Atletica.Repository.Implementação
         {
             throw new NotImplementedException();
         }
+
     }
 }
