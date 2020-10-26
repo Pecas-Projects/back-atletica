@@ -65,8 +65,13 @@ namespace Back_Atletica.Repository.Implementação
 
             var token = GerarTokenJWTMembro(dadosMembro, "Login");
 
+            var loginDados = new
+            {
+                Atletica = dadosMembro,
+                token = token
+            };
 
-            return new HttpRes(200, dadosMembro);
+            return new HttpRes(200, loginDados);
         }
 
         private object GerarTokenJWTMembro(Membro membro, string tipo)

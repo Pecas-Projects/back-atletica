@@ -40,7 +40,12 @@ namespace Back_Atletica.Controllers
         {
             Membro membro = value.Transform();
 
-            membro.Pessoa.Atletica.PIN = Atletica_Pin;
+            Atletica atletica = new Atletica
+            {
+                PIN = Atletica_Pin
+            };
+
+            membro.Pessoa.Atletica = atletica;
 
             var result = _AutenticacaoBusiness.RegistrarMembro(membro);
 
