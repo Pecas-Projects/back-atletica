@@ -31,7 +31,37 @@ namespace Back_Atletica.Utils.RequestModels
 
         public class LoginMembroModel
         {
+            [Required]
+            public string Senha { get; set; }
+            [Required]
+            public SenhaModel Email { get; set; }
 
+            public Membro Transform()
+            {
+                Membro membro = new Membro
+                {
+                    Senha = this.Senha,
+                    Pessoa = this.Email.Transform()
+                };
+
+                return membro;
+            }
+        }
+
+        public class SenhaModel
+        {
+            [Required]
+            public string Email { get; set; }
+
+            public Pessoa Transform()
+            {
+                Pessoa pessoa = new Pessoa
+                {
+                    Email = Email
+                };
+
+                return pessoa;
+            }
         }
 
         public class RegistroMembroModel

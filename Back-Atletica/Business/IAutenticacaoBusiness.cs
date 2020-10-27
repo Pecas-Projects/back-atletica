@@ -11,7 +11,8 @@ namespace Back_Atletica.Business
     {
         HttpRes RegistrarAtletica(Atletica atletica);
         HttpRes RegistrarMembro(Membro membro);
-        HttpRes Login(Atletica atletica);
+        HttpRes LoginAtletica(Atletica atletica);
+        HttpRes LoginMembro(Membro membro);
         HttpRes ResetarSenha(string email);
     }
 }

@@ -40,7 +40,12 @@ namespace Back_Atletica.Controllers
         {
             Membro membro = value.Transform();
 
-            membro.Pessoa.Atletica.PIN = Atletica_Pin;
+            Atletica atletica = new Atletica
+            {
+                PIN = Atletica_Pin
+            };
+
+            membro.Pessoa.Atletica = atletica;
 
             var result = _AutenticacaoBusiness.RegistrarMembro(membro);
 
@@ -53,7 +58,18 @@ namespace Back_Atletica.Controllers
         {
             Atletica data = value.Transform();
 
-            var result = _AutenticacaoBusiness.Login(data);
+            var result = _AutenticacaoBusiness.LoginAtletica(data);
+
+            return result.HttpResponse();
+        }
+
+        [Route("api/Login/Membro")]
+        [HttpPost]
+        public IActionResult LoginMembro([FromBody] LoginMembroModel value)
+        {
+            Membro data = value.Transform();
+
+            var result = _AutenticacaoBusiness.LoginMembro(data);
 
             return result.HttpResponse();
         }

@@ -17,9 +17,14 @@ namespace Back_Atletica.Business.Implementação
             _repositorio = repositorio;
         }
 
-        public HttpRes Login(Atletica atletica)
+        public HttpRes LoginAtletica(Atletica atletica)
         {
-            return _repositorio.Login(atletica);
+            return _repositorio.LoginAtletica(atletica);
+        }
+
+        public HttpRes LoginMembro(Membro membro)
+        {
+            return _repositorio.LoginMembro(membro);
         }
 
         public HttpRes RegistrarAtletica(Atletica atletica)
