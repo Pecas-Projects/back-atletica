@@ -26,7 +26,6 @@ namespace Back_Atletica.Controllers
         [HttpPost]
         public IActionResult RegistroAtletica([FromBody] RegistroAtleticaModel value)
         {
-
             Atletica atletica = value.Transform();
 
             var result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
@@ -48,6 +47,24 @@ namespace Back_Atletica.Controllers
             membro.Pessoa.Atletica = atletica;
 
             var result = _AutenticacaoBusiness.RegistrarMembro(membro);
+
+            return result.HttpResponse();
+        }
+
+        [Route("api/Registro/MembroAtleta/{Atletica_Pin}")]
+        [HttpPut]
+        public IActionResult MembroAtleta([FromBody] RegistroMembroModel value, string Atletica_Pin)
+        {
+            Membro membro = value.Transform();
+
+            Atletica atletica = new Atletica
+            {
+                PIN = Atletica_Pin
+            };
+
+            membro.Pessoa.Atletica = atletica;
+
+            var result = _AutenticacaoBusiness.RegistrarMembroAtleta(membro);
 
             return result.HttpResponse();
         }

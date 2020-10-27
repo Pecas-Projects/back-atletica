@@ -37,6 +37,11 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.RegistrarMembro(membro);
         }
 
+        public HttpRes RegistrarMembroAtleta(Membro membro)
+        {
+            return _repositorio.RegistrarMembroAtleta(membro);
+        }
+
         public HttpRes ResetarSenha(string email)
         {
             throw new NotImplementedException();
