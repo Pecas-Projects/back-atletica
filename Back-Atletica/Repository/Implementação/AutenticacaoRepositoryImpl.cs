@@ -160,13 +160,12 @@ namespace Back_Atletica.Repository.Implementação
             {
                 Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.PIN.Equals(membro.Pessoa.Atletica.PIN));
 
-                if(atletica == null)
-                {
-                    return new HttpRes(404, "Atletica não encontrada");
-                }
+                if(atletica == null) return new HttpRes(404, "Atletica não encontrada");
 
                 membro.Senha = hash.Encriptografia(membro.Senha);
                 membro.Pessoa.Atletica = atletica;
+
+                membro.Pessoa.Tipo = "M";
 
                 _context.Add(membro);
 
@@ -190,7 +189,40 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RegistrarMembroAtleta(Membro membro)
         {
-            return new HttpRes(204);
+
+            try
+            {
+                Membro membroDados = _context.Membros.Include(p => p.Pessoa).SingleOrDefault(p => p.Pessoa.Email.Equals(membro.Pessoa.Email));
+
+                if (membroDados.Pessoa == null) return new HttpRes(404, "Este usuario não existe");
+
+                if(membroDados.Senha != null || membro.Pessoa.Tipo.Equals("A")) return new HttpRes(400, "Este usuario já é um membro");
+
+                try
+                {
+                    membro.Pessoa.Tipo = "AM";
+
+                    _context.Entry(membroDados).CurrentValues.SetValues(membro);
+
+                    _context.SaveChanges();
+
+                    return new HttpRes(200, membro);
+                }
+                catch(Exception ex)
+                {
+                    if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+
+                    return new HttpRes(400, ex.InnerException.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
         }
     }
 }
