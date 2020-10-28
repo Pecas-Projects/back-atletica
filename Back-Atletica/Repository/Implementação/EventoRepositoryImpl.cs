@@ -29,12 +29,39 @@ namespace Back_Atletica.Repository.Implementação
                 //if (!existeAtletica(id)) return new HttpRes(404, "Não existe nenhum atlética com este id");
 
                 Evento eventoData = _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
-
                 if (eventoData == null) return new HttpRes(404, "Evento não encontrada");
 
-                evento.EventoId = eventoId;
-                evento.EventoCategoriaId = eventoData.EventoCategoriaId;
+                EventoCategoria categoria = new EventoCategoria();
+                categoria = _context.EventoCategorias.SingleOrDefault(e => e.EventoCategoriaId == eventoData.EventoCategoriaId);
 
+                if (evento.EventoCategoria.Nome != categoria.Nome)
+                {
+                    categoria = _context.EventoCategorias.SingleOrDefault(e => e.Nome == evento.EventoCategoria.Nome);
+
+                    if (categoria == null)
+                    {
+                        EventoCategoria novaCategoria = new EventoCategoria();
+
+                        novaCategoria.Nome = evento.EventoCategoria.Nome;
+                        _context.EventoCategorias.Add(novaCategoria);
+                        _context.SaveChanges();
+                        evento.EventoCategoria = novaCategoria;
+                        evento.EventoCategoriaId = novaCategoria.EventoCategoriaId;
+                    }
+                    {
+                        evento.EventoCategoria = categoria;
+                        evento.EventoCategoriaId = categoria.EventoCategoriaId;
+                    }
+                    
+                    
+                }
+                else
+                {
+                    evento.EventoCategoriaId = eventoData.EventoCategoriaId;
+                }
+
+                evento.EventoId = eventoId;
+                evento.AtleticaId = eventoData.AtleticaId;
                 _context.Entry(eventoData).CurrentValues.SetValues(evento);
                 _context.SaveChanges();
 
@@ -79,8 +106,35 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, eventos);
         }
 
-        public HttpRes CriarEvento(Evento evento)
+        public HttpRes CriarEvento(Evento evento, int atleticaId)
         {
+            Atletica atletica = new Atletica();
+            EventoCategoria categoria = new EventoCategoria();
+
+            atletica = _context.Atleticas.SingleOrDefault(e => e.AtleticaId == atleticaId);
+            if (atletica == null)
+            {
+                return new HttpRes(404, "Atletica não encontrada");
+            }
+            evento.AtleticaId = atleticaId;
+
+            categoria = _context.EventoCategorias.SingleOrDefault(e => e.Nome == evento.EventoCategoria.Nome);
+
+            if(categoria == null)
+            {
+                EventoCategoria novaCategoria = new EventoCategoria();
+                novaCategoria.Nome = evento.EventoCategoria.Nome;
+                _context.EventoCategorias.Add(novaCategoria);
+                _context.SaveChanges();
+                evento.EventoCategoria = novaCategoria;
+                evento.EventoCategoriaId = novaCategoria.EventoCategoriaId;
+            }
+            else
+            {
+                evento.EventoCategoria = categoria;
+                evento.EventoCategoriaId = categoria.EventoCategoriaId;
+            }
+            
             _context.Eventos.Add(evento);
             _context.SaveChanges();
 

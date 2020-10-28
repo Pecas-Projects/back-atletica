@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
+using static Back_Atletica.Utils.RequestModels.EventoModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,20 +40,28 @@ namespace Back_Atletica.Controllers
         }
 
         // POST api/<EventoController>
-        [Route("api/Evento")]
+        [Route("api/Evento/{atleticaId}")]
         [HttpPost]
-        public IActionResult Post([FromBody] Evento evento)
+        public IActionResult Post([FromBody] CriarEventoModel evento, int atleticaId)
         {
-            var resultado = _EventoBusiness.CriarEvento(evento);
+            Evento e = evento.Transform();
+            EventoCategoria categoria = new EventoCategoria();
+            categoria.Nome = evento.NomeCategoria;
+            e.EventoCategoria = categoria;
+            var resultado = _EventoBusiness.CriarEvento(e, atleticaId);
             return resultado.HttpResponse();
         }
 
         // PUT api/<EventoController>/5
         [Route("api/Evento/{eventoId}")]
         [HttpPut]
-        public IActionResult Put(int id, [FromBody] Evento evento, int eventoId)
+        public IActionResult Put(int id, [FromBody] CriarEventoModel evento, int eventoId)
         {
-            var resultado = _EventoBusiness.AtualizarEvento(eventoId, evento);
+            Evento e = evento.Transform();
+            EventoCategoria categoria = new EventoCategoria();
+            categoria.Nome = evento.NomeCategoria;
+            e.EventoCategoria = categoria;
+            var resultado = _EventoBusiness.AtualizarEvento(eventoId, e);
             return resultado.HttpResponse();
         }
 

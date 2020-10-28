@@ -32,9 +32,9 @@ namespace Back_Atletica.Business.Implementação
             return _EventoRepository.BuscarTodos(atleticaId);
         }
 
-        public HttpRes CriarEvento(Evento evento)
+        public HttpRes CriarEvento(Evento evento, int atleticaId)
         {
-            return _EventoRepository.CriarEvento(evento);
+            return _EventoRepository.CriarEvento(evento, atleticaId);
         }
 
         public HttpRes DeletarEvento(int eventoId)
