@@ -190,8 +190,6 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes RegistrarMembroAtleta(Membro membro)
         {
 
-            try
-            {
                 Membro membroDados = _context.Membros.Include(p => p.Pessoa).SingleOrDefault(p => p.Pessoa.Email.Equals(membro.Pessoa.Email));
 
                 if (membroDados.Pessoa == null) return new HttpRes(404, "Este usuario não existe");
@@ -214,14 +212,6 @@ namespace Back_Atletica.Repository.Implementação
 
                     return new HttpRes(400, ex.InnerException.Message);
                 }
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
-
-                return new HttpRes(400, ex.InnerException.Message);
-            }
 
         }
     }
