@@ -190,7 +190,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RegistrarMembroAtleta(Membro membro)
         {
-            throw new NotImplementedException();
+            return new HttpRes(204);
         }
     }
 }
