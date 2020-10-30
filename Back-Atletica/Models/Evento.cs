@@ -17,7 +17,6 @@ namespace Back_Atletica.Models
         public virtual EventoCategoria EventoCategoria { get; set; }
         public string Cor { get; set; }
         public int AtleticaId { get; set; }
-        public virtual Atletica  Atletica { get; set; }
-        
+        public virtual Atletica  Atletica { get; set; }  
     }
 }
