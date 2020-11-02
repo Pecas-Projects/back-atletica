@@ -51,6 +51,13 @@ namespace Back_Atletica.Data
                 .Property(p => p.Ativo)
                 .IsRequired();
 
+            modelBuilder.Entity<Atleta>()
+             .HasOne<Pessoa>(a => a.Pessoa)
+             .WithOne(a => a.Atleta)
+             .HasForeignKey<Pessoa>(a => a.PessoaId);
+
+            
+
             /* Atletica */
             modelBuilder.Entity<Atletica>().HasKey(am => new { am.AtleticaId });
 
@@ -134,6 +141,12 @@ namespace Back_Atletica.Data
               .HasForeignKey(am => am.CursoId);
 
             /* Campus*/
+
+            modelBuilder.Entity<Campus>()
+             .HasOne<Faculdade>(c => c.Faculdade)
+             .WithMany(f => f.Campus)
+             .HasForeignKey(c => c.FaculdadeId) ;
+
             modelBuilder.Entity<Campus>()
                 .Property(p => p.Cidade)
                 .HasMaxLength(45)
@@ -244,6 +257,12 @@ namespace Back_Atletica.Data
                 .Property(p => p.Email)
                 .HasMaxLength(254)
                 .IsRequired();
+
+            modelBuilder.Entity<Membro>()
+                .HasOne<Pessoa>(a => a.Pessoa)
+                .WithOne(a => a.Membro)
+                .HasForeignKey<Pessoa>(a => a.PessoaId);
+
 
             /* Publicações*/
             modelBuilder.Entity<Publicacao>().HasKey(am => new { am.PublicacaoId });
@@ -379,6 +398,17 @@ namespace Back_Atletica.Data
                .HasForeignKey(am => am.ProdutoCategoriaId);
 
             modelBuilder.Entity<Produto>()
+                .HasOne<Atletica>(p => p.Atletica)
+                .WithMany(a => a.Produtos)
+                .HasForeignKey(am => am.AtleticaId);
+
+            modelBuilder.Entity<Produto>()
+                .HasOne<Imagem>(p => p.Imagem)
+                .WithOne(a => a.Produto)
+                .HasForeignKey<Imagem>(I => I.ImagemId);
+
+
+            modelBuilder.Entity<Produto>()
                 .Property(p => p.Nome)
                 .HasMaxLength(45)
                 .IsRequired();
@@ -400,6 +430,17 @@ namespace Back_Atletica.Data
                 .Property(p => p.Titulo)
                 .HasMaxLength(45)
                 .IsRequired();
+
+            modelBuilder.Entity<Publicacao>()
+                .HasOne<Atletica>(p => p.Atletica)
+                .WithMany(a => a.Publicacoes)
+                .HasForeignKey(p => p.AtleticaId);
+
+            modelBuilder.Entity<Publicacao>()
+                 .HasOne<Imagem>(p => p.Imagem)
+                 .WithOne(a => a.Publicacao)
+                 .HasForeignKey<Imagem>(I => I.ImagemId);
+
 
             modelBuilder.Entity<Publicacao>()
                 .Property(p => p.Descricao)
