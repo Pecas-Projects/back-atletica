@@ -17,43 +17,48 @@ namespace Back_Atletica.Business.Implementação
         {
             _atletaRepository = atletaRepository;
         }
-
-        HttpRes IAtletaBusiness.Atualizar(int atletaID, Atleta atleta)
+       
+        public HttpRes Atualizar(int atletaID, Atleta atleta)
         {
             return _atletaRepository.Atualizar(atletaID, atleta);
         }
 
-        HttpRes IAtletaBusiness.BuscaAtivos(int atleticaID)
+        public HttpRes BuscaAtivos(int atleticaID)
         {
            return _atletaRepository.BuscaAtivos(atleticaID);
         }
 
-        HttpRes IAtletaBusiness.BuscaPorID(int atletaID)
+        public HttpRes BuscaPorID(int atletaID)
         {
             return _atletaRepository.BuscaPorID(atletaID);
         }
 
-        HttpRes IAtletaBusiness.BuscaPorModalidade(int modalidadeID)
+        public HttpRes BuscaPorJogo(int JogoID)
         {
-            return _atletaRepository.BuscaPorModalidade(modalidadeID);
+            return _atletaRepository.BuscaPorJogo(JogoID);
         }
 
-        HttpRes IAtletaBusiness.BuscaPorTime(int timeEscaladoID)
+        public HttpRes BuscaPorModalidade(int modalidadeID, int atleticaID)
         {
-            return _atletaRepository.BuscaPorTime(timeEscaladoID);
+            return _atletaRepository.BuscaPorModalidade(modalidadeID, atleticaID);
         }
 
-        HttpRes IAtletaBusiness.BuscarTodos(int atleticaID)
+        public HttpRes BuscarPorJogo(int JogoID)
+        {
+            return _atletaRepository.BuscaPorJogo(JogoID);
+        }
+
+        public HttpRes BuscarTodos(int atleticaID)
         {
             return _atletaRepository.BuscarTodos(atleticaID);
         }
 
-        HttpRes IAtletaBusiness.CriarAtleta(Atleta atleta)
+        public HttpRes CriarAtleta(Atleta atleta)
         {
             return _atletaRepository.CriarAtleta(atleta);
         }
 
-        HttpRes IAtletaBusiness.Deletar(int atletaID)
+        public HttpRes Deletar(int atletaID)
         {
             return _atletaRepository.Deletar(atletaID);
         }

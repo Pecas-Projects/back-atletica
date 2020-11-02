@@ -37,19 +37,19 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/AtletaModalidade/{modalidadeID}")]
+        [Route("api/AtletaModalidade/{atleticaID}/{modalidadeID}")]
         [HttpGet]
-        public IActionResult BuscarPorModalidade(int modalidadeID)
+        public IActionResult BuscarPorModalidade(int modalidadeID, int atleticaID)
         {
-            var resultado = _AtletaBusiness.BuscaPorModalidade(modalidadeID);
+            var resultado = _AtletaBusiness.BuscaPorModalidade(modalidadeID, atleticaID);
             return resultado.HttpResponse();
         }
 
-        [Route("api/AtletaTime/{timeID}")]
+        [Route("api/AtletaJogo/{jogoID}")]
         [HttpGet]
-        public IActionResult BuscarPorTime(int timeID)
+        public IActionResult BuscarPorJogo(int JogoID)
         {
-            var resultado = _AtletaBusiness.BuscaPorTime(timeID);
+            var resultado = _AtletaBusiness.BuscaPorJogo(JogoID);
             return resultado.HttpResponse();
         }
 

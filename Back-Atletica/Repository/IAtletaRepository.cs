@@ -12,8 +12,8 @@ namespace Back_Atletica.Repository
         HttpRes CriarAtleta(Atleta atleta);
         HttpRes BuscarTodos(int atleticaID);
         HttpRes BuscaPorID(int atletaID);
-        HttpRes BuscaPorTime(int timeEscaladoID);
-        HttpRes BuscaPorModalidade(int modalidadeID);
+        HttpRes BuscaPorJogo(int JogoID);
+        HttpRes BuscaPorModalidade(int modalidadeID, int atleticaID);
         HttpRes BuscaAtivos(int atleticaID);
         HttpRes Atualizar(int atletaID, Atleta atleta);
         HttpRes Deletar(int atletaID);
