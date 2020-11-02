@@ -490,10 +490,6 @@ namespace Back_Atletica.Data
                 .WithMany(m => m.AtleticaModalidades)
                 .HasForeignKey(am => am.ModalidadeId);
 
-            modelBuilder.Entity<AtleticaModalidade>()
-                .Property(p => p.NomeCoordenador)
-                .HasMaxLength(45);
-
             /* AtletaAtleticaModalidadeTimeEscalado*/
             modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaAtleticaModalidadeTimeEscaladoId });
 

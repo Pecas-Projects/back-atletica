@@ -99,7 +99,8 @@ namespace Back_Atletica
             services.AddScoped<ITimeRepository, TimeRepositoryImpl>();
             services.AddScoped<IAtletaBusiness, AtletaBusinessImpl>();
             services.AddScoped<IAtletaRepository, AtletaRepositpryImpl>();
-
+            services.AddScoped<IEventoBusiness, EventoBusinessImpl>();
+            services.AddScoped<IEventoRepository, EventoRepositoryImpl>();
 
         }
 
