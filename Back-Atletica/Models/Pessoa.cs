@@ -17,8 +17,8 @@ namespace Back_Atletica.Models
         public char Genero { get; set; }
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
-        public virtual Atleta Atletas { get; set; }
-        public virtual Membro Membros { get; set; }
+        public virtual Atleta Atleta { get; set; }
+        public virtual Membro Membro { get; set; }
 
     }
 }
