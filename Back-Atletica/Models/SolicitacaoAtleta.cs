@@ -13,6 +13,7 @@ namespace Back_Atletica.Models
         public string WhatsApp { get; set; }
         public string Email { get; set; }
         public int AtleticaId { get; set; }
+        public bool Aprovado { get; set; }
         public virtual Atletica Atletica { get; set; }
     }
 }
