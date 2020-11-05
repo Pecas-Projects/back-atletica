@@ -3,6 +3,7 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
+using static Back_Atletica.Utils.RequestModels.AtletaModel;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -69,12 +70,21 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-     
+        /// <summary>
+        /// Atualizar Atleta
+        /// </summary>
+        /// <param name="atletaId">ID do atleta que será atualizado</param>
+        /// <returns>Atleta atualizado</returns>
+        /// <response code="200">Objeto criado no banco</response>
+        /// <response code="400">Erro na validação dos dados</response>
+        [ProducesResponseType(typeof(AtualizarAtletaModel), 200)]
         [Route("api/Atleta/{atletaID}")]
         [HttpPut]
-        public IActionResult Atualizar(int atletaID, [FromBody] Atleta value)
+        public IActionResult Atualizar(int atletaID, [FromBody] AtualizarAtletaModel value)
         {
-            var resultado = _AtletaBusiness.Atualizar(atletaID, value);
+            Atleta atleta = value.Transform();
+
+            var resultado = _AtletaBusiness.Atualizar(atletaID, atleta);
             return resultado.HttpResponse();
         }
 
