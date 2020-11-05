@@ -48,6 +48,11 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaAtivos(int atleticaID)
         {
+            Atletica atletica = new Atletica();
+
+            atletica = _context.Atleticas.Find(atleticaID);
+
+            if( atletica == null) return new HttpRes(404, "Atletica não encontrada");
 
             var atletas = new List<Pessoa>();
 
@@ -59,9 +64,10 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorID(int atletaID)
         {
-            var atleta = new Atleta();
 
-            atleta = _context.Atletas.Find(atleta);
+            Atleta atleta = _context.Atletas.Find(atletaID);
+
+            if (atleta == null) return new HttpRes(404, "atleta não encontrado");
 
             return new HttpRes(200, atleta);
         }
@@ -72,6 +78,8 @@ namespace Back_Atletica.Repository.Implementação
             AtleticaModalidade atleticaModalidade = new AtleticaModalidade();
 
             atleticaModalidade = _context.AtleticaModalidades.SingleOrDefault(m => m.ModalidadeId == modalidadeID && m.AtleticaId == atleticaID);
+
+            if (atleticaModalidade == null) return new HttpRes(404, "AtleticaModalidae não encontrada");
 
             atletaAtleticaModalidades = _context.AtletaAtleticaModalidades.Where(a => a.AtleticaModalidadeId == atleticaModalidade.AtleticaModalidadeId).ToList();
 
@@ -91,6 +99,9 @@ namespace Back_Atletica.Repository.Implementação
         {
             
             TimeEscalado timeEscalado = _context.TimeEscalados.SingleOrDefault(t => t.JogoId == JogoId);
+
+            if (timeEscalado == null) return new HttpRes(404, "Jogo não encontrado");
+
             List<AtletaAtleticaModalidadeTimeEscalado> _atletaAtleticaModalidadeTimeEscalados = _context.AtletaAtleticaModalidadeTimesEscalados
                 .Where(t => t.TimeEscaladoId == timeEscalado.TimeEscaladoId).ToList();
 
@@ -111,6 +122,10 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarTodos(int atleticaID)
         {
             var atletas = new List<Pessoa>();
+
+            Atletica atletica = _context.Atleticas.Find(atleticaID);
+
+            if (atletica == null) return new HttpRes(404, "Atlética não encontrada");
 
             atletas = _context.Pessoas.Where(a => a.AtleticaId == atleticaID && (a.Tipo == "A" || a.Tipo == "AM")).ToList();
                             
