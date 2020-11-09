@@ -14,6 +14,11 @@ namespace Back_Atletica.Models
         public Modalidade Modalidade { get; set; }
         public int MembroId { get; set; }
         public Membro Membro { get; set; }
+        public int ImagemId { get; set; }
+        public Imagem Imagem { get; set; }
+        public int PosicaoRanking { get; set; }
         public ICollection<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
+        public ICollection<AtleticaModalidadeJogo> AtleticaModalidadeJogos { get; set; }
+        public IList<AtleticaModalidadeAgendaTreino> AtleticaModalidadeAgendaTreinos { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace Back_Atletica.Models
         public string Senha { get; set; }
         public int PessoaId { get; set; }
         public virtual Pessoa Pessoa { get; set; }
+        public int ImagemId { get; set; }
+        public virtual Imagem Imagem { get; set; }
         public ICollection<AtleticaModalidade> AtleticaModalidades { get; set; }
     }
 }

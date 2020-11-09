@@ -7,7 +7,7 @@ namespace Back_Atletica.Models
 {
     public class Funcao
     {
-        public int ID { get; set; }
+        public int FuncaoId { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public ICollection<AtletaAtleticaModalidadeTimeEscalado> AtletaAtleticaModalidadeTimeEscalados { get; set; }

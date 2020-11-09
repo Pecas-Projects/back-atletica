@@ -28,8 +28,7 @@ namespace Back_Atletica.Utils.RequestModels
                     Descricao = Descricao,
                     Local = Local,
                     DataHora = DataHora,
-                    PrecoIngresso = PrecoIngresso,
-                    Cor = Cor,
+                    PrecoIngresso = PrecoIngresso
                 };
                 return evento;
             }
