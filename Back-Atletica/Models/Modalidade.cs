@@ -11,5 +11,7 @@ namespace Back_Atletica.Models
         public string Nome { get; set; }
         public string Genero { get; set; }
         public IList<AtleticaModalidade> AtleticaModalidades { get; set; }
+        public ICollection<SolicitacaoJogo> SolicitacaoJogos { get; set; }
+        public ICollection<SolicitacaoAtletaModalidade> SolicitacaoAtletaModalidades { get; set; }
     }
 }

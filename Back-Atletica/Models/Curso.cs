@@ -10,5 +10,7 @@ namespace Back_Atletica.Models
         public int CursoId { get; set; }
         public string Nome { get; set; }
         public IList<AtleticaCurso> AtleticaCursos { get; set; }
+        public ICollection<Pessoa> Pessoas { get; set; }
+        public ICollection<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
     }
 }

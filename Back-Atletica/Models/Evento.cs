@@ -15,7 +15,6 @@ namespace Back_Atletica.Models
         public double PrecoIngresso { get; set; }
         public int EventoCategoriaId { get; set; }
         public virtual EventoCategoria EventoCategoria { get; set; }
-        public string Cor { get; set; }
         public int AtleticaId { get; set; }
         public virtual Atletica  Atletica { get; set; }  
     }
