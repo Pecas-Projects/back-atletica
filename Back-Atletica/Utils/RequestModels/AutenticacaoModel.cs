@@ -138,6 +138,7 @@ namespace Back_Atletica.Utils.RequestModels
             return atletica;
         }
     }
+
     public class CampusModel
     {
         public string Nome { get; set; }
