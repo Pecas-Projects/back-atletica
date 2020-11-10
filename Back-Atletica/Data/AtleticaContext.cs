@@ -226,6 +226,10 @@ namespace Back_Atletica.Data
                 .HasMaxLength(254)
                 .IsRequired();
 
+            modelBuilder.Entity<SolicitacaoAtleta>()
+                .Property(p => p.Genero)
+                .HasDefaultValue('I');
+
             /* AtleticaCurso */
             modelBuilder.Entity<AtleticaCurso>().HasKey(am => new { am.AtleticaCursoId });
 
@@ -495,6 +499,10 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Pessoa>()
                 .Property(sample => sample.AnoEntradaFacul)
                 .HasColumnType("date");
+
+            modelBuilder.Entity<Pessoa>()
+                .Property(p => p.Genero)
+                .HasDefaultValue('I');
 
             /* Produto*/
             modelBuilder.Entity<Produto>().HasKey(am => new { am.ProdutoId });
