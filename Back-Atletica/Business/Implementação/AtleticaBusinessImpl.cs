@@ -44,11 +44,6 @@ namespace Back_Atletica.Business.Implementação
             return _AtleticaRepository.BuscarTodos();
         }
 
-        public HttpRes Criar(Atletica atletica)
-        {
-            return _AtleticaRepository.Criar(atletica);
-        }
-
         public HttpRes Deletar(int id)
         {
             return _AtleticaRepository.Deletar(id);

@@ -9,7 +9,6 @@ namespace Back_Atletica.Business
 {
     public interface IAtleticaBusiness
     {
-        HttpRes Criar(Atletica atletica);
         HttpRes BuscarTodos();
         HttpRes BuscaPorId(int id);
         HttpRes BuscaPorNome(string nome);

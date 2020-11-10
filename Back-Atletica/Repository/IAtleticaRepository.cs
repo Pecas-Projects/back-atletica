@@ -9,7 +9,6 @@ namespace Back_Atletica.Repository
 {
     public interface IAtleticaRepository
     {
-        HttpRes Criar(Atletica atletica);
         HttpRes BuscarTodos();
         HttpRes BuscaPorId(int id);
         HttpRes BuscaPorNome(string nome);

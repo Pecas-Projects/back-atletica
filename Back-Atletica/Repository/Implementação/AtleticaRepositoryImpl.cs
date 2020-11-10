@@ -52,11 +52,13 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorId(int id)
         {
-            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId.Equals(id));
+
             if (atletica == null)
             {
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
+
             return new HttpRes(200, atletica);
         }
 
@@ -85,14 +87,6 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, _context.Atleticas.ToList());
         }
 
-        public HttpRes Criar(Atletica atletica)
-        {
-            _context.Atleticas.Add(atletica);
-            _context.SaveChanges();
-
-            return new HttpRes(200, atletica);
-        }
- 
         public HttpRes Deletar(int id)
         {
             var atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);

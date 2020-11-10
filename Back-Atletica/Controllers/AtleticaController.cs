@@ -51,13 +51,13 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica")]
-        [HttpPost]
-        public IActionResult Criar([FromBody] Atletica value)
-        {
-            var resultado = _AtleticaBusiness.Criar(value);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Atletica")]
+        //[HttpPost]
+        //public IActionResult Criar([FromBody] Atletica value)
+        //{
+        //    var resultado = _AtleticaBusiness.Criar(value);
+        //    return resultado.HttpResponse();
+        //}
 
         [Authorize]
         [Route("api/Atletica/{id}")]
