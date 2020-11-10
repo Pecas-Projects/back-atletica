@@ -34,7 +34,6 @@ namespace Back_Atletica.Data
         public DbSet<EventoCategoria> EventoCategorias { get; set; }
         public DbSet<ProdutoCategoria> ProdutoCategorias { get; set; }
         public DbSet<AgendaTreino> AgendaTreinos { get; set; }
-        public DbSet<AtleticaModalidadeAgendaTreino> AtleticaModalidadeAgendaTreinos { get; set; }
         public DbSet<AtleticaModalidadeJogo> AtleticaModalidadeJogos { get; set; }
         public DbSet<SolicitacaoAtletaModalidade> SolicitacaoAtletaModalidades { get; set; }
         public DbSet<SolicitacaoJogo> SolicitacaoJogos { get; set; }
@@ -76,6 +75,10 @@ namespace Back_Atletica.Data
                 .Property(p => p.Local)
                 .HasMaxLength(45);
 
+            modelBuilder.Entity<SolicitacaoJogo>()
+                .Property(p => p.Local)
+                .IsRequired();
+
             /* SolicitacaoAtletaModalidade */
             modelBuilder.Entity<SolicitacaoAtletaModalidade>().HasKey(am => new { am.SolicitacaoAtletaModalidadeId });
 
@@ -102,23 +105,15 @@ namespace Back_Atletica.Data
                .WithMany(a => a.AtleticaModalidadeJogos)
                .HasForeignKey(am => am.AtleticaModalidadeId);
 
-            /* AtleticaModalidadeAgendaTreino */
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>().HasKey(am => new { am.AtleticaModalidadeAgendaTreinoId });
-
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>()
-               .HasOne<AgendaTreino>(am => am.AgendaTreino)
-               .WithMany(a => a.AtleticaModalidadeAgendaTreinos)
-               .HasForeignKey(am => am.AgendaTreinoId);
-
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>()
-               .HasOne<AtleticaModalidade>(am => am.AtleticaModalidade)
-               .WithMany(a => a.AtleticaModalidadeAgendaTreinos)
-               .HasForeignKey(am => am.AtleticaModalidadeId);
-
             /* AgendaTreino */
             modelBuilder.Entity<AgendaTreino>()
                 .Property(p => p.DiaSemana)
-                .HasMaxLength(30);
+                .IsRequired();
+
+            modelBuilder.Entity<AgendaTreino>()
+               .HasOne<AtleticaModalidade>(am => am.AtleticaModalidade)
+               .WithMany(a => a.AgendaTreinos)
+               .HasForeignKey(am => am.AtleticaModalidadeId);
 
             /* ImagemAtletica */
             modelBuilder.Entity<ImagemAtletica>().HasKey(am => new { am.ImagemAtleticaId });
@@ -209,7 +204,7 @@ namespace Back_Atletica.Data
               .HasForeignKey(am => am.CursoId);
 
             modelBuilder.Entity<SolicitacaoAtleta>()
-                .Property(sample => sample.AnoEntradaFacul)
+                .Property(sa => sa.AnoEntradaFacul)
                 .HasColumnType("date");
 
             modelBuilder.Entity<SolicitacaoAtleta>()
@@ -230,6 +225,10 @@ namespace Back_Atletica.Data
                 .Property(p => p.Email)
                 .HasMaxLength(254)
                 .IsRequired();
+
+            modelBuilder.Entity<SolicitacaoAtleta>()
+                .Property(p => p.Genero)
+                .HasDefaultValue('I');
 
             /* AtleticaCurso */
             modelBuilder.Entity<AtleticaCurso>().HasKey(am => new { am.AtleticaCursoId });
@@ -304,7 +303,7 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<JogoCategoria>()
                 .Property(p => p.Cor)
-                .HasMaxLength(7);
+                .HasColumnType("CHAR(7)");
 
             /*EventoCategoria */
             modelBuilder
@@ -319,7 +318,7 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<EventoCategoria>()
                 .Property(p => p.Cor)
-                .HasMaxLength(7);
+                .HasColumnType("CHAR(7)");
 
             /*ProdutoCategoria */
             modelBuilder
@@ -439,10 +438,6 @@ namespace Back_Atletica.Data
                 .HasMaxLength(30)
                 .IsRequired();
 
-            modelBuilder.Entity<Funcao>()
-                .Property(p => p.Descricao)
-                .HasMaxLength(45);
-
             /* Modalidade*/
             modelBuilder.Entity<Modalidade>()
                 .Property(p => p.Nome)
@@ -504,6 +499,10 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Pessoa>()
                 .Property(sample => sample.AnoEntradaFacul)
                 .HasColumnType("date");
+
+            modelBuilder.Entity<Pessoa>()
+                .Property(p => p.Genero)
+                .HasDefaultValue('I');
 
             /* Produto*/
             modelBuilder.Entity<Produto>().HasKey(am => new { am.ProdutoId });

@@ -9,7 +9,8 @@ namespace Back_Atletica.Models
     {
         public int AgendaTreinoId { get; set; }
         public string DiaSemana { get; set; }
-        public TimeSpan HoraInicio { get; set; }
-        public IList<AtleticaModalidadeAgendaTreino> AtleticaModalidadeAgendaTreinos { get; set; }
+        public TimeSpan? HoraInicio { get; set; }
+        public int AtleticaModalidadeId { get; set; }
+        public AtleticaModalidade AtleticaModalidade { get; set; }
     }
 }
