@@ -27,6 +27,11 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.LoginMembro(membro);
         }
 
+        public HttpRes MudancaSenha(int id, string senha)
+        {
+            return _repositorio.MudancaSenha(id, senha);
+        }
+
         public HttpRes RegistrarAtletica(Atletica atletica)
         {
             return _repositorio.RegistrarAtletica(atletica);
@@ -37,9 +42,9 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.RegistrarMembro(membro);
         }
 
-        public HttpRes ResetarSenha(string email)
+        public HttpRes ResetarSenhaAtletica(string email)
         {
-            throw new NotImplementedException();
+            return _repositorio.ResetarSenhaAtletica(email);
         }
     }
 }
