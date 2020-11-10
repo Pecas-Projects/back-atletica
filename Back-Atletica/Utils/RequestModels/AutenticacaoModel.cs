@@ -9,6 +9,27 @@ namespace Back_Atletica.Utils.RequestModels
 {
     public class AutenticacaoModel
     {
+
+        public class EmailModel
+        {
+            public string Email { get; set; }
+
+            public string Transform()
+            {
+                return Email;
+            }
+        }
+
+        public class SenhaResetarModel
+        {
+            public string Senha { get; set; }
+
+            public string Transform()
+            {
+                return Senha;
+            }
+        }
+
         public class LoginAtleticaModel
         {
             [Required]
