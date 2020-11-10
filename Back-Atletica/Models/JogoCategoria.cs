@@ -9,7 +9,7 @@ namespace Back_Atletica.Models
     {
         public int JogoCategoriaId { get; set; }
         public string Nome { get; set; }
-        public string Cor { get; set; }
+        public string? Cor { get; set; }
         public ICollection<Jogo> Jogos { get; set; }
         public ICollection<SolicitacaoJogo> SolicitacaoJogos { get; set; }
     }
