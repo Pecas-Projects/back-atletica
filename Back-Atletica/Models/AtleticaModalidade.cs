@@ -19,6 +19,6 @@ namespace Back_Atletica.Models
         public int? PosicaoRanking { get; set; }
         public ICollection<AtletaAtleticaModalidade> AtletaAtleticaModalidades { get; set; }
         public ICollection<AtleticaModalidadeJogo> AtleticaModalidadeJogos { get; set; }
-        public IList<AtleticaModalidadeAgendaTreino> AtleticaModalidadeAgendaTreinos { get; set; }
+        public ICollection<AgendaTreino> AgendaTreinos { get; set; }
     }
 }

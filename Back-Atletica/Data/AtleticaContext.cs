@@ -34,7 +34,6 @@ namespace Back_Atletica.Data
         public DbSet<EventoCategoria> EventoCategorias { get; set; }
         public DbSet<ProdutoCategoria> ProdutoCategorias { get; set; }
         public DbSet<AgendaTreino> AgendaTreinos { get; set; }
-        public DbSet<AtleticaModalidadeAgendaTreino> AtleticaModalidadeAgendaTreinos { get; set; }
         public DbSet<AtleticaModalidadeJogo> AtleticaModalidadeJogos { get; set; }
         public DbSet<SolicitacaoAtletaModalidade> SolicitacaoAtletaModalidades { get; set; }
         public DbSet<SolicitacaoJogo> SolicitacaoJogos { get; set; }
@@ -106,23 +105,15 @@ namespace Back_Atletica.Data
                .WithMany(a => a.AtleticaModalidadeJogos)
                .HasForeignKey(am => am.AtleticaModalidadeId);
 
-            /* AtleticaModalidadeAgendaTreino */
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>().HasKey(am => new { am.AtleticaModalidadeAgendaTreinoId });
-
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>()
-               .HasOne<AgendaTreino>(am => am.AgendaTreino)
-               .WithMany(a => a.AtleticaModalidadeAgendaTreinos)
-               .HasForeignKey(am => am.AgendaTreinoId);
-
-            modelBuilder.Entity<AtleticaModalidadeAgendaTreino>()
-               .HasOne<AtleticaModalidade>(am => am.AtleticaModalidade)
-               .WithMany(a => a.AtleticaModalidadeAgendaTreinos)
-               .HasForeignKey(am => am.AtleticaModalidadeId);
-
             /* AgendaTreino */
             modelBuilder.Entity<AgendaTreino>()
                 .Property(p => p.DiaSemana)
                 .IsRequired();
+
+            modelBuilder.Entity<AgendaTreino>()
+               .HasOne<AtleticaModalidade>(am => am.AtleticaModalidade)
+               .WithMany(a => a.AgendaTreinos)
+               .HasForeignKey(am => am.AtleticaModalidadeId);
 
             /* ImagemAtletica */
             modelBuilder.Entity<ImagemAtletica>().HasKey(am => new { am.ImagemAtleticaId });
