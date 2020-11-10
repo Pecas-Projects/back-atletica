@@ -16,7 +16,7 @@ namespace Back_Atletica.Models
         public string Estado { get; set; }
         public string CEP { get; set; }
         public string Nome { get; set; }
-        public string Complemento { get; set; }
+        public string? Complemento { get; set; }
         public ICollection<Atletica> Atleticas { get; set; }
         
     }

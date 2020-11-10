@@ -76,6 +76,10 @@ namespace Back_Atletica.Data
                 .Property(p => p.Local)
                 .HasMaxLength(45);
 
+            modelBuilder.Entity<SolicitacaoJogo>()
+                .Property(p => p.Local)
+                .IsRequired();
+
             /* SolicitacaoAtletaModalidade */
             modelBuilder.Entity<SolicitacaoAtletaModalidade>().HasKey(am => new { am.SolicitacaoAtletaModalidadeId });
 
@@ -118,7 +122,7 @@ namespace Back_Atletica.Data
             /* AgendaTreino */
             modelBuilder.Entity<AgendaTreino>()
                 .Property(p => p.DiaSemana)
-                .HasMaxLength(30);
+                .IsRequired();
 
             /* ImagemAtletica */
             modelBuilder.Entity<ImagemAtletica>().HasKey(am => new { am.ImagemAtleticaId });
