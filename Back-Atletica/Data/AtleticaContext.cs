@@ -434,10 +434,6 @@ namespace Back_Atletica.Data
                 .HasMaxLength(30)
                 .IsRequired();
 
-            modelBuilder.Entity<Funcao>()
-                .Property(p => p.Descricao)
-                .HasMaxLength(45);
-
             /* Modalidade*/
             modelBuilder.Entity<Modalidade>()
                 .Property(p => p.Nome)
