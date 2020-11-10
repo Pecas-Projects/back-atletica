@@ -204,7 +204,7 @@ namespace Back_Atletica.Data
               .HasForeignKey(am => am.CursoId);
 
             modelBuilder.Entity<SolicitacaoAtleta>()
-                .Property(sample => sample.AnoEntradaFacul)
+                .Property(sa => sa.AnoEntradaFacul)
                 .HasColumnType("date");
 
             modelBuilder.Entity<SolicitacaoAtleta>()
@@ -299,7 +299,7 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<JogoCategoria>()
                 .Property(p => p.Cor)
-                .HasMaxLength(7);
+                .HasColumnType("CHAR(7)");
 
             /*EventoCategoria */
             modelBuilder
@@ -314,7 +314,7 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<EventoCategoria>()
                 .Property(p => p.Cor)
-                .HasMaxLength(7);
+                .HasColumnType("CHAR(7)");
 
             /*ProdutoCategoria */
             modelBuilder
