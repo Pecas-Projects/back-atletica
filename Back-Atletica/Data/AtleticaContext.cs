@@ -119,11 +119,6 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<ImagemAtletica>().HasKey(am => new { am.ImagemAtleticaId });
 
             modelBuilder.Entity<ImagemAtletica>()
-                .HasOne<Imagem>(a => a.Imagem)
-                .WithOne(a => a.ImagemAtletica)
-                .HasForeignKey<ImagemAtletica>(a => a.ImagemId);
-
-            modelBuilder.Entity<ImagemAtletica>()
                .HasOne<Atletica>(am => am.Atletica)
                .WithMany(a => a.ImagemAtleticas)
                .HasForeignKey(am => am.AtleticaId);
@@ -134,11 +129,6 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Atleta>()
                 .Property(p => p.Ativo)
                 .IsRequired();
-
-            modelBuilder.Entity<Atleta>()
-             .HasOne<Pessoa>(a => a.Pessoa)
-             .WithOne(a => a.Atleta)
-             .HasForeignKey<Pessoa>(a => a.PessoaId);
 
             /* Atletica */
             modelBuilder.Entity<Atletica>().HasKey(am => new { am.AtleticaId });
@@ -354,16 +344,6 @@ namespace Back_Atletica.Data
                 .HasMaxLength(255)
                 .IsRequired();
 
-            modelBuilder.Entity<Membro>()
-                .HasOne<Pessoa>(a => a.Pessoa)
-                .WithOne(a => a.Membro)
-                .HasForeignKey<Pessoa>(a => a.PessoaId);
-
-            modelBuilder.Entity<Membro>()
-                .HasOne<Imagem>(a => a.Imagem)
-                .WithOne(a => a.Membro)
-                .HasForeignKey<Membro>(a => a.ImagemId);
-
             /* Publicações*/
             modelBuilder.Entity<Publicacao>().HasKey(am => new { am.PublicacaoId });
 
@@ -371,11 +351,6 @@ namespace Back_Atletica.Data
               .HasOne<Atletica>(am => am.Atletica)
               .WithMany(a => a.Publicacoes)
               .HasForeignKey(am => am.AtleticaId);
-
-            modelBuilder.Entity<Publicacao>()
-                .HasOne<Imagem>(a => a.Imagem)
-                .WithOne(a => a.Publicacao)
-                .HasForeignKey<Publicacao>(a => a.ImagemId);
 
             /* Imagem */
             modelBuilder.Entity<Imagem>().HasKey(am => new { am.ImagemId });
@@ -518,11 +493,6 @@ namespace Back_Atletica.Data
                 .HasForeignKey(am => am.AtleticaId);
 
             modelBuilder.Entity<Produto>()
-                .HasOne<Imagem>(p => p.Imagem)
-                .WithOne(a => a.Produto)
-                .HasForeignKey<Imagem>(I => I.ImagemId);
-
-            modelBuilder.Entity<Produto>()
                 .Property(p => p.Nome)
                 .HasMaxLength(45)
                 .IsRequired();
@@ -549,12 +519,6 @@ namespace Back_Atletica.Data
                 .HasOne<Atletica>(p => p.Atletica)
                 .WithMany(a => a.Publicacoes)
                 .HasForeignKey(p => p.AtleticaId);
-
-            modelBuilder.Entity<Publicacao>()
-                 .HasOne<Imagem>(p => p.Imagem)
-                 .WithOne(a => a.Publicacao)
-                 .HasForeignKey<Imagem>(I => I.ImagemId);
-
 
             modelBuilder.Entity<Publicacao>()
                 .Property(p => p.Descricao)
@@ -608,11 +572,6 @@ namespace Back_Atletica.Data
                 .HasOne<Membro>(m => m.Membro)
                 .WithMany(m => m.AtleticaModalidades)
                 .HasForeignKey(am => am.MembroId);
-
-            modelBuilder.Entity<AtleticaModalidade>()
-                .HasOne<Imagem>(a => a.Imagem)
-                .WithOne(a => a.AtleticaModalidade)
-                .HasForeignKey<AtleticaModalidade>(a => a.ImagemId);
 
             /* AtletaAtleticaModalidadeTimeEscalado*/
             modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaAtleticaModalidadeTimeEscaladoId });
