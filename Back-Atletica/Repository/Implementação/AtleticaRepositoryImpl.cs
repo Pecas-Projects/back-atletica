@@ -111,5 +111,15 @@ namespace Back_Atletica.Repository.Implementação
         {
             return _context.Atleticas.Any(a => a.AtleticaId == id);
         }
+
+        public HttpRes RankingAtleticas(int modalidadeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes RenovarPIN(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
