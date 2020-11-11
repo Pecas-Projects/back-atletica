@@ -100,7 +100,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                membros = context.Membros.ToList<Membro>();
+                membros = context.Membros.Include(a => a.Pessoa).ToList<Membro>();
             }
             catch
             {
