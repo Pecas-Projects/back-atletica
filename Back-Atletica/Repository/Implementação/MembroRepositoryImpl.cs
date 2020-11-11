@@ -23,7 +23,8 @@ namespace Back_Atletica.Repository.Implementação
             if (id != membro.MembroId)
             {
                 return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
-            }
+            
+            } 
 
             context.Entry(membro).State = EntityState.Modified;
 
@@ -167,34 +168,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public bool existeMembro(Membro membro)
         {
-            bool existe = false;
 
-            try
-            {
-                existe = context.Membros.Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
-            }
-            catch
-            {
-                Console.WriteLine("Ocorreu algum erro!");
-            }
-
-            return existe;
+            return context.Membros
+                .Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && 
+                m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
+                       
         }
 
         public bool existeMembro(int membroId)
         {
-            bool existe = false;
-
-            try
-            {
-                existe = context.Membros.Any(m => m.MembroId == membroId);
-            }
-            catch
-            {
-                Console.WriteLine("Ocorreu algum erro!");
-            }
-
-            return existe;
+            return  context.Membros.Any(m => m.MembroId == membroId);
         }
     }
 }
