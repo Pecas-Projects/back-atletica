@@ -50,14 +50,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             Membro membro = new Membro();
 
-            try
-            {
-                membro = context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membro = context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
 
             return new HttpRes(200, membro);
         }
@@ -74,21 +67,17 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
 
-            try
-            {
-                membros = context.Membros.Include(m => m.Pessoa).Where(m => m.Pessoa.AtleticaId == atleticaId &&
-                    (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
-                    m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
-                    (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower().Contains(nome.ToLower())
-                    ))
-                    .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
-                    EF.Functions.Like(m.Pessoa.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
-                    .ToList();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membros = context.Membros.Include(m => m.Pessoa)
+                .Where(m => m.Pessoa.AtleticaId == atleticaId &&
+                (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
+                m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
+                (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower()
+                .Contains(nome.ToLower()) ))
+                .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
+                nome.ToUpper() + "%") ? 1 : EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
+                "%" + nome.ToUpper()) ? 3 : 2)
+                .ToList();
+
 
             return new HttpRes(200, membros);
 
@@ -96,32 +85,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            var membros = new List<Membro>();
+            List<Membro> membros = new List<Membro>();
 
-            try
-            {
-                membros = context.Membros.Include(a => a.Pessoa).ToList<Membro>();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membros = context.Membros.Include(a => a.Pessoa).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
 
         public HttpRes BuscarTodos(int atleticaId)
         {
-            var membros = new List<Membro>();
+            List<Membro> membros = new List<Membro>();
 
-            try
-            {
-                membros = context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membros = context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
