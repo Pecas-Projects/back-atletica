@@ -124,32 +124,31 @@ namespace Back_Atletica.Repository.Implementação
         {
             if (!existeMembro(id))
             {
-                return new HttpRes(404, "Não existe nenhum membro com este id");
+                return new HttpRes(404, "Não existe membro com este id");
             }
 
-            var membro = new Membro();
-            var pessoa = new Pessoa();
-            try
-            {
-                membro = context.Membros.Find(id);
-                pessoa = context.Pessoas.Where(p => p.PessoaId == membro.PessoaId).FirstOrDefault();
-                
-                if(pessoa.Tipo == "AM")
-                {
-                    pessoa.Tipo = "A";
-                }
-                else if(pessoa.Tipo == "M")
-                {
-                    context.Pessoas.Remove(pessoa);
-                }
+            Membro membro = new Membro();
+            Pessoa pessoa = new Pessoa();
+            
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
 
-                context.Membros.Remove(membro);
-                context.SaveChanges();
-            }
-            catch
+            membro = context.Membros.SingleOrDefault(m => m.MembroId == id);
+            pessoa = context.Pessoas.SingleOrDefault(p => p.PessoaId == membro.PessoaId);
+
+            if(pessoa.Tipo == "AM")
             {
-                return new HttpRes(400, "Algo deu errado!");
+                pessoa.Tipo = "A";
             }
+            else if(pessoa.Tipo == "M")
+            {
+                context.Pessoas.Remove(pessoa);
+            }
+
+            context.Membros.Remove(membro);
+            context.SaveChanges();
+
+            atletica.RenovarPIN(pessoa.AtleticaId);
+
 
             return new HttpRes(204);
         }
@@ -165,7 +164,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public bool existeMembro(int membroId)
         {
-            return  context.Membros.Any(m => m.MembroId == membroId);
+            return context.Membros.Any(m => m.MembroId == membroId);
         }
     }
 }
