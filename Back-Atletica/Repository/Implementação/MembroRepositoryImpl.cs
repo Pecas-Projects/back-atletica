@@ -28,14 +28,21 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 Membro membroDate = context.Membros.SingleOrDefault(a => a.MembroId == id);
+                Pessoa pessoaDate = context.Pessoas.SingleOrDefault(p => p.PessoaId == membroDate.PessoaId);
 
                 if (membroDate == null) return new HttpRes(404, "Membro não encontrado");
 
+                membro.Pessoa.AtleticaId = pessoaDate.AtleticaId;
                 membro.MembroId = id;
                 membro.Senha = membroDate.Senha;
                 membro.ImagemId = membroDate.ImagemId;
+                membro.PessoaId = membroDate.PessoaId;
+                membro.Pessoa.PessoaId = membroDate.PessoaId;
 
                 context.Entry(membroDate).CurrentValues.SetValues(membro);
+                context.Entry(pessoaDate).CurrentValues.SetValues(membro.Pessoa);
+
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
