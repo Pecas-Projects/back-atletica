@@ -13,7 +13,8 @@ namespace Back_Atletica.Repository
         HttpRes RegistrarMembro(Membro membro);
         HttpRes LoginAtletica(Atletica atletica);
         HttpRes LoginMembro(Membro membro);
-        HttpRes ResetarSenha(string email);
+        HttpRes ResetarSenhaAtletica(string email);
+        HttpRes MudancaSenha(int id, string senha);
         string GerarPIN();
     }
 }

@@ -8,15 +8,15 @@ namespace Back_Atletica.Models
     public class Atletica
     {
         public int AtleticaId { get; set; }
-        public int CampusId { get; set; }
+        public int? CampusId { get; set; }
         public virtual Campus Campus { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
         public string PIN { get; set; }
-        public string Telefone { get; set; }
-        public string LinkProsel { get; set; }
+        public string? Telefone { get; set; }
+        public string? LinkProsel { get; set; }
         public ICollection<SolicitacaoAtleta> SolicitacaoAtletas { get; set; }
         public ICollection<Publicacao> Publicacoes { get; set; }
         public ICollection<ImagemAtletica> ImagemAtleticas { get; set; }

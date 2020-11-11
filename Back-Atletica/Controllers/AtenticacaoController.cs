@@ -7,6 +7,7 @@ using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using static Back_Atletica.Utils.RequestModels.AutenticacaoModel;
 using Back_Atletica.Utils.RequestModels;
+using Back_Atletica.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +30,7 @@ namespace Back_Atletica.Controllers
 
             Atletica atletica = value.Transform();
 
-            var result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
+            HttpRes result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
 
             return result.HttpResponse();
         }
@@ -70,6 +71,32 @@ namespace Back_Atletica.Controllers
             Membro data = value.Transform();
 
             var result = _AutenticacaoBusiness.LoginMembro(data);
+
+            return result.HttpResponse();
+        }
+
+        [Route("api/ReseteSenha/Atletica")]
+        [HttpPost]
+        public IActionResult ResetarSenhaAtletica([FromBody] EmailModel email)
+        {
+            string data = email.Transform();
+            var result = _AutenticacaoBusiness.ResetarSenhaAtletica(data);
+
+            return result.HttpResponse();
+        }
+
+        [Authorize]
+        [Route("api/MudancaSenha/Atletica")]
+        [HttpPost]
+        public IActionResult MudancaSenha([FromBody] SenhaResetarModel senha)
+        {
+            string data = senha.Transform();
+
+            var id = HttpToken.GetUserId(HttpContext);
+
+            if (HttpToken.GetTokenType(HttpContext) != "Reset") return BadRequest("Token Invalido");
+
+            var result = _AutenticacaoBusiness.MudancaSenha((int)id, data);
 
             return result.HttpResponse();
         }

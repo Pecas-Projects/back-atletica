@@ -3,15 +3,17 @@ using System;
 using Back_Atletica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Back_Atletica.Migrations
 {
     [DbContext(typeof(AtleticaContext))]
-    partial class AtleticaContextModelSnapshot : ModelSnapshot
+    [Migration("20201110200450_Null-Constraint")]
+    partial class NullConstraint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +59,6 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("AtletaId");
-
-                    b.HasIndex("PessoaId")
-                        .IsUnique();
 
                     b.ToTable("Atletas");
                 });
@@ -424,9 +423,7 @@ namespace Back_Atletica.Migrations
             modelBuilder.Entity("Back_Atletica.Models.Imagem", b =>
                 {
                     b.Property<int>("ImagemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
 
                     b.Property<string>("Extensao")
                         .IsRequired()
@@ -545,9 +542,6 @@ namespace Back_Atletica.Migrations
                     b.HasIndex("ImagemId")
                         .IsUnique();
 
-                    b.HasIndex("PessoaId")
-                        .IsUnique();
-
                     b.ToTable("Membros");
                 });
 
@@ -576,9 +570,7 @@ namespace Back_Atletica.Migrations
             modelBuilder.Entity("Back_Atletica.Models.Pessoa", b =>
                 {
                     b.Property<int>("PessoaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("AnoEntradaFacul")
                         .HasColumnType("date");
@@ -665,9 +657,6 @@ namespace Back_Atletica.Migrations
 
                     b.HasIndex("AtleticaId");
 
-                    b.HasIndex("ImagemId")
-                        .IsUnique();
-
                     b.HasIndex("ProdutoCategoriaId");
 
                     b.ToTable("Produtos");
@@ -718,9 +707,6 @@ namespace Back_Atletica.Migrations
                     b.HasKey("PublicacaoId");
 
                     b.HasIndex("AtleticaId");
-
-                    b.HasIndex("ImagemId")
-                        .IsUnique();
 
                     b.ToTable("Publicacoes");
                 });
@@ -878,15 +864,6 @@ namespace Back_Atletica.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Back_Atletica.Models.Atleta", b =>
-                {
-                    b.HasOne("Back_Atletica.Models.Pessoa", "Pessoa")
-                        .WithOne("Atleta")
-                        .HasForeignKey("Back_Atletica.Models.Atleta", "PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Back_Atletica.Models.AtletaAtleticaModalidade", b =>
                 {
                     b.HasOne("Back_Atletica.Models.Atleta", "Atleta")
@@ -1007,6 +984,21 @@ namespace Back_Atletica.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Back_Atletica.Models.Imagem", b =>
+                {
+                    b.HasOne("Back_Atletica.Models.Produto", "Produto")
+                        .WithOne("Imagem")
+                        .HasForeignKey("Back_Atletica.Models.Imagem", "ImagemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Back_Atletica.Models.Publicacao", "Publicacao")
+                        .WithOne("Imagem")
+                        .HasForeignKey("Back_Atletica.Models.Imagem", "ImagemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Back_Atletica.Models.ImagemAtletica", b =>
                 {
                     b.HasOne("Back_Atletica.Models.Atletica", "Atletica")
@@ -1036,12 +1028,6 @@ namespace Back_Atletica.Migrations
                     b.HasOne("Back_Atletica.Models.Imagem", "Imagem")
                         .WithOne("Membro")
                         .HasForeignKey("Back_Atletica.Models.Membro", "ImagemId");
-
-                    b.HasOne("Back_Atletica.Models.Pessoa", "Pessoa")
-                        .WithOne("Membro")
-                        .HasForeignKey("Back_Atletica.Models.Membro", "PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Back_Atletica.Models.Pessoa", b =>
@@ -1057,6 +1043,18 @@ namespace Back_Atletica.Migrations
                         .HasForeignKey("CursoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Back_Atletica.Models.Atleta", "Atleta")
+                        .WithOne("Pessoa")
+                        .HasForeignKey("Back_Atletica.Models.Pessoa", "PessoaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Back_Atletica.Models.Membro", "Membro")
+                        .WithOne("Pessoa")
+                        .HasForeignKey("Back_Atletica.Models.Pessoa", "PessoaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Back_Atletica.Models.Produto", b =>
@@ -1064,12 +1062,6 @@ namespace Back_Atletica.Migrations
                     b.HasOne("Back_Atletica.Models.Atletica", "Atletica")
                         .WithMany("Produtos")
                         .HasForeignKey("AtleticaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Back_Atletica.Models.Imagem", "Imagem")
-                        .WithOne("Produto")
-                        .HasForeignKey("Back_Atletica.Models.Produto", "ImagemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1085,12 +1077,6 @@ namespace Back_Atletica.Migrations
                     b.HasOne("Back_Atletica.Models.Atletica", "Atletica")
                         .WithMany("Publicacoes")
                         .HasForeignKey("AtleticaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Back_Atletica.Models.Imagem", "Imagem")
-                        .WithOne("Publicacao")
-                        .HasForeignKey("Back_Atletica.Models.Publicacao", "ImagemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
