@@ -52,7 +52,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                membro = context.Membros.Find(id);
+                membro = context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
             }
             catch
             {
@@ -76,7 +76,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                membros = context.Membros.Where(m => m.Pessoa.AtleticaId == atleticaId &&
+                membros = context.Membros.Include(m => m.Pessoa).Where(m => m.Pessoa.AtleticaId == atleticaId &&
                     (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
                     m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
                     (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower().Contains(nome.ToLower())
