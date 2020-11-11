@@ -20,28 +20,27 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Membro membro)
         {
-            if (id != membro.MembroId)
+            if (membro == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
-            
-            } 
-
-            context.Entry(membro).State = EntityState.Modified;
+                return new HttpRes(400, "Verifique os dados enviados");
+            }
 
             try
             {
-                context.SaveChanges();
+                Membro membroDate = context.Membros.SingleOrDefault(a => a.MembroId == id);
+
+                if (membroDate == null) return new HttpRes(404, "Membro não encontrado");
+
+                membro.MembroId = id;
+                membro.Senha = membroDate.Senha;
+                membro.ImagemId = membroDate.ImagemId;
+
+                context.Entry(membroDate).CurrentValues.SetValues(membro);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!existeMembro(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum produto com este id");
-                }
-                else
-                {
-                    return new HttpRes(400, "Ocorreu algum erro durante a atualização!");
-                }
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
             return new HttpRes(200, membro);
