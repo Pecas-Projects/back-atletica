@@ -116,7 +116,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                membros = context.Membros.Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
+                membros = context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
             }
             catch
             {
