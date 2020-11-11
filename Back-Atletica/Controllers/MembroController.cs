@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Mvc;
+using static Back_Atletica.Utils.RequestModels.MembroModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -74,8 +76,10 @@ namespace Back_Atletica.Controllers
         // PUT api/<MembroController>/5
         [Route("api/Membro/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Membro membro)
+        public IActionResult Atualizar(int id, [FromBody] AtualizarMembro value)
         {
+            Membro membro = value.Transform();
+
             var resultado = _MembroBusiness.Atualizar(id, membro);
 
             return resultado.HttpResponse();
