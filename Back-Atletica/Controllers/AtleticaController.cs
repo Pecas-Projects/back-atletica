@@ -3,6 +3,7 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
+using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,11 +44,19 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica/{id}")]
+        /// <summary>
+        /// Detalhes de uma atletica
+        /// </summary>
+        /// <param name="id">Id da atletica desejada</param>
+        /// <returns>Todos os dados da atletica</returns>
+        /// <response code="200">Objeto criado no banco</response>
+        /// <response code="400">Erro na validação dos dados</response>
+        [ProducesResponseType(typeof(AtleticaPorId), 200)]
+        [Route("api/Atletica/BuscaPorId/{id}")]
         [HttpGet]
-        public IActionResult Get(int id)
+        public IActionResult BuscaPorId(int id)
         {
-            var resultado = _AtleticaBusiness.BuscaPorId(id);
+            HttpRes resultado = _AtleticaBusiness.BuscaPorId(id);
             return resultado.HttpResponse();
         }
 

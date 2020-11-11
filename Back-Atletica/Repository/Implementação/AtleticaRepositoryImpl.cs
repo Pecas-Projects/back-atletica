@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -52,12 +53,29 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorId(int id)
         {
-            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
-            if (atletica == null)
+            Atletica atletica = _context.Atleticas
+                .Include(a => a.Campus).ThenInclude(a => a.Faculdade)
+                .Include(a => a.ImagemAtleticas).ThenInclude(a => a.Imagem)
+                .Include(a => a.Pessoas).ThenInclude(a => a.Membro).ThenInclude(a => a.Imagem)
+                .SingleOrDefault(a => a.AtleticaId == id);
+
+            if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
+
+            if(atletica.Pessoas != null)
             {
-                return new HttpRes(404, "Não existe nenhuma atlética com este id");
+                List<Pessoa> pessoas = new List<Pessoa>();
+
+                foreach (Pessoa p in atletica.Pessoas)
+                {
+                    if (p.Tipo != "A") pessoas.Add(p);
+                }
+                atletica.Pessoas = pessoas;
+
             }
-            return new HttpRes(200, atletica);
+
+            AtleticaPorId result = new AtleticaPorId();
+
+            return new HttpRes(200, result.Transform(atletica));
         }
 
         public HttpRes BuscaPorInstituicao(int faculdadeId)
