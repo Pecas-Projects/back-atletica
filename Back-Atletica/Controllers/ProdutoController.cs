@@ -71,6 +71,7 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/Produto/{id}")]
         [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] ProdutoModel valor)
