@@ -51,6 +51,22 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/RankingAtleticas/{modalidadeId}")]
+        [HttpGet]
+        public IActionResult RankingAtleticas(int modalidadeId)
+        {
+            var resultado = _AtleticaBusiness.RankingAtleticas(modalidadeId);
+            return resultado.HttpResponse();
+        }
+
+        [Route("api/AtleticaPIN/{id}")]
+        [HttpGet]
+        public IActionResult RenovarPIN(int id)
+        {
+            var resultado = _AtleticaBusiness.RenovarPIN(id);
+            return resultado.HttpResponse();
+        }
+
         [Route("api/Atletica")]
         [HttpPost]
         public IActionResult Criar([FromBody] Atletica value)
