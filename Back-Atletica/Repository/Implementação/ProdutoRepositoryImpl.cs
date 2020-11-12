@@ -55,6 +55,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             var produtos = _context.Produtos
                 .Where(p => p.AtleticaId.Equals(atleticaId))
+                .Include(p => p.Imagem)
                 .ToList();
 
             return new HttpRes(200, produtos);
