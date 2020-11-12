@@ -9,7 +9,7 @@ namespace Back_Atletica.Repository
 {
     public interface ISolicitacaoAtletaRepository
     {
-        HttpRes CriarSolicitacaoAtletao(SolicitacaoAtleta solicitacaoAtleta, int atleticaId);
+        HttpRes CriarSolicitacaoAtletas(SolicitacaoAtleta solicitacaoAtleta, List<int> ModalidadesId);
         HttpRes BuscarTodas(int atleticaId);
         HttpRes DeletarSolicitacaoAtleta(int solicitacaoAtletaId);
         HttpRes DeletarSolicitacaoAtletaAprovado(int solicitacaoAtletaId);

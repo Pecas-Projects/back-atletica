@@ -26,17 +26,27 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, solicitacoesAtleta);
         }
 
-        public HttpRes CriarSolicitacaoAtletao(SolicitacaoAtleta solicitacaoAtleta, int atleticaId)
+        public HttpRes CriarSolicitacaoAtletas(SolicitacaoAtleta solicitacaoAtleta, List<int> ModalidadesId)
         {
-            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == solicitacaoAtleta.AtleticaId);
             if(atletica == null)
             {
                 return new HttpRes(404, "Atletica não encontrada");
             }
 
-            solicitacaoAtleta.AtleticaId = atleticaId;
+            solicitacaoAtleta.AtleticaId = solicitacaoAtleta.AtleticaId;
             _context.SolicitacaoAtletas.Add(solicitacaoAtleta);
             _context.SaveChanges();
+
+            foreach (int modalidadeId in ModalidadesId)
+            {
+                SolicitacaoAtletaModalidade solicitacaoAtletaModalidade = new SolicitacaoAtletaModalidade();
+                solicitacaoAtletaModalidade.SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId;
+                solicitacaoAtletaModalidade.ModalidadeId = modalidadeId;
+                _context.SolicitacaoAtletaModalidades.Add(solicitacaoAtletaModalidade);
+            }
+            _context.SaveChanges();
+
             return new HttpRes(200, solicitacaoAtleta);
         }
 

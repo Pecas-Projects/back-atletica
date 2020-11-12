@@ -20,27 +20,34 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Membro membro)
         {
-            if (id != membro.MembroId)
+            if (membro == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+                return new HttpRes(400, "Verifique os dados enviados");
             }
-
-            context.Entry(membro).State = EntityState.Modified;
 
             try
             {
+                Membro membroDate = context.Membros.SingleOrDefault(a => a.MembroId == id);
+                Pessoa pessoaDate = context.Pessoas.SingleOrDefault(p => p.PessoaId == membroDate.PessoaId);
+
+                if (membroDate == null) return new HttpRes(404, "Membro não encontrado");
+
+                membro.Pessoa.AtleticaId = pessoaDate.AtleticaId;
+                membro.MembroId = id;
+                membro.Senha = membroDate.Senha;
+                membro.ImagemId = membroDate.ImagemId;
+                membro.PessoaId = membroDate.PessoaId;
+                membro.Pessoa.PessoaId = membroDate.PessoaId;
+
+                context.Entry(membroDate).CurrentValues.SetValues(membro);
+                context.Entry(pessoaDate).CurrentValues.SetValues(membro.Pessoa);
+
                 context.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!existeMembro(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum produto com este id");
-                }
-                else
-                {
-                    return new HttpRes(400, "Ocorreu algum erro durante a atualização!");
-                }
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
             return new HttpRes(200, membro);
@@ -50,14 +57,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             Membro membro = new Membro();
 
-            try
-            {
-                membro = context.Membros.Find(id);
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membro = context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
 
             return new HttpRes(200, membro);
         }
@@ -74,21 +74,17 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
 
-            try
-            {
-                membros = context.Membros.Where(m => m.Pessoa.AtleticaId == atleticaId &&
-                    (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
-                    m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
-                    (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower().Contains(nome.ToLower())
-                    ))
-                    .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
-                    EF.Functions.Like(m.Pessoa.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
-                    .ToList();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membros = context.Membros.Include(m => m.Pessoa)
+                .Where(m => m.Pessoa.AtleticaId == atleticaId &&
+                (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
+                m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
+                (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower()
+                .Contains(nome.ToLower()) ))
+                .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
+                nome.ToUpper() + "%") ? 1 : EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
+                "%" + nome.ToUpper()) ? 3 : 2)
+                .ToList();
+
 
             return new HttpRes(200, membros);
 
@@ -96,32 +92,25 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            var membros = new List<Membro>();
+            List<Membro> membros = new List<Membro>();
 
-            try
-            {
-                membros = context.Membros.ToList<Membro>();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            membros = context.Membros.Include(a => a.Pessoa).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
 
         public HttpRes BuscarTodos(int atleticaId)
         {
-            var membros = new List<Membro>();
+            List<Membro> membros = new List<Membro>();
 
-            try
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
+
+            if (!atletica.existeAtletica(atleticaId))
             {
-                membros = context.Membros.Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
+                return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+
+            membros = context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
@@ -135,66 +124,47 @@ namespace Back_Atletica.Repository.Implementação
         {
             if (!existeMembro(id))
             {
-                return new HttpRes(404, "Não existe nenhum membro com este id");
+                return new HttpRes(404, "Não existe membro com este id");
             }
 
-            var membro = new Membro();
-            var pessoa = new Pessoa();
-            try
-            {
-                membro = context.Membros.Find(id);
-                pessoa = context.Pessoas.Where(p => p.PessoaId == membro.PessoaId).FirstOrDefault();
-                
-                if(pessoa.Tipo == "AM")
-                {
-                    pessoa.Tipo = "A";
-                }
-                else if(pessoa.Tipo == "M")
-                {
-                    context.Pessoas.Remove(pessoa);
-                }
+            Membro membro = new Membro();
+            Pessoa pessoa = new Pessoa();
+            
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
 
-                context.Membros.Remove(membro);
-                context.SaveChanges();
-            }
-            catch
+            membro = context.Membros.SingleOrDefault(m => m.MembroId == id);
+            pessoa = context.Pessoas.SingleOrDefault(p => p.PessoaId == membro.PessoaId);
+
+            if(pessoa.Tipo == "AM")
             {
-                return new HttpRes(400, "Algo deu errado!");
+                pessoa.Tipo = "A";
             }
+            else if(pessoa.Tipo == "M")
+            {
+                context.Pessoas.Remove(pessoa);
+            }
+
+            context.Membros.Remove(membro);
+            context.SaveChanges();
+
+            atletica.RenovarPIN(pessoa.AtleticaId);
+
 
             return new HttpRes(204);
         }
 
         public bool existeMembro(Membro membro)
         {
-            bool existe = false;
 
-            try
-            {
-                existe = context.Membros.Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
-            }
-            catch
-            {
-                Console.WriteLine("Ocorreu algum erro!");
-            }
-
-            return existe;
+            return context.Membros
+                .Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && 
+                m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
+                       
         }
 
         public bool existeMembro(int membroId)
         {
-            bool existe = false;
-
-            try
-            {
-                existe = context.Membros.Any(m => m.MembroId == membroId);
-            }
-            catch
-            {
-                Console.WriteLine("Ocorreu algum erro!");
-            }
-
-            return existe;
+            return context.Membros.Any(m => m.MembroId == membroId);
         }
     }
 }

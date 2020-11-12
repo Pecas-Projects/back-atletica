@@ -16,6 +16,8 @@ namespace Back_Atletica.Repository
         HttpRes BuscaPorInstituicao(int faculdadeId);
         HttpRes Deletar(int id);
         HttpRes Atualizar(int id, Atletica atletica);
+        HttpRes RenovarPIN(int id);
+        HttpRes RankingAtleticas(int modalidadeId);
         bool existeAtletica(int id);
     }
 }
