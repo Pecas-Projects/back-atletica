@@ -36,7 +36,8 @@ namespace Back_Atletica.Controllers
         public IActionResult Post([FromBody] CriarSolicitacaoAtletaModel solicitacaoAtleta, int atleticaId)
         {
             SolicitacaoAtleta s = solicitacaoAtleta.Transform();
-            var resultado = _SolicitacaoAtletaBusiness.CriarSolicitacaoAtletao(s, atleticaId);
+            s.AtleticaId = atleticaId;
+            var resultado = _SolicitacaoAtletaBusiness.CriarSolicitacaoAtletas(s, solicitacaoAtleta.ModalidadesId);
             return resultado.HttpResponse();
         }
 

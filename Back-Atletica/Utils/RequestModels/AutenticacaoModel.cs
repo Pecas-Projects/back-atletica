@@ -94,12 +94,15 @@ namespace Back_Atletica.Utils.RequestModels
             [Required]
             public PessoaModel Pessoa { get; set; }
 
+            
+
             public Membro Transform()
             {
                 Membro membro = new Membro
                 {
                     Senha = this.Senha,
                     Pessoa = this.Pessoa.Transform()
+                    
                 };
 
                 return membro;
@@ -118,6 +121,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Whatsapp { get; set; }
         public string Tipo { get; set; }
         public char Genero { get; set; }
+        public int CursoId { get; set; }
 
         public Pessoa Transform()
         {
@@ -128,7 +132,8 @@ namespace Back_Atletica.Utils.RequestModels
                 Email = Email,
                 Whatsapp = this.Whatsapp,
                 Tipo = this.Tipo,
-                Genero = this.Genero
+                Genero = this.Genero,
+                CursoId = this.CursoId
             };
             return pessoa;
         }
@@ -159,6 +164,7 @@ namespace Back_Atletica.Utils.RequestModels
             return atletica;
         }
     }
+
     public class CampusModel
     {
         public string Nome { get; set; }
@@ -198,6 +204,23 @@ namespace Back_Atletica.Utils.RequestModels
             };
 
             return faculdade;
+        }
+
+    }
+
+    public class CursoModel
+    {
+        [Required]
+        public string Nome { get; set; }
+
+        public Curso Transform()
+        {
+            Curso curso = new Curso
+            {
+                Nome = this.Nome
+            };
+
+            return curso;
         }
     }
 }

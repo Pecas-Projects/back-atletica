@@ -24,9 +24,9 @@ namespace Back_Atletica.Business.Implementação
             return _SolicitacaoAtletaRepository.BuscarTodas(atleticaId);
         }
 
-        public HttpRes CriarSolicitacaoAtletao(SolicitacaoAtleta solicitacaoAtleta, int atleticaId)
+        public HttpRes CriarSolicitacaoAtletas(SolicitacaoAtleta solicitacaoAtleta, List<int> ModalidadesId)
         {
-            return _SolicitacaoAtletaRepository.CriarSolicitacaoAtletao(solicitacaoAtleta, atleticaId);
+            return _SolicitacaoAtletaRepository.CriarSolicitacaoAtletas(solicitacaoAtleta, ModalidadesId);
         }
 
         public HttpRes DeletarSolicitacaoAtleta(int solicitacaoAtletaId)
