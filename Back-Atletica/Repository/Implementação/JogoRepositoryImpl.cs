@@ -41,7 +41,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            throw new NotImplementedException();
+            var jogo = _context.Jogos.SingleOrDefault(a => a.JogoId == id);
+            if (jogo == null)
+            {
+                return new HttpRes(404, "Jogo não encontrado");
+            }
+
+            _context.Jogos.Remove(jogo);
+            _context.SaveChanges();
+
+            return new HttpRes(204);
         }
 
         public bool existeJogo(int id)
