@@ -33,7 +33,7 @@ namespace Back_Atletica.Utils.RequestModels
                 ProdutoCategoriaId = ProdutoCategoriaId,
                 AtleticaId = AtleticaId,
                 ImagemId = ImagemId,
-                Imagem = Imagem.Transform()
+                Imagem = Imagem != null ? Imagem.Transform() : null
             };
 
             return produto;
