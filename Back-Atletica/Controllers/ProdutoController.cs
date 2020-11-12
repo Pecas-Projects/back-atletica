@@ -81,6 +81,7 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/Produto/{id}")]
         [HttpDelete]
         public IActionResult Deletar(int id)
