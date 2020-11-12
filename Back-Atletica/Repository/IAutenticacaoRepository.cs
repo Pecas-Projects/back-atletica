@@ -9,7 +9,7 @@ namespace Back_Atletica.Repository
 {
     public interface IAutenticacaoRepository
     {
-        HttpRes RegistrarAtletica(Atletica atletica);
+        HttpRes RegistrarAtletica(Atletica atletica, List<int> cursosIds);
         HttpRes RegistrarMembro(Membro membro);
         HttpRes LoginAtletica(Atletica atletica);
         HttpRes LoginMembro(Membro membro);

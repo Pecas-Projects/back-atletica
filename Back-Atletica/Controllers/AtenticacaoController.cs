@@ -27,7 +27,7 @@ namespace Back_Atletica.Controllers
 
             Atletica atletica = value.Transform();
 
-            HttpRes result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
+            HttpRes result = _AutenticacaoBusiness.RegistrarAtletica(atletica, value.CursosIds);
 
             return result.HttpResponse();
         }
