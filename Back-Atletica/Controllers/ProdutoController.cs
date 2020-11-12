@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Back_Atletica.Utils.RequestModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace Back_Produto.Controllers
             _ProdutoBusiness = produtoBusiness;
         }
 
+        [Authorize]
         [Route("api/Produto")]
         [HttpPost]
         public IActionResult Criar([FromBody] ProdutoModel value)
