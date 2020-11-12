@@ -59,6 +59,14 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/ProdutoCategoria")]
+        [HttpGet]
+        public IActionResult BuscarCategorias()
+        {
+            var resultado = _ProdutoBusiness.BuscarCategorias();
+            return resultado.HttpResponse();
+        }
+
         [Route("api/Produto/{id}")]
         [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] Produto valor)

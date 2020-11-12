@@ -46,6 +46,11 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, produto);
         }
 
+        public HttpRes BuscarCategorias()
+        {
+            throw new NotImplementedException();
+        }
+
         public HttpRes BuscarPorAtletica(int atleticaId)
         {
             var produtos = _context.Produtos
