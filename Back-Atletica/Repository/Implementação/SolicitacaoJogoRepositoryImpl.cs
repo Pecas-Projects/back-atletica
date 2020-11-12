@@ -20,22 +20,81 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodas(int atleticaId)
         {
-            throw new NotImplementedException();
+            List<SolicitacaoJogo> solicitacoesJogo = _context.SolicitacaoJogos
+                .Where(s => s.AtleticaId == atleticaId)
+                .ToList();
+
+            return new HttpRes(200, solicitacoesJogo);
         }
 
-        public HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo, int atleticaId)
+        public HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo)
         {
-            throw new NotImplementedException();
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == solicitacaoJogo.AtleticaAdversariaId);
+            if (atletica == null)
+            {
+                return new HttpRes(404, "Atletica não encontrada");
+            }
+
+            Atletica atleticaConvidada = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == solicitacaoJogo.AtleticaId);
+            if (atleticaConvidada == null)
+            {
+                return new HttpRes(404, "Atletica convidada não encontrada");
+            }
+
+            AtleticaModalidade atleticaModalidade =
+                _context.AtleticaModalidades
+                .SingleOrDefault(am => am.AtleticaId == atletica.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId);
+
+            if (atleticaModalidade == null)
+            {
+                return new HttpRes(404, "A atletica não tem essa modalidade cadastrada");
+            }
+
+            AtleticaModalidade atleticaModalidadeConvidada =
+                _context.AtleticaModalidades
+                .SingleOrDefault(am => am.AtleticaId == atleticaConvidada.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId);
+
+            if (atleticaModalidadeConvidada == null)
+            {
+                return new HttpRes(404, "A atletica convidada não tem essa modalidade cadastrada");
+            }
+
+            _context.SolicitacaoJogos.Add(solicitacaoJogo);
+            _context.SaveChanges();
+
+            return new HttpRes(200, solicitacaoJogo);
         }
 
-        public HttpRes DeletarSolicitacaoJogo(int solicitacaoAtletaId)
+        public HttpRes DeletarSolicitacaoJogo(int solicitacaoJogoId)
         {
-            throw new NotImplementedException();
+            var solicitacao = _context.SolicitacaoJogos
+                .SingleOrDefault(s => s.SolicitacaoJogoId == solicitacaoJogoId);
+
+            if (solicitacao == null)
+            {
+                return new HttpRes(404, "Solicitacao não encontrada");
+            }
+
+            _context.SolicitacaoJogos.Remove(solicitacao);
+            _context.SaveChanges();
+            return new HttpRes(204);
         }
 
-        public HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoAtletaId)
+        public HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoJogoId)
         {
-            throw new NotImplementedException();
+            var solicitacao = _context.SolicitacaoJogos
+                .SingleOrDefault(s => s.SolicitacaoJogoId == solicitacaoJogoId);
+
+            if (solicitacao == null)
+            {
+                return new HttpRes(404, "Solicitacao não encontrada");
+            }
+            solicitacao.Aprovado = true;
+            _context.SaveChanges();
+
+            _context.SolicitacaoJogos.Remove(solicitacao);
+            _context.SaveChanges();
+            return new HttpRes(204);
         }
     }
 }

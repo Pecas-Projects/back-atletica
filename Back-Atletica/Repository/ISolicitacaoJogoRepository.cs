@@ -9,7 +9,7 @@ namespace Back_Atletica.Repository
 {
     public interface ISolicitacaoJogoRepository
     {
-        HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo, int atleticaId);
+        HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo);
         HttpRes BuscarTodas(int atleticaId);
         HttpRes DeletarSolicitacaoJogo(int solicitacaoAtletaId);
         HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoAtletaId);

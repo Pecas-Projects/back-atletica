@@ -12,7 +12,7 @@ namespace Back_Atletica.Utils.RequestModels
         {
             public DateTime DataHora { get; set; }
             public string Local { get; set; }
-            public int AtleticaId { get; set; }
+            public int AtleticaConvidadaId { get; set; }
             public int JogoCategoriaId { get; set; }
             public int ModalidadeId { get; set; }
 
@@ -22,9 +22,10 @@ namespace Back_Atletica.Utils.RequestModels
                 {
                     DataHora = DataHora,
                     Local = Local,
-                    AtleticaId = AtleticaId,
+                    AtleticaId = AtleticaConvidadaId,
                     JogoCategoriaId = JogoCategoriaId,
-                    ModalidadeId = ModalidadeId
+                    ModalidadeId = ModalidadeId,
+                    Aprovado = false
                 };
                 return solicitacao;
             }

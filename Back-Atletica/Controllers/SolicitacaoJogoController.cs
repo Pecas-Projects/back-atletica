@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Back_Atletica.Business;
 using Back_Atletica.Business.Implementação;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace Back_Atletica.Controllers
         {
             SolicitacaoJogo s = solicitacaoJogo.Transform();
             s.AtleticaAdversariaId = atleticaId;
-            var resultado = _SolicitacaoJogoBusiness.CriarSolicitacaoJogo(s, atleticaId);
+            var resultado = _SolicitacaoJogoBusiness.CriarSolicitacaoJogo(s);
             return resultado.HttpResponse();
         }
 

@@ -22,9 +22,9 @@ namespace Back_Atletica.Business.Implementação
             return _SolicitacaoJogoRepository.BuscarTodas(atleticaId);
         }
 
-        public HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo, int atleticaId)
+        public HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo)
         {
-            return _SolicitacaoJogoRepository.CriarSolicitacaoJogo(solicitacaoJogo, atleticaId);
+            return _SolicitacaoJogoRepository.CriarSolicitacaoJogo(solicitacaoJogo);
         }
 
         public HttpRes DeletarSolicitacaoJogo(int solicitacaoAtletaId)
