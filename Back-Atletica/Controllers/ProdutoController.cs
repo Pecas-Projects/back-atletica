@@ -73,9 +73,10 @@ namespace Back_Produto.Controllers
 
         [Route("api/Produto/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Produto valor)
+        public IActionResult Atualizar(int id, [FromBody] ProdutoModel valor)
         {
-            var resultado = _ProdutoBusiness.Atualizar(id, valor);
+            Produto produto = valor.Transform();
+            var resultado = _ProdutoBusiness.Atualizar(id, produto);
             return resultado.HttpResponse();
         }
 
