@@ -39,21 +39,21 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Produto/{id}")]
-        [HttpGet]
-        public IActionResult BuscarPorId(int id)
-        {
-            var resultado = _ProdutoBusiness.BuscarPorId(id);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Produto/{id}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorId(int id)
+        //{
+        //    var resultado = _ProdutoBusiness.BuscarPorId(id);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Route("api/Produto/{atleticaId}/{nome}")]
-        [HttpGet]
-        public IActionResult BuscarPorNome(int atleticaId, string nome)
-        {
-            var resultado = _ProdutoBusiness.BuscarPorNome(atleticaId, nome);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Produto/{atleticaId}/{nome}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorNome(int atleticaId, string nome)
+        //{
+        //    var resultado = _ProdutoBusiness.BuscarPorNome(atleticaId, nome);
+        //    return resultado.HttpResponse();
+        //}
 
         [Route("api/ProdutoCategoria/{atleticaId}/{categoriaId}")]
         [HttpGet]
