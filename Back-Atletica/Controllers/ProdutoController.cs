@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +22,10 @@ namespace Back_Produto.Controllers
 
         [Route("api/Produto")]
         [HttpPost]
-        public IActionResult Criar([FromBody] Produto value)
+        public IActionResult Criar([FromBody] ProdutoModel value)
         {
-            var resultado = _ProdutoBusiness.Criar(value);
+            Produto produto = value.Transform();
+            var resultado = _ProdutoBusiness.Criar(produto);
             return resultado.HttpResponse();
         }
 
