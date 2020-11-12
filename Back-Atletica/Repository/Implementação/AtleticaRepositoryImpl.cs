@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
@@ -19,25 +18,39 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
         {
-            if (atletica == null)
-            {
-                return new HttpRes(400, "Verifique os dados enviados");
-            }
+            if (atletica == null) return new HttpRes(400, "Verifique os dados enviados");
 
             try
             {
                 //if (!existeAtletica(id)) return new HttpRes(404, "Não existe nenhum atlética com este id");
 
-                Atletica atleticaDate = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
+                List<AtleticaCurso> atleticaCursoDado = _context.AtleticaCursos
+                    .Include(a => a.Atletica).ThenInclude(a =>a.Campus).ThenInclude(a => a.Faculdade)
+                    .Where(a => a.AtleticaId == id).ToList();
 
-               if(atleticaDate == null ) return new HttpRes(404, "Atletica não encontrada");
+                if(atleticaCursoDado == null) return new HttpRes(404, "Atletica não encontrada");
 
-                atletica.AtleticaId = id;
-                atletica.CampusId = atleticaDate.CampusId;
+                Atletica atleticaDados = atleticaCursoDado[0].Atletica;
 
-                _context.Entry(atleticaDate).CurrentValues.SetValues(atletica);
+                foreach (AtleticaCurso a in atleticaCursoDado)
+                {
+                    _context.Remove(a);
+                }
+
+                atletica.AtleticaId = atleticaDados.AtleticaId;
+                atletica.PIN = atleticaDados.PIN;
+                atletica.Senha = atleticaDados.Senha;
+                atletica.CampusId = atleticaDados.CampusId;
+                atletica.Campus.FaculdadeId = atletica.Campus.FaculdadeId;
+
+                _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
+
+                foreach (int a in CursosId)
+                {
+                    _context.Add(new AtleticaCurso { CursoId = a, Atletica = atletica });
+                }
 
                 _context.SaveChanges();
 
@@ -101,14 +114,6 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarTodos()
         {
             return new HttpRes(200, _context.Atleticas.ToList());
-        }
-
-        public HttpRes Criar(Atletica atletica)
-        {
-            _context.Atleticas.Add(atletica);
-            _context.SaveChanges();
-
-            return new HttpRes(200, atletica);
         }
  
         public HttpRes Deletar(int id)

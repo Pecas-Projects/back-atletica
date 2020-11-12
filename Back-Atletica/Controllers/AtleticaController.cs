@@ -4,6 +4,7 @@ using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
 using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
+using Back_Atletica.Utils.RequestModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -60,22 +61,15 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica")]
-        [HttpPost]
-        public IActionResult Criar([FromBody] Atletica value)
-        {
-            var resultado = _AtleticaBusiness.Criar(value);
-            return resultado.HttpResponse();
-        }
-
         [Authorize]
         [Route("api/Atletica/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Atletica valor)
+        public IActionResult Atualizar(int id, [FromBody] AtleticaModel valor)
         {
-            var userId = HttpToken.GetUserId(HttpContext);
+            Atletica atletica = valor.Transform();
 
-            var resultado = _AtleticaBusiness.Atualizar(id, valor);
+            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds);
+
             return resultado.HttpResponse();
         }
 

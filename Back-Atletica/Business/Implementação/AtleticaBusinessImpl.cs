@@ -1,11 +1,7 @@
-﻿using Back_Atletica.Controllers;
-using Back_Atletica.Models;
+﻿using Back_Atletica.Models;
 using Back_Atletica.Repository;
 using Back_Atletica.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Back_Atletica.Business.Implementação
 {
@@ -19,9 +15,9 @@ namespace Back_Atletica.Business.Implementação
             _AtleticaRepository = atleticaRepository;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
         {
-            return _AtleticaRepository.Atualizar(id, atletica);
+            return _AtleticaRepository.Atualizar(id, atletica, CursosId);
         }
 
         public HttpRes BuscaPorId(int id)
@@ -42,11 +38,6 @@ namespace Back_Atletica.Business.Implementação
         public HttpRes BuscarTodos()
         {
             return _AtleticaRepository.BuscarTodos();
-        }
-
-        public HttpRes Criar(Atletica atletica)
-        {
-            return _AtleticaRepository.Criar(atletica);
         }
 
         public HttpRes Deletar(int id)

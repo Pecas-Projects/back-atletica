@@ -52,7 +52,7 @@ namespace Back_Atletica
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
-          /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
               {
                   options.TokenValidationParameters = new TokenValidationParameters
@@ -65,7 +65,7 @@ namespace Back_Atletica
                       ValidAudience = Env.Issuer,
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret))
                   };
-              }); */
+              }); 
 
   
             services.AddSwaggerGen(c =>
