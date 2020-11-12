@@ -18,32 +18,39 @@ namespace Back_Atletica.Repository.Implementação
         {
             _context = contxt;
         }
+
         public HttpRes Atualizar(int id, Produto produto)
         {
-            if (id != produto.ProdutoId)
+            if (produto == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+                return new HttpRes(400, "Verifique os dados enviados");
             }
-
-            _context.Entry(produto).State = EntityState.Modified;
-
             try
             {
+                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id);
+
+                if (produtoData == null) return new HttpRes(404, "Produto não encontrado");
+
+                produto.ProdutoId = id;
+
+                if (produto.Imagem != null)
+                {
+                    _context.Imagens.Add(produto.Imagem);
+                    _context.SaveChanges();
+                    produto.ImagemId = produto.Imagem.ImagemId;
+                }
+
+                _context.Entry(produtoData).CurrentValues.SetValues(produto);
                 _context.SaveChanges();
+
+                return new HttpRes(200, produto);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!existeProduto(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum produto com este id");
-                }
-                else
-                {
-                    throw;
-                }
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
-            return new HttpRes(200, produto);
         }
 
         public HttpRes BuscarCategorias()
