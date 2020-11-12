@@ -16,6 +16,7 @@ namespace Back_Atletica.Utils.RequestModels
             public string Email { get; set; }
             public int AtleticaId { get; set; }
             public int CursoId { get; set; }
+            public char Genero { get; set; }
             public DateTime AnoEntradaFacul { get; set; }
             public List<int> ModalidadesId { get; set; }
 
@@ -31,6 +32,7 @@ namespace Back_Atletica.Utils.RequestModels
                     AtleticaId = AtleticaId,
                     AnoEntradaFacul = AnoEntradaFacul,
                     CursoId = CursoId,
+                    Genero = Genero,
                     Aprovado = false
                 };
 
