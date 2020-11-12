@@ -24,15 +24,16 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                //if (!existeAtletica(id)) return new HttpRes(404, "Não existe nenhum atlética com este id");
+                Atletica atleticaDados = _context.Atleticas
+                    .Include(a => a.Campus)
+                    .ThenInclude(a => a.Faculdade)
+                    .SingleOrDefault(a => a.AtleticaId == id);
 
-                List<AtleticaCurso> atleticaCursoDado = _context.AtleticaCursos
-                    .Include(a => a.Atletica).ThenInclude(a =>a.Campus).ThenInclude(a => a.Faculdade)
-                    .Where(a => a.AtleticaId == id).ToList();
+                if(atleticaDados == null) return new HttpRes(404, "Atletica não encontrada");
 
-                if(atleticaCursoDado == null) return new HttpRes(404, "Atletica não encontrada");
+                List<AtleticaCurso> atleticaCursoDado = _context.AtleticaCursos.Where(a => a.AtleticaId == id).ToList();
 
-                Atletica atleticaDados = atleticaCursoDado[0].Atletica;
+                if (atleticaCursoDado.Count == 0) return new HttpRes(404, "Atletica não encontrada");
 
                 foreach (AtleticaCurso a in atleticaCursoDado)
                 {
@@ -47,9 +48,13 @@ namespace Back_Atletica.Repository.Implementação
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
 
+                
                 foreach (int a in CursosId)
                 {
-                    _context.Add(new AtleticaCurso { CursoId = a, Atletica = atletica });
+                    AtleticaCurso atleticaCurso = new AtleticaCurso();
+                    atleticaCurso.AtleticaId = id;
+                    atleticaCurso.CursoId = a;
+                    _context.Add(atleticaCurso);
                 }
 
                 _context.SaveChanges();

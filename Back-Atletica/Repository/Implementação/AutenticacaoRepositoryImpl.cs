@@ -128,7 +128,7 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
-        public HttpRes RegistrarAtletica(Atletica atletica)
+        public HttpRes RegistrarAtletica(Atletica atletica, List<int> cursosIds)
         {
             Env hash = new Env();
 
@@ -139,7 +139,10 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.Senha = encrip;
                 atletica.PIN = GerarPIN();
 
-                _context.Add(atletica);
+                foreach(int i in cursosIds)
+                {
+                    _context.Add(new AtleticaCurso { CursoId = i, Atletica = atletica });
+                }
 
                 _context.SaveChanges();
 
