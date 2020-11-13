@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,22 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarPorTodos()
         {
             return new HttpRes(200, _context.Modalidades.ToList());
+        }
+
+        public HttpRes BuscarTodosNaAtletica(int atleticaId)
+        {
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
+
+            if(atletica == null)
+            {
+                return new HttpRes(404, "Atlética não encontrada!");
+            }
+
+            List<AtleticaModalidade> atleticaModalidade = _context.AtleticaModalidades
+                .Where(am => am.AtleticaId == atleticaId).ToList();
+
+           
+            return new HttpRes(200, atleticaModalidade);
         }
 
         public HttpRes BuscarPorId(int id)

@@ -12,6 +12,7 @@ namespace Back_Atletica.Repository
         HttpRes Criar(Modalidade modalidade);
         HttpRes CriarAtleticaModalidade(AtleticaModalidade modalidade);
         HttpRes BuscarPorTodos();
+        HttpRes BuscarTodosNaAtletica(int atleticaId);
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
         bool existeModalidade(int id);
