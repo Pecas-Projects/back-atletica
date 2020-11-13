@@ -1,1 +1,6 @@
-# Resources to provision on app creation
+#klsjhdf
+build:
+  docker:
+    web: Dockerfile
+run:
+  web: bundle exec puma -C config/puma.rb
