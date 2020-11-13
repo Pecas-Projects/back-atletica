@@ -20,6 +20,7 @@ namespace Back_Atletica.Utils.RequestModels
         public int ProdutoCategoriaId { get; set; }
         [Required]
         public int AtleticaId { get; set; }
+        [Required]
         public int ImagemId { get; set; }
         public Produto Transform()
         {
