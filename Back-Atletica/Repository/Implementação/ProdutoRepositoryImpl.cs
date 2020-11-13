@@ -27,7 +27,7 @@ namespace Back_Atletica.Repository.Implementação
             }
             try
             {
-                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id);
+                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id && a.AtleticaId == produto.AtleticaId);
 
                 if (produtoData == null) return new HttpRes(404, "Produto não encontrado");
 
