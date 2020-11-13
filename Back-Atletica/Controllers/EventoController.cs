@@ -30,12 +30,21 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // GET api/<EventoController>/5
+        // GET api/<EventoController>/
         [Route("api/Evento/{eventoId}")]
         [HttpGet]
-        public IActionResult GetEventosAtleticaCategoria(int eventoId)
+        public IActionResult GetEvento(int eventoId)
         {
             var resultado = _EventoBusiness.BuscarEvento(eventoId);
+            return resultado.HttpResponse();
+        }
+
+        // GET api/<EventoController>/
+        [Route("api/Evento/Categorias")]
+        [HttpGet]
+        public IActionResult GetCategoriasEvento()
+        {
+            var resultado = _EventoBusiness.BuscarCategoriasEvento();
             return resultado.HttpResponse();
         }
 
@@ -67,5 +76,7 @@ namespace Back_Atletica.Controllers
             var resultado = _EventoBusiness.DeletarEvento(eventoId);
             return resultado.HttpResponse();
         }
+
     }
+
 }
