@@ -12,6 +12,7 @@ namespace Back_Atletica.Business
         HttpRes Criar(Modalidade modalidade);
         HttpRes CriarAtleticaModalidade(AtleticaModalidade modalidade);
         HttpRes BuscarPorTodos();
+        HttpRes BuscarTodasNaAtletica(int atleticaId);
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
     }
