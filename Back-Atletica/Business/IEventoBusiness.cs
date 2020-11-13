@@ -12,6 +12,7 @@ namespace Back_Atletica.Business
         HttpRes CriarEvento(Evento evento, int atleticaId);
         HttpRes BuscarTodos(int atleticaId);
         HttpRes BuscarEvento(int eventoId);
+        HttpRes BuscarCategoriasEvento();
         HttpRes AtualizarEvento(int eventoId, Evento evento);
         HttpRes DeletarEvento(int eventoId);
     }

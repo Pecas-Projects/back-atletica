@@ -46,6 +46,13 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
+        public HttpRes BuscarCategoriasEvento()
+        {
+            List<EventoCategoria> eventoCategorias = _context.EventoCategorias.ToList();
+
+            return new HttpRes(200, eventoCategorias);
+        }
+
         public HttpRes BuscarEvento(int eventoId)
         {
             Evento evento= _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
