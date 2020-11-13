@@ -47,6 +47,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/Publicacao/{id}")]
         [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] PublicacaoModel valor)
