@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +22,10 @@ namespace Back_Atletica.Controllers
 
         [Route("api/Publicacao")]
         [HttpPost]
-        public IActionResult Criar([FromBody] Publicacao value)
+        public IActionResult Criar([FromBody] PublicacaoModel value)
         {
-            var resultado = _PublicacaoBusiness.Criar(value);
+            Publicacao publicacao = value.Transform();
+            var resultado = _PublicacaoBusiness.Criar(publicacao);
             return resultado.HttpResponse();
         }
 
