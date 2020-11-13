@@ -65,8 +65,7 @@ namespace Back_Atletica
                       ValidAudience = Env.Issuer,
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret))
                   };
-              });
-
+              }); 
 
             services.AddSwaggerGen(c =>
             {
