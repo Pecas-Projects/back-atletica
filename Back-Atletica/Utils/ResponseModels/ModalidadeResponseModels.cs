@@ -13,7 +13,7 @@ namespace Back_Atletica.Utils.ResponseModels
             public string Modalidade { get; set; }
             public ImagemResponseModel ImagemModalidade { get; set; }
             public string Coordenador { get; set; }
-            public List<AgendaTreino> AgendaTreinos { get; set; }
+            public List<Treinos> AgendaTreinos { get; set; }
 
             public List<ModalidadesAtletica> Transform(List<AtleticaModalidade> atleticaModalidade)
             {
@@ -23,13 +23,14 @@ namespace Back_Atletica.Utils.ResponseModels
                 foreach(var a in atleticaModalidade)
                 {
                     ImagemResponseModel img = new ImagemResponseModel();
+                    Treinos treinos = new Treinos();
 
                     ModalidadesAtletica m = new ModalidadesAtletica
                     {
                         Modalidade = a.Modalidade.Nome,
                         ImagemModalidade = a.Imagem != null ? img.Transform(a.Imagem) : null,
                         Coordenador = a.Membro.Pessoa.Nome,
-                        AgendaTreinos = new List<AgendaTreino>(a.AgendaTreinos)
+                        AgendaTreinos = a.AgendaTreinos != null ? treinos.Transform(a.AgendaTreinos) : null
                     };
 
                     ma.Add(m);
@@ -52,6 +53,31 @@ namespace Back_Atletica.Utils.ResponseModels
                 };
 
                 return membro;
+            }
+        }
+
+        public class Treinos
+        {
+            public string DiaSemana { get; set; }
+            public TimeSpan? HoraInicio { get; set; }
+            
+            public List<Treinos> Transform(ICollection<AgendaTreino> agenda)
+            {
+                List<Treinos> treinos = new List<Treinos>();
+
+                foreach(var a in agenda)
+                {
+                    Treinos treino = new Treinos
+                    {
+                        DiaSemana = a.DiaSemana,
+                        HoraInicio = a.HoraInicio
+                    };
+
+                    treinos.Add(treino);
+                }
+                
+
+                return treinos;
             }
         }
 
