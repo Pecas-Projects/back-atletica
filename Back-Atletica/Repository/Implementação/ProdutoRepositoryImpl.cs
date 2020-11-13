@@ -33,13 +33,6 @@ namespace Back_Atletica.Repository.Implementação
 
                 produto.ProdutoId = id;
 
-                if (produto.Imagem != null)
-                {
-                    _context.Imagens.Add(produto.Imagem);
-                    _context.SaveChanges();
-                    produto.ImagemId = produto.Imagem.ImagemId;
-                }
-
                 _context.Entry(produtoData).CurrentValues.SetValues(produto);
                 _context.SaveChanges();
 
