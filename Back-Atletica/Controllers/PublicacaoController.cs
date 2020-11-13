@@ -39,13 +39,13 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Publicacao/{id}")]
-        [HttpGet]
-        public IActionResult BuscarPorId(int id)
-        {
-            var resultado = _PublicacaoBusiness.BuscarPorId(id);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Publicacao/{id}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorId(int id)
+        //{
+        //    var resultado = _PublicacaoBusiness.BuscarPorId(id);
+        //    return resultado.HttpResponse();
+        //}
 
         [Authorize]
         [Route("api/Publicacao/{id}")]
