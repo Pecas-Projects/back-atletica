@@ -25,6 +25,14 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, modalidade);
         }
 
+        public HttpRes CriarAtleticaModalidade(AtleticaModalidade modalidade)
+        {
+            _context.AtleticaModalidades.Add(modalidade);
+            _context.SaveChanges();
+
+            return new HttpRes(200, modalidade);
+        }
+
         public HttpRes Deletar(int id)
         {
             var modalidade = _context.Modalidades.Find(id);
@@ -58,5 +66,6 @@ namespace Back_Atletica.Repository.Implementação
         {
             return _context.Modalidades.Any(a => a.ModalidadeId == id);
         }
+
     }
 }
