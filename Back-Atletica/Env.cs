@@ -7,6 +7,7 @@ namespace Back_Atletica
 {
     public class Env
     {
+        //public static string ConnString = "User ID = postgres; Password=0; Host=localhost;Port=5432; Database=Olympos-db;";
         //Davi string
         //public static string ConnString = "User ID = postgres; Password=password; Host=localhost;Port=5432; Database=Olympos;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;";
         //Atari string
