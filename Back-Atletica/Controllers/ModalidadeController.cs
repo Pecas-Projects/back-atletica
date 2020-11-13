@@ -42,6 +42,15 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/{atleticaId}/Modalidade")]
+        [HttpGet]
+        public IActionResult GetAll(int atleticaId)
+        {
+            var resultado = _ModalidadeBusiness.BuscarTodasNaAtletica(atleticaId);
+
+            return resultado.HttpResponse();
+        }
+
         // POST api/<ModalidadeController>
         [Route("api/Modalidade")]
         [HttpPost]
