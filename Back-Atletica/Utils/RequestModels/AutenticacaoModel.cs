@@ -89,6 +89,8 @@ namespace Back_Atletica.Utils.RequestModels
             [Required]
             public PessoaModel Pessoa { get; set; }
 
+            
+
             public Membro Transform()
             {
                 Membro membro = new Membro
@@ -102,5 +104,6 @@ namespace Back_Atletica.Utils.RequestModels
             }
         }
     }
+
 
 }

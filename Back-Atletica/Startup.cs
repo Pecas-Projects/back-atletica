@@ -67,7 +67,6 @@ namespace Back_Atletica
                   };
               }); 
 
-  
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -101,7 +100,7 @@ namespace Back_Atletica
             services.AddScoped<IAtletaRepository, AtletaRepositpryImpl>();
             services.AddScoped<IEventoBusiness, EventoBusinessImpl>();
             services.AddScoped<IEventoRepository, EventoRepositoryImpl>();
-            services.AddScoped<ISolicitacaoAtletaBusiness,SolicitacaoAtletaBusinessImpl>();
+            services.AddScoped<ISolicitacaoAtletaBusiness, SolicitacaoAtletaBusinessImpl>();
             services.AddScoped<ISolicitacaoAtletaRepository, SolicitacaoAtletaRepositoryImpl>();
 
         }

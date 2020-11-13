@@ -140,7 +140,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             return _context.Atleticas.Any(a => a.AtleticaId == id);
         }
-
+        
         public HttpRes ResetPin(int atleticaId)
         {
             try
@@ -160,6 +160,7 @@ namespace Back_Atletica.Repository.Implementação
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
+
         }
     }
 }

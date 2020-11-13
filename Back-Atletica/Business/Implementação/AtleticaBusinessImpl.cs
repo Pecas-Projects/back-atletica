@@ -49,5 +49,15 @@ namespace Back_Atletica.Business.Implementação
         {
             return _AtleticaRepository.ResetPin(atleticaId);
         }
+
+        public HttpRes RankingAtleticas(int modalidadeId)
+        {
+            return _AtleticaRepository.RankingAtleticas(modalidadeId);
+        }
+
+        public HttpRes RenovarPIN(int id)
+        {
+            return _AtleticaRepository.RenovarPIN(id);
+        }
     }
 }
