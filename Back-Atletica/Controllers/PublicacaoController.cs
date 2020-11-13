@@ -7,6 +7,7 @@ using Back_Atletica.Models;
 using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Back_Atletica.Controllers
 {
@@ -20,6 +21,7 @@ namespace Back_Atletica.Controllers
             _PublicacaoBusiness = publicacaoBusiness;
         }
 
+        [Authorize]
         [Route("api/Publicacao")]
         [HttpPost]
         public IActionResult Criar([FromBody] PublicacaoModel value)
