@@ -147,8 +147,7 @@ namespace Back_Atletica.Repository.Implementação
             context.Membros.Remove(membro);
             context.SaveChanges();
 
-            atletica.RenovarPIN(pessoa.AtleticaId);
-
+            //atletica.RenovarPIN(pessoa.AtleticaId);
 
             return new HttpRes(204);
         }

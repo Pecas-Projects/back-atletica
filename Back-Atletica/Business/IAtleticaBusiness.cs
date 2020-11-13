@@ -13,5 +13,7 @@ namespace Back_Atletica.Business
         HttpRes Deletar(int atleticaId);
         HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId);
         HttpRes ResetPin(int atleticaId);
+        HttpRes RemoverMembro(int membroId, int atleticaId);
+        HttpRes RankingAtleticas(int modalidadeId, int alteticaId);
     }
 }

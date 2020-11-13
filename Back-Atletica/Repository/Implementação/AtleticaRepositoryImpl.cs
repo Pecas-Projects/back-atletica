@@ -76,23 +76,37 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(a => a.Pessoas).ThenInclude(a => a.Membro).ThenInclude(a => a.Imagem)
                 .SingleOrDefault(a => a.AtleticaId == id);
 
+            var qAtletica = from a in _context.Atleticas
+                            join
+                            c in _context.Campus on a.CampusId equals c.CampusId
+                            join
+                            f in _context.Faculdades on c.FaculdadeId equals f.FaculdadeId
+                            join
+                            p in _context.Pessoas on a.AtleticaId equals p.AtleticaId
+                            where p.Tipo != "A"
+                            join
+                            m in _context.Membros on p.PessoaId equals m.PessoaId
+                            select new { a }; 
+                            
+
+
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
 
-            if(atletica.Pessoas != null)
-            {
-                List<Pessoa> pessoas = new List<Pessoa>();
+            //if(atletica.Pessoas != null)
+            //{
+            //    List<Pessoa> pessoas = new List<Pessoa>();
 
-                foreach (Pessoa p in atletica.Pessoas)
-                {
-                    if (p.Tipo != "A") pessoas.Add(p);
-                }
-                atletica.Pessoas = pessoas;
-
-            }
+            //    foreach (Pessoa p in atletica.Pessoas)
+            //    {
+            //        if (p.Tipo != "A") pessoas.Add(p);
+            //    }
+            //    atletica.Pessoas = pessoas;
+            //}
 
             AtleticaPorId result = new AtleticaPorId();
 
-            return new HttpRes(200, result.Transform(atletica));
+            //return new HttpRes(200, result.Transform(atletica));
+            return new HttpRes(200, qAtletica);
         }
 
         public HttpRes BuscaPorInstituicao(int faculdadeId)
@@ -140,7 +154,29 @@ namespace Back_Atletica.Repository.Implementação
         {
             return _context.Atleticas.Any(a => a.AtleticaId == id);
         }
-        
+
+        public HttpRes RankingAtleticas(int modalidadeId, int alteticaId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes RemoverMembro(int membroId, int atleticaId)
+        {
+            try
+            {
+                bool exist = _context.Pessoas.Any(a => a.Membro.MembroId == membroId && a.AtleticaId == atleticaId);
+                if (!exist) return new HttpRes(404, "Membro não encontrado");
+
+
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+            throw new NotImplementedException();
+        }
+
         public HttpRes ResetPin(int atleticaId)
         {
             try
