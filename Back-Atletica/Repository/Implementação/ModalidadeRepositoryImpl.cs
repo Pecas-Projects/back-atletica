@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.ModalidadeResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -63,10 +64,15 @@ namespace Back_Atletica.Repository.Implementação
             }
 
             List<AtleticaModalidade> atleticaModalidade = _context.AtleticaModalidades
+                .Include(am => am.Modalidade)
+                .Include(am => am.Imagem)
+                .Include(am => am.AgendaTreinos)
+                .Include(am => am.Membro).ThenInclude(a => a.Pessoa)
                 .Where(am => am.AtleticaId == atleticaId).ToList();
 
+            ModalidadesAtletica atleticaModalidades = new ModalidadesAtletica();
            
-            return new HttpRes(200, atleticaModalidade);
+            return new HttpRes(200, atleticaModalidades.Transform(atleticaModalidade));
         }
 
         public HttpRes BuscarPorId(int id)
