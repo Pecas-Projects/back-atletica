@@ -597,7 +597,7 @@ namespace Back_Atletica.Data
         public void Start()
         {
             this.Database.EnsureCreated();
-            this.Database.Migrate();
+           // this.Database.Migrate();
         }
 
     }
