@@ -48,7 +48,6 @@ namespace Back_Atletica.Repository.Implementação
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
 
-                
                 foreach (int a in CursosId)
                 {
                     AtleticaCurso atleticaCurso = new AtleticaCurso();
@@ -121,9 +120,11 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, _context.Atleticas.ToList());
         }
  
-        public HttpRes Deletar(int id)
+        public HttpRes Deletar(int atleticaId)
         {
-            var atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == id);
+            
+            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
+
             if (atletica == null)
             {
                 return new HttpRes(404, "Atletica não encontrada");

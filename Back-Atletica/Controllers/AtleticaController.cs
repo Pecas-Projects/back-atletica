@@ -73,11 +73,16 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica/{id}")]
+        [Authorize]
+        [Route("api/Atletica/{atleticaId}")]
         [HttpDelete]
-        public IActionResult Deletar(int id)
+        public IActionResult Deletar(int atleticaId)
         {
-            var result = _AtleticaBusiness.Deletar(id);
+            var userId = HttpToken.GetUserId(HttpContext);
+
+            if (atleticaId != userId) return new HttpRes(401, "Você nao corresponde a atletica que deseja deletar").HttpResponse();
+
+            var result = _AtleticaBusiness.Deletar(atleticaId);
             return result.HttpResponse();
         }
     }

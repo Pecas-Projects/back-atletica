@@ -40,9 +40,9 @@ namespace Back_Atletica.Business.Implementação
             return _AtleticaRepository.BuscarTodos();
         }
 
-        public HttpRes Deletar(int id)
+        public HttpRes Deletar(int atleticaId)
         {
-            return _AtleticaRepository.Deletar(id);
+            return _AtleticaRepository.Deletar(atleticaId);
         }
     }
 }
