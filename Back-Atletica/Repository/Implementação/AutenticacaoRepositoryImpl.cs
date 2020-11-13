@@ -25,18 +25,6 @@ namespace Back_Atletica.Repository.Implementação
         {
             _context = context;
         }
-
-        public string GerarPIN()
-        {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var random = new Random();
-            var result = new string(
-                Enumerable.Repeat(chars, 5)
-                          .Select(s => s[random.Next(s.Length)])
-                          .ToArray());
-            return result;
-        }
-
         public HttpRes LoginAtletica(Atletica atletica)
         {
             Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
@@ -137,7 +125,7 @@ namespace Back_Atletica.Repository.Implementação
                 string encrip = hash.Encriptografia(atletica.Senha);
 
                 atletica.Senha = encrip;
-                atletica.PIN = GerarPIN();
+                atletica.PIN = new AtleticaPin().GerarPIN();
 
                 foreach(int i in cursosIds)
                 {

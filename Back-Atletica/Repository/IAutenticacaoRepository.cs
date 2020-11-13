@@ -15,6 +15,5 @@ namespace Back_Atletica.Repository
         HttpRes LoginMembro(Membro membro);
         HttpRes ResetarSenhaAtletica(string email);
         HttpRes MudancaSenha(int id, string senha);
-        string GerarPIN();
     }
 }
