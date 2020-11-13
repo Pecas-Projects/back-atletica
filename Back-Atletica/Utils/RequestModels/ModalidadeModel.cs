@@ -12,8 +12,9 @@ namespace Back_Atletica.Utils.RequestModels
 
         public class ModalidadeAtletica
         {
-            [Required]
+            
             public int CoordenadorId { get; set; }
+
             [Required]
             public int ModalidadeId { get; set; }
 
