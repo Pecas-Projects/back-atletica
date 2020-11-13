@@ -27,18 +27,11 @@ namespace Back_Atletica.Repository.Implementação
             }
             try
             {
-                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id);
+                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id && a.AtleticaId == produto.AtleticaId);
 
                 if (produtoData == null) return new HttpRes(404, "Produto não encontrado");
 
                 produto.ProdutoId = id;
-
-                if (produto.Imagem != null)
-                {
-                    _context.Imagens.Add(produto.Imagem);
-                    _context.SaveChanges();
-                    produto.ImagemId = produto.Imagem.ImagemId;
-                }
 
                 _context.Entry(produtoData).CurrentValues.SetValues(produto);
                 _context.SaveChanges();
