@@ -44,5 +44,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _AtleticaRepository.Deletar(atleticaId);
         }
+
+        public HttpRes ResetPin(int atleticaId)
+        {
+            return _AtleticaRepository.ResetPin(atleticaId);
+        }
     }
 }

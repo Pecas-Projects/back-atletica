@@ -140,5 +140,26 @@ namespace Back_Atletica.Repository.Implementação
         {
             return _context.Atleticas.Any(a => a.AtleticaId == id);
         }
+
+        public HttpRes ResetPin(int atleticaId)
+        {
+            try
+            {
+                Atletica atleticaDado = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
+
+                Atletica atletica = atleticaDado;
+                atletica.PIN = new AtleticaPin().GerarPIN();
+
+                _context.Entry(atleticaDado).CurrentValues.SetValues(atletica);
+
+                return new HttpRes(200, atletica);
+
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+        }
     }
 }

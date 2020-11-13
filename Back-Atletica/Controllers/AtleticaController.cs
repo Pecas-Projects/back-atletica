@@ -74,6 +74,16 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
+        [Route("api/Atletica/ResetPin/{atleticaId}")]
+        [HttpPut]
+        public IActionResult ResetPin(int atleticaId)
+        {
+            HttpRes resultado = _AtleticaBusiness.ResetPin(atleticaId);
+
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
         [Route("api/Atletica/{atleticaId}")]
         [HttpDelete]
         public IActionResult Deletar(int atleticaId)

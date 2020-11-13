@@ -1,11 +1,8 @@
 ﻿using Back_Atletica.Models;
 using Back_Atletica.Utils;
-using System.Security.Cryptography;
-using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Back_Atletica.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
