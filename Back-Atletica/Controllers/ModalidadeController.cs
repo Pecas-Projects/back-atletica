@@ -6,6 +6,7 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using static Back_Atletica.Utils.RequestModels.ModalidadeModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,6 +52,16 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/{atleticaId}/Modalidade")]
+        [HttpPost]
+        public IActionResult CriarAtleticaModalidade([FromBody] ModalidadeAtletica modalidade, int atleticaId)
+        {
+            AtleticaModalidade atleticaModalidade = modalidade.Transform(atleticaId);
+
+            var resultado = _ModalidadeBusiness.CriarAtleticaModalidade(atleticaModalidade);
+
+            return resultado.HttpResponse();
+        }
 
         // DELETE api/<ModalidadeController>/5
         [Route("api/Modalidade/{id}")]
