@@ -17,6 +17,10 @@ namespace Back_Atletica.Business.Implementação
             _ModalidadeRepository = modalidadeRepository;
         }
 
+        public HttpRes CriarAtleticaModalidade(AtleticaModalidade modalidade)
+        {
+            return _ModalidadeRepository.CriarAtleticaModalidade(modalidade);
+        }
 
         public HttpRes Criar(Modalidade modalidade)
         {
@@ -37,5 +41,6 @@ namespace Back_Atletica.Business.Implementação
         {
             return _ModalidadeRepository.BuscarPorId(id);
         }
+
     }
 }
