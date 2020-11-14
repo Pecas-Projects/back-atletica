@@ -81,5 +81,14 @@ namespace Back_Atletica.Controllers
 
             return resultado.HttpResponse();
         }
+
+        [Route("api/{atleticaId}/Modalidade/{modalidadeId}")]
+        [HttpDelete]
+        public IActionResult ExcluiModalidadeAtletica(int atleticaId, int modalidadeId)
+        {
+            var resultado = _ModalidadeBusiness.ExcluiModalidadeAtletica(atleticaId, modalidadeId);
+
+            return resultado.HttpResponse();
+        }
     }
 }
