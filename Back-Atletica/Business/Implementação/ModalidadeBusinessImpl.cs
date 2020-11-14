@@ -46,5 +46,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _ModalidadeRepository.BuscarTodosNaAtletica(atleticaId);
         }
+
+        public HttpRes ExcluiModalidadeAtletica(int atleticaId, int modalidadeId)
+        {
+            return _ModalidadeRepository.ExcluiModalidade(atleticaId, modalidadeId);
+        }
     }
 }
