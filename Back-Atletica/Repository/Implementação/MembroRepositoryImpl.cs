@@ -130,10 +130,9 @@ namespace Back_Atletica.Repository.Implementação
             Membro membro = new Membro();
             Pessoa pessoa = new Pessoa();
             
-            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
 
             membro = context.Membros.SingleOrDefault(m => m.MembroId == id);
-            pessoa = context.Pessoas.SingleOrDefault(p => p.PessoaId == membro.PessoaId);
+            pessoa = context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
 
             if(pessoa.Tipo == "AM")
             {
@@ -145,9 +144,11 @@ namespace Back_Atletica.Repository.Implementação
             }
 
             context.Membros.Remove(membro);
+            pessoa.Atletica.PIN = new AtleticaPin().GerarPIN(); 
+
             context.SaveChanges();
 
-            //atletica.RenovarPIN(pessoa.AtleticaId);
+            
 
             return new HttpRes(204);
         }
