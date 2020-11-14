@@ -90,5 +90,9 @@ namespace Back_Atletica.Repository.Implementação
             return _context.Modalidades.Any(a => a.ModalidadeId == id);
         }
 
+        public HttpRes ExcluiModalidade(int atleticaId, int modalidadeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
