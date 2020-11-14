@@ -49,6 +49,21 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(204);
         }
 
+        public HttpRes ExcluiModalidade(int atleticaModalidadeId)
+        {
+            AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
+
+            if (modalidade == null)
+            {
+                return new HttpRes(404, "Modalidade não encontrada");
+            }
+
+            _context.AtleticaModalidades.Remove(modalidade);
+            _context.SaveChanges();
+
+            return new HttpRes(204);
+        }
+
         public HttpRes BuscarPorTodos()
         {
             return new HttpRes(200, _context.Modalidades.ToList());
@@ -90,9 +105,5 @@ namespace Back_Atletica.Repository.Implementação
             return _context.Modalidades.Any(a => a.ModalidadeId == id);
         }
 
-        public HttpRes ExcluiModalidade(int atleticaId, int modalidadeId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
