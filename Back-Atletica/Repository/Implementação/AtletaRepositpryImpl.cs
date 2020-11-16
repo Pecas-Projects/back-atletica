@@ -81,7 +81,7 @@ namespace Back_Atletica.Repository.Implementação
 
             var query = from aam in atletaAtleticaModalidades
                         join
-                       a in _context.Atletas on aam.AtletaId equals a.AtletaId
+                        a in _context.Atletas on aam.AtletaId equals a.AtletaId
                         join
                         p in _context.Pessoas on a.PessoaId equals p.PessoaId
 
@@ -187,7 +187,25 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
-            throw new NotImplementedException();
+
+            List<AtleticaModalidade> atleticaModalidades = _context.AtleticaModalidades
+                .Where(a => a.AtleticaId == atleticaId && a.ModalidadeId != modalidadeId)
+                .ToList();
+
+            var query = (from am in atleticaModalidades
+                         join
+                         aam in _context.AtletaAtleticaModalidades on am.AtleticaModalidadeId equals aam.AtleticaModalidadeId
+                         join
+                         a in _context.Atletas on aam.AtletaId equals a.AtletaId
+                         join
+                         p in _context.Pessoas on a.PessoaId equals p.PessoaId
+                         select new
+                         {
+                             a.AtletaId,
+                             p.Nome
+                         }).Distinct();
+
+            return new HttpRes(200, query);
         }
     }
 }
