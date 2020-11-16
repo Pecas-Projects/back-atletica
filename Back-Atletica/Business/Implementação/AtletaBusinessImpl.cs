@@ -17,7 +17,12 @@ namespace Back_Atletica.Business.Implementação
         {
             _atletaRepository = atletaRepository;
         }
-       
+
+        public HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
+        {
+            return _atletaRepository.AdicionarAtletaModalidade(atletaId, atleticaModalidadeId);
+        }
+
         public HttpRes Atualizar(int atletaID, Atleta atleta)
         {
             return _atletaRepository.Atualizar(atletaID, atleta);
@@ -43,6 +48,11 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.BuscaPorModalidade(modalidadeID, atleticaID);
         }
 
+        public HttpRes BuscarForaModalidade(int atleticaModalidadeId)
+        {
+            return _atletaRepository.BuscarForaModalidade(atleticaModalidadeId);
+        }
+
         public HttpRes BuscarPorJogo(int JogoID)
         {
             return _atletaRepository.BuscaPorJogo(JogoID);
@@ -61,6 +71,11 @@ namespace Back_Atletica.Business.Implementação
         public HttpRes Deletar(int atletaID)
         {
             return _atletaRepository.Deletar(atletaID);
+        }
+
+        public HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
+        {
+            return _atletaRepository.RemoverAtletaModalidade(atletaAtleticaModalidadeId);
         }
     }
 }

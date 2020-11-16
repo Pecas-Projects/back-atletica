@@ -10,7 +10,7 @@ using static Back_Atletica.Utils.RequestModels.AtletaModel;
 
 namespace Back_Atletica.Controllers
 {
-    
+
     [ApiController]
     public class AtletaController : ControllerBase
     {
@@ -23,11 +23,11 @@ namespace Back_Atletica.Controllers
 
         [Route("api/AtletaAtletica/{atleticaID}")]
         [HttpGet]
-        public IActionResult BuscarTodos (int atleticaID)
+        public IActionResult BuscarTodos(int atleticaID)
         {
             var resultado = _AtletaBusiness.BuscarTodos(atleticaID);
             return resultado.HttpResponse();
-            
+
         }
 
         [Route("api/Atleta/{atletaID}")]
@@ -93,6 +93,30 @@ namespace Back_Atletica.Controllers
         public IActionResult Delete(int atletaID)
         {
             var resultado = _AtletaBusiness.Deletar(atletaID);
+            return resultado.HttpResponse();
+        }
+
+        [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
+        [HttpPost]
+        public IActionResult AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
+        {
+            var resultado = _AtletaBusiness.AdicionarAtletaModalidade(atletaId, atleticaModalidadeId);
+            return resultado.HttpResponse();
+        }
+
+        [Route("api/AtletaModalidade/{atletaAtleticaModalidadeId}")]
+        [HttpDelete]
+        public IActionResult RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
+        {
+            var resultado = _AtletaBusiness.RemoverAtletaModalidade(atletaAtleticaModalidadeId);
+            return resultado.HttpResponse();
+        }
+
+        [Route("api/AtletaModalidade/{atleticaModalidadeId}")]
+        [HttpGet]
+        public IActionResult BuscarForaModalidade(int atleticaModalidadeId)
+        {
+            var resultado = _AtletaBusiness.BuscarForaModalidade(atleticaModalidadeId);
             return resultado.HttpResponse();
         }
     }

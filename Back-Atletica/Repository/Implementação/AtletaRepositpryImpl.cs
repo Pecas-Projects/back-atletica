@@ -163,5 +163,20 @@ namespace Back_Atletica.Repository.Implementação
 
             return existe;
         }
+
+        public HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpRes BuscarForaModalidade(int atleticaModalidadeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
