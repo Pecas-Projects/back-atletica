@@ -21,22 +21,22 @@ namespace Back_Atletica.Controllers
             _AtletaBusiness = atletaBusiness;
         }
 
-        [Route("api/AtletaAtletica/{atleticaID}")]
-        [HttpGet]
-        public IActionResult BuscarTodos(int atleticaID)
-        {
-            var resultado = _AtletaBusiness.BuscarTodos(atleticaID);
-            return resultado.HttpResponse();
+        //[Route("api/AtletaAtletica/{atleticaID}")]
+        //[HttpGet]
+        //public IActionResult BuscarTodos (int atleticaID)
+        //{
+        //    var resultado = _AtletaBusiness.BuscarTodos(atleticaID);
+        //    return resultado.HttpResponse();
 
-        }
+        //}
 
-        [Route("api/Atleta/{atletaID}")]
-        [HttpGet]
-        public IActionResult BuscarPorID(int atletaID)
-        {
-            var resultado = _AtletaBusiness.BuscaPorID(atletaID);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Atleta/{atletaID}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorID(int atletaID)
+        //{
+        //    var resultado = _AtletaBusiness.BuscaPorID(atletaID);
+        //    return resultado.HttpResponse();
+        //}
 
         [Route("api/AtletaModalidade/{atleticaID}/{modalidadeID}")]
         [HttpGet]
@@ -46,55 +46,55 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/AtletaJogo/{jogoID}")]
-        [HttpGet]
-        public IActionResult BuscarPorJogo(int JogoID)
-        {
-            var resultado = _AtletaBusiness.BuscaPorJogo(JogoID);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/AtletaJogo/{jogoID}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorJogo(int JogoID)
+        //{
+        //    var resultado = _AtletaBusiness.BuscaPorJogo(JogoID);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Route("api/AtletaAtivo/{atleticaID}")]
-        [HttpGet]
-        public IActionResult BuscarAtivo(int atleticaID)
-        {
-            var resultado = _AtletaBusiness.BuscaAtivos(atleticaID);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/AtletaAtivo/{atleticaID}")]
+        //[HttpGet]
+        //public IActionResult BuscarAtivo(int atleticaID)
+        //{
+        //    var resultado = _AtletaBusiness.BuscaAtivos(atleticaID);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Route("api/Atleta")]
-        [HttpPost]
-        public IActionResult CriarAtleta([FromBody] Atleta value)
-        {
-            var resultado = _AtletaBusiness.CriarAtleta(value);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Atleta")]
+        //[HttpPost]
+        //public IActionResult CriarAtleta([FromBody] Atleta value)
+        //{
+        //    var resultado = _AtletaBusiness.CriarAtleta(value);
+        //    return resultado.HttpResponse();
+        //}
 
-        /// <summary>
-        /// Atualizar Atleta
-        /// </summary>
-        /// <param name="atletaId">ID do atleta que será atualizado</param>
-        /// <returns>Atleta atualizado</returns>
-        /// <response code="200">Objeto criado no banco</response>
-        /// <response code="400">Erro na validação dos dados</response>
-        [ProducesResponseType(typeof(AtualizarAtletaModel), 200)]
-        [Route("api/Atleta/{atletaID}")]
-        [HttpPut]
-        public IActionResult Atualizar(int atletaID, [FromBody] AtualizarAtletaModel value)
-        {
-            Atleta atleta = value.Transform();
+        ///// <summary>
+        ///// Atualizar Atleta
+        ///// </summary>
+        ///// <param name="atletaId">ID do atleta que será atualizado</param>
+        ///// <returns>Atleta atualizado</returns>
+        ///// <response code="200">Objeto criado no banco</response>
+        ///// <response code="400">Erro na validação dos dados</response>
+        //[ProducesResponseType(typeof(AtualizarAtletaModel), 200)]
+        //[Route("api/Atleta/{atletaID}")]
+        //[HttpPut]
+        //public IActionResult Atualizar(int atletaID, [FromBody] AtualizarAtletaModel value)
+        //{
+        //    Atleta atleta = value.Transform();
 
-            var resultado = _AtletaBusiness.Atualizar(atletaID, atleta);
-            return resultado.HttpResponse();
-        }
+        //    var resultado = _AtletaBusiness.Atualizar(atletaID, atleta);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Route("api/Atleta/{atletaID}")]
-        [HttpDelete]
-        public IActionResult Delete(int atletaID)
-        {
-            var resultado = _AtletaBusiness.Deletar(atletaID);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Atleta/{atletaID}")]
+        //[HttpDelete]
+        //public IActionResult Delete(int atletaID)
+        //{
+        //    var resultado = _AtletaBusiness.Deletar(atletaID);
+        //    return resultado.HttpResponse();
+        //}
 
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
         [HttpPost]
