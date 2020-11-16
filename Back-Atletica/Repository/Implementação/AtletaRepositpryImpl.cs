@@ -72,16 +72,12 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, atleta);
         }
 
-        public HttpRes BuscaPorModalidade(int modalidadeID, int atleticaID)
+        public HttpRes BuscaPorModalidade(int atleticaModalidadeId)
         {
-            List<AtletaAtleticaModalidade> atletaAtleticaModalidades = new List<AtletaAtleticaModalidade>();
-            AtleticaModalidade atleticaModalidade = new AtleticaModalidade();
 
-            atleticaModalidade = _context.AtleticaModalidades.SingleOrDefault(m => m.ModalidadeId == modalidadeID && m.AtleticaId == atleticaID);
-
-            if (atleticaModalidade == null) return new HttpRes(404, "AtleticaModalidae não encontrada");
-
-            atletaAtleticaModalidades = _context.AtletaAtleticaModalidades.Where(a => a.AtleticaModalidadeId == atleticaModalidade.AtleticaModalidadeId).ToList();
+            List<AtletaAtleticaModalidade> atletaAtleticaModalidades = _context.AtletaAtleticaModalidades
+                .Where(a => a.AtleticaModalidadeId == atleticaModalidadeId)
+                .ToList();
 
             var query = from aam in atletaAtleticaModalidades
                         join

@@ -38,11 +38,11 @@ namespace Back_Atletica.Controllers
         //    return resultado.HttpResponse();
         //}
 
-        [Route("api/AtletaModalidade/{atleticaID}/{modalidadeID}")]
+        [Route("api/AtletaModalidade/{atleticaModalidadeId}")]
         [HttpGet]
-        public IActionResult BuscarPorModalidade(int modalidadeID, int atleticaID)
+        public IActionResult BuscarPorModalidade(int atleticaModalidadeId)
         {
-            var resultado = _AtletaBusiness.BuscaPorModalidade(modalidadeID, atleticaID);
+            var resultado = _AtletaBusiness.BuscaPorModalidade(atleticaModalidadeId);
             return resultado.HttpResponse();
         }
 
@@ -113,7 +113,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/AtletaModalidade/{atleticaModalidadeId}")]
+        [Route("api/AtletaModalidades/{atleticaModalidadeId}")]
         [HttpGet]
         public IActionResult BuscarForaModalidade(int atleticaModalidadeId)
         {
