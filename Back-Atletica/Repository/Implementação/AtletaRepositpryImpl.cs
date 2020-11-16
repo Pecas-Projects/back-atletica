@@ -185,7 +185,7 @@ namespace Back_Atletica.Repository.Implementação
             throw new NotImplementedException();
         }
 
-        public HttpRes BuscarForaModalidade(int atleticaModalidadeId)
+        public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
             throw new NotImplementedException();
         }
