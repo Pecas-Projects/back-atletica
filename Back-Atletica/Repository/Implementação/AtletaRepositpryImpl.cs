@@ -89,7 +89,14 @@ namespace Back_Atletica.Repository.Implementação
                         join
                         p in _context.Pessoas on a.PessoaId equals p.PessoaId
 
-                        select new { p };
+                        select new
+                        {
+                            aam.AtletaAtleticaModalidadeId,
+                            aam.AtleticaModalidadeId,
+                            a.AtletaId,
+                            p.PessoaId,
+                            p.Nome
+                        };
 
             return new HttpRes(200, query);
 
