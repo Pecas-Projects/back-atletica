@@ -96,6 +96,7 @@ namespace Back_Atletica.Controllers
         //    return resultado.HttpResponse();
         //}
 
+        [Authorize]
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
         [HttpPost]
         public IActionResult AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)

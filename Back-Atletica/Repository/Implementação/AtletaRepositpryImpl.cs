@@ -20,7 +20,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Atleta atleta)
         {
-            if(atleta == null)
+            if (atleta == null)
             {
                 return new HttpRes(400, "Verifique os dados enviados");
             }
@@ -38,7 +38,7 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(200, atleta);
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
@@ -52,7 +52,7 @@ namespace Back_Atletica.Repository.Implementação
 
             atletica = _context.Atleticas.Find(atleticaID);
 
-            if( atletica == null) return new HttpRes(404, "Atletica não encontrada");
+            if (atletica == null) return new HttpRes(404, "Atletica não encontrada");
 
             var atletas = new List<Pessoa>();
 
@@ -86,8 +86,8 @@ namespace Back_Atletica.Repository.Implementação
             var query = from aam in atletaAtleticaModalidades
                         join
                        a in _context.Atletas on aam.AtletaId equals a.AtletaId
-                       join 
-                       p in _context.Pessoas on a.PessoaId equals p.PessoaId
+                        join
+                        p in _context.Pessoas on a.PessoaId equals p.PessoaId
 
                         select new { p };
 
@@ -97,7 +97,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscaPorJogo(int JogoId)
         {
-            
+
             TimeEscalado timeEscalado = _context.TimeEscalados.SingleOrDefault(t => t.JogoId == JogoId);
 
             if (timeEscalado == null) return new HttpRes(404, "Jogo não encontrado");
@@ -105,17 +105,17 @@ namespace Back_Atletica.Repository.Implementação
             List<AtletaAtleticaModalidadeTimeEscalado> _atletaAtleticaModalidadeTimeEscalados = _context.AtletaAtleticaModalidadeTimesEscalados
                 .Where(t => t.TimeEscaladoId == timeEscalado.TimeEscaladoId).ToList();
 
-           var query = from aamte in _atletaAtleticaModalidadeTimeEscalados
-                            join
-                       aam in _context.AtletaAtleticaModalidades on aamte.AtletaAtleticaModalidadeId equals aam.AtletaAtleticaModalidadeId
-                            join
-                       a in _context.Atletas on aam.AtletaId equals a.AtletaId
-                            join
-                       p in _context.Pessoas on a.PessoaId equals p.PessoaId
+            var query = from aamte in _atletaAtleticaModalidadeTimeEscalados
+                        join
+                   aam in _context.AtletaAtleticaModalidades on aamte.AtletaAtleticaModalidadeId equals aam.AtletaAtleticaModalidadeId
+                        join
+                   a in _context.Atletas on aam.AtletaId equals a.AtletaId
+                        join
+                   p in _context.Pessoas on a.PessoaId equals p.PessoaId
 
-                       select new { p };
+                        select new { p };
 
-        return new HttpRes(200, query);
+            return new HttpRes(200, query);
 
         }
 
@@ -128,7 +128,7 @@ namespace Back_Atletica.Repository.Implementação
             if (atletica == null) return new HttpRes(404, "Atlética não encontrada");
 
             atletas = _context.Pessoas.Where(a => a.AtleticaId == atleticaID && (a.Tipo == "A" || a.Tipo == "AM")).ToList();
-                            
+
             return new HttpRes(200, atletas);
         }
 
@@ -166,7 +166,15 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
         {
-            throw new NotImplementedException();
+            AtletaAtleticaModalidade aam = new AtletaAtleticaModalidade
+            {
+                AtletaId = atletaId,
+                AtleticaModalidadeId = atleticaModalidadeId
+            };
+            _context.AtletaAtleticaModalidades.Add(aam);
+            _context.SaveChanges();
+
+            return new HttpRes(200, aam);
         }
 
         public HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
