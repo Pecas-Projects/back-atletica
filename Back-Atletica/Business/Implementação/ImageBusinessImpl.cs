@@ -16,9 +16,9 @@ namespace Back_Atletica.Business.Implementação
         {
             _RepositorioImagem = repositorioImagem;
         }
-        public HttpRes UploadImagemProduto(IFormFile Imagem, int produtoId)
+        public HttpRes UploadImagemProduto(IFormFile Imagem, int produtoId, int userId)
         {
-            return _RepositorioImagem.UploadImagemProduto(Imagem, produtoId);
+            return _RepositorioImagem.UploadImagemProduto(Imagem, produtoId, userId);
         }
     }
 }

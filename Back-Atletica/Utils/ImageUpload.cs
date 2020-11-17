@@ -38,6 +38,7 @@ namespace Back_Atletica.Utils
                         uploadResult = cloudinary.Upload(uploadParams);
                         imagem.Extensao = uploadResult.Format;
                         imagem.Path = uploadResult.Url.ToString();
+
                     }
 
                 }
@@ -48,6 +49,16 @@ namespace Back_Atletica.Utils
             }
 
             return imagem;
+        }
+
+        public void DeleteImagem(Imagem imagem)
+        {
+                Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+                Cloudinary cloudinary = new Cloudinary(account);
+                // var deletionParams = new DeletionParams(imagem.PublicId);
+                // var deletionResult = cloudinary.Destroy(deletionParams);
+
+
         }
     }
 }

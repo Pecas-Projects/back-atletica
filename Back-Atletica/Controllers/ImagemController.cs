@@ -3,6 +3,7 @@ using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,14 @@ namespace Back_Atletica.Controllers
             _ImagemBusiness = img;
         }
 
+        [Authorize]
         [Route("api/Upload/Produto/{produtoId}")]
         [HttpPost]
         public IActionResult UploadImagemProduto([FromForm] IFormFile value, int produtoId)
         {
-            HttpRes result = _ImagemBusiness.UploadImagemProduto(value, produtoId);
+            int userId = (int)HttpToken.GetUserId(HttpContext);
+
+            HttpRes result = _ImagemBusiness.UploadImagemProduto(value, produtoId, userId);
 
             return result.HttpResponse();
         }
