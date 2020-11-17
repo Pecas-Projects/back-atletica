@@ -20,30 +20,28 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int id, Publicacao publicacao)
         {
-            if (id != publicacao.PublicacaoId)
+            if (publicacao == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+                return new HttpRes(400, "Verifique os dados enviados");
             }
-
-            _context.Entry(publicacao).State = EntityState.Modified;
-
             try
             {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!existePublicacao(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum publicação com este id");
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                Publicacao publicacaoData = _context.Publicacoes.SingleOrDefault(p => p.PublicacaoId == id && p.AtleticaId == publicacao.AtleticaId);
 
-            return new HttpRes(200, publicacao);
+                if (publicacaoData == null) return new HttpRes(404, "Publicação não encontrada");
+
+                publicacao.PublicacaoId = id;
+
+                _context.Entry(publicacaoData).CurrentValues.SetValues(publicacao);
+                _context.SaveChanges();
+
+                return new HttpRes(200, publicacao);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes BuscarPorAtletica(int atleticaId)

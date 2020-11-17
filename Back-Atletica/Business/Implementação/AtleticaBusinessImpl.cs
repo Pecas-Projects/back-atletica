@@ -1,11 +1,7 @@
-﻿using Back_Atletica.Controllers;
-using Back_Atletica.Models;
+﻿using Back_Atletica.Models;
 using Back_Atletica.Repository;
 using Back_Atletica.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Back_Atletica.Business.Implementação
 {
@@ -19,9 +15,9 @@ namespace Back_Atletica.Business.Implementação
             _AtleticaRepository = atleticaRepository;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
         {
-            return _AtleticaRepository.Atualizar(id, atletica);
+            return _AtleticaRepository.Atualizar(id, atletica, CursosId);
         }
 
         public HttpRes BuscaPorId(int id)
@@ -44,24 +40,24 @@ namespace Back_Atletica.Business.Implementação
             return _AtleticaRepository.BuscarTodos();
         }
 
-        public HttpRes Criar(Atletica atletica)
+        public HttpRes Deletar(int atleticaId)
         {
-            return _AtleticaRepository.Criar(atletica);
+            return _AtleticaRepository.Deletar(atleticaId);
         }
 
-        public HttpRes Deletar(int id)
+        public HttpRes ResetPin(int atleticaId)
         {
-            return _AtleticaRepository.Deletar(id);
+            return _AtleticaRepository.ResetPin(atleticaId);
         }
 
-        public HttpRes RankingAtleticas(int modalidadeId)
+        public HttpRes RemoverMembro(int membroId, int atleticaId)
         {
-            return _AtleticaRepository.RankingAtleticas(modalidadeId);
+            return _AtleticaRepository.RemoverMembro(membroId, atleticaId);
         }
 
-        public HttpRes RenovarPIN(int id)
+        public HttpRes RankingAtleticas(int modalidadeId, int alteticaId)
         {
-            return _AtleticaRepository.RenovarPIN(id);
+            return _AtleticaRepository.RankingAtleticas(modalidadeId, alteticaId);
         }
     }
 }

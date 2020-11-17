@@ -11,7 +11,7 @@ namespace Back_Atletica.Repository.Implementação
 {
     public class AtletaRepositpryImpl : IAtletaRepository
     {
-        AtleticaContext _context;
+        readonly AtleticaContext _context;
 
         public AtletaRepositpryImpl(AtleticaContext context)
         {

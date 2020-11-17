@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils.RequestModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +21,13 @@ namespace Back_Produto.Controllers
             _ProdutoBusiness = produtoBusiness;
         }
 
+        [Authorize]
         [Route("api/Produto")]
         [HttpPost]
-        public IActionResult Criar([FromBody] Produto value)
+        public IActionResult Criar([FromBody] ProdutoModel value)
         {
-            var resultado = _ProdutoBusiness.Criar(value);
+            Produto produto = value.Transform();
+            var resultado = _ProdutoBusiness.Criar(produto);
             return resultado.HttpResponse();
         }
 
@@ -35,21 +39,21 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Produto/{id}")]
-        [HttpGet]
-        public IActionResult BuscarPorId(int id)
-        {
-            var resultado = _ProdutoBusiness.BuscarPorId(id);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Produto/{id}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorId(int id)
+        //{
+        //    var resultado = _ProdutoBusiness.BuscarPorId(id);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Route("api/Produto/{atleticaId}/{nome}")]
-        [HttpGet]
-        public IActionResult BuscarPorNome(int atleticaId, string nome)
-        {
-            var resultado = _ProdutoBusiness.BuscarPorNome(atleticaId, nome);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Produto/{atleticaId}/{nome}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorNome(int atleticaId, string nome)
+        //{
+        //    var resultado = _ProdutoBusiness.BuscarPorNome(atleticaId, nome);
+        //    return resultado.HttpResponse();
+        //}
 
         [Route("api/ProdutoCategoria/{atleticaId}/{categoriaId}")]
         [HttpGet]
@@ -59,14 +63,25 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Produto/{id}")]
-        [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Produto valor)
+        [Route("api/ProdutoCategoria")]
+        [HttpGet]
+        public IActionResult BuscarCategorias()
         {
-            var resultado = _ProdutoBusiness.Atualizar(id, valor);
+            var resultado = _ProdutoBusiness.BuscarCategorias();
             return resultado.HttpResponse();
         }
 
+        [Authorize]
+        [Route("api/Produto/{id}")]
+        [HttpPut]
+        public IActionResult Atualizar(int id, [FromBody] ProdutoModel valor)
+        {
+            Produto produto = valor.Transform();
+            var resultado = _ProdutoBusiness.Atualizar(id, produto);
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
         [Route("api/Produto/{id}")]
         [HttpDelete]
         public IActionResult Deletar(int id)
