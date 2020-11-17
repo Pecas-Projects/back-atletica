@@ -49,7 +49,7 @@ namespace Back_Atletica.Business.Implementação
 
         public HttpRes ExcluiModalidadeAtletica(int atleticaModalidadeId)
         {
-            return _ModalidadeRepository.ExcluiModalidade(atleticaModalidadeId);
+            return _ModalidadeRepository.ExcluiModalidadeAtletica(atleticaModalidadeId);
         }
 
         public HttpRes AtualizaModalidadeAtletica(int atleticaId, AtleticaModalidade modalidade)

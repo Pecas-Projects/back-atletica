@@ -49,7 +49,7 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(204);
         }
 
-        public HttpRes ExcluiModalidade(int atleticaModalidadeId)
+        public HttpRes ExcluiModalidadeAtletica(int atleticaModalidadeId)
         {
             AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
 
