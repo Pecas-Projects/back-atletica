@@ -30,6 +30,10 @@ namespace Back_Atletica.Utils.RequestModels
                     ImagemId = this.ImagemId
                 };
 
+                if (atleticaModalidade.MembroId == 0) atleticaModalidade.MembroId = null;
+
+                if (atleticaModalidade.ImagemId == 0) atleticaModalidade.ImagemId = null;
+
                 return atleticaModalidade;
             }
         }
@@ -52,9 +56,13 @@ namespace Back_Atletica.Utils.RequestModels
                 {
                     MembroId = this.CoordenadorId,
                     ModalidadeId = this.ModalidadeId,
-                    ImagemId = this.ModalidadeId,
+                    ImagemId = this.ImagemId,
                     AtleticaId = this.AtleticaId
                 };
+
+                if (modalidade.MembroId == 0) modalidade.MembroId = null;
+
+                if (modalidade.ImagemId == 0) modalidade.ImagemId = null;
 
                 return modalidade;
             }
