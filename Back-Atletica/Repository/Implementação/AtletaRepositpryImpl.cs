@@ -169,12 +169,26 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
         {
-            AtletaAtleticaModalidade aam = new AtletaAtleticaModalidade
+            AtletaAtleticaModalidade aam = _context.AtletaAtleticaModalidades
+                .SingleOrDefault(aam => aam.AtletaId == atletaId && aam.AtleticaModalidadeId == atleticaModalidadeId);
+
+            if (aam == null)
             {
-                AtletaId = atletaId,
-                AtleticaModalidadeId = atleticaModalidadeId
-            };
-            _context.AtletaAtleticaModalidades.Add(aam);
+                aam = new AtletaAtleticaModalidade
+                {
+                    AtletaId = atletaId,
+                    AtleticaModalidadeId = atleticaModalidadeId
+                };
+                _context.AtletaAtleticaModalidades.Add(aam);
+            }
+            else if (aam.Ativo)
+                return new HttpRes(404, "Este atleta já foi adicionado a esta modalidade");
+            else if (!aam.Ativo)
+            {
+                aam.Ativo = true;
+                _context.Entry(aam).CurrentValues.SetValues(aam);
+            }
+
             _context.SaveChanges();
 
             return new HttpRes(200, aam);
