@@ -17,8 +17,7 @@ namespace Back_Atletica.Utils.RequestModels
             public string Local { get; set; }
             public DateTime DataHora { get; set; }
             public double PrecoIngresso { get; set; }
-            public string Cor { get; set; }
-            public string NomeCategoria { get; set; }
+            public int EventoCategoriaId { get; set; }
 
             public Evento Transform()
             {
@@ -28,7 +27,8 @@ namespace Back_Atletica.Utils.RequestModels
                     Descricao = Descricao,
                     Local = Local,
                     DataHora = DataHora,
-                    PrecoIngresso = PrecoIngresso
+                    PrecoIngresso = PrecoIngresso,
+                    EventoCategoriaId = EventoCategoriaId
                 };
                 return evento;
             }

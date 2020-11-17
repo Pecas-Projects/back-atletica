@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Back_Atletica.Controllers
 {
@@ -19,11 +21,13 @@ namespace Back_Atletica.Controllers
             _PublicacaoBusiness = publicacaoBusiness;
         }
 
+        [Authorize]
         [Route("api/Publicacao")]
         [HttpPost]
-        public IActionResult Criar([FromBody] Publicacao value)
+        public IActionResult Criar([FromBody] PublicacaoModel value)
         {
-            var resultado = _PublicacaoBusiness.Criar(value);
+            Publicacao publicacao = value.Transform();
+            var resultado = _PublicacaoBusiness.Criar(publicacao);
             return resultado.HttpResponse();
         }
 
@@ -35,19 +39,21 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Publicacao/{id}")]
-        [HttpGet]
-        public IActionResult BuscarPorId(int id)
-        {
-            var resultado = _PublicacaoBusiness.BuscarPorId(id);
-            return resultado.HttpResponse();
-        }
+        //[Route("api/Publicacao/{id}")]
+        //[HttpGet]
+        //public IActionResult BuscarPorId(int id)
+        //{
+        //    var resultado = _PublicacaoBusiness.BuscarPorId(id);
+        //    return resultado.HttpResponse();
+        //}
 
+        [Authorize]
         [Route("api/Publicacao/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Publicacao valor)
+        public IActionResult Atualizar(int id, [FromBody] PublicacaoModel valor)
         {
-            var resultado = _PublicacaoBusiness.Atualizar(id, valor);
+            Publicacao publicacao = valor.Transform();
+            var resultado = _PublicacaoBusiness.Atualizar(id, publicacao);
             return resultado.HttpResponse();
         }
 

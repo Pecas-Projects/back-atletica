@@ -32,9 +32,9 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.MudancaSenha(id, senha);
         }
 
-        public HttpRes RegistrarAtletica(Atletica atletica)
+        public HttpRes RegistrarAtletica(Atletica atletica, List<int> cursosIds)
         {
-            return _repositorio.RegistrarAtletica(atletica);
+            return _repositorio.RegistrarAtletica(atletica, cursosIds);
         }
 
         public HttpRes RegistrarMembro(Membro membro)

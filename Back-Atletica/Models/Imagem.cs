@@ -8,6 +8,7 @@ namespace Back_Atletica.Models
     public class Imagem
     {
         public int ImagemId { get; set; }
+        public string PublicId { get; set; }
         public string Nome { get; set; }
         public string Path { get; set; }
         public string Extensao { get; set; }

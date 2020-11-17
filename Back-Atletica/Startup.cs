@@ -52,7 +52,7 @@ namespace Back_Atletica
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
-          /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
               {
                   options.TokenValidationParameters = new TokenValidationParameters
@@ -65,9 +65,8 @@ namespace Back_Atletica
                       ValidAudience = Env.Issuer,
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.Secret))
                   };
-              }); */
+              }); 
 
-  
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -101,10 +100,12 @@ namespace Back_Atletica
             services.AddScoped<IAtletaRepository, AtletaRepositpryImpl>();
             services.AddScoped<IEventoBusiness, EventoBusinessImpl>();
             services.AddScoped<IEventoRepository, EventoRepositoryImpl>();
-            services.AddScoped<ISolicitacaoAtletaBusiness,SolicitacaoAtletaBusinessImpl>();
+            services.AddScoped<ISolicitacaoAtletaBusiness, SolicitacaoAtletaBusinessImpl>();
             services.AddScoped<ISolicitacaoAtletaRepository, SolicitacaoAtletaRepositoryImpl>();
             services.AddScoped<ISolicitacaoJogoBusiness, SolicitacaoJogoBusinessImpl>();
             services.AddScoped<ISolicitacaoJogoRepository, SolicitacaoJogoRepositoryImpl>();
+            services.AddScoped<IImagemBusiness, ImageBusinessImpl>();
+            services.AddScoped<IImagemRepository, ImagemRepositoryImpl>();
 
         }
 

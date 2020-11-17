@@ -3,6 +3,8 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
+using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
+using Back_Atletica.Utils.RequestModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,54 +45,54 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica/{id}")]
+        /// <summary>
+        /// Detalhes de uma atletica
+        /// </summary>
+        /// <param name="id">Id da atletica desejada</param>
+        /// <returns>Todos os dados da atletica</returns>
+        /// <response code="200">Objeto criado no banco</response>
+        /// <response code="400">Erro na validação dos dados</response>
+        [ProducesResponseType(typeof(AtleticaPorId), 200)]
+        [Route("api/Atletica/BuscaPorId/{id}")]
         [HttpGet]
-        public IActionResult Get(int id)
+        public IActionResult BuscaPorId(int id)
         {
-            var resultado = _AtleticaBusiness.BuscaPorId(id);
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/RankingAtleticas/{modalidadeId}")]
-        [HttpGet]
-        public IActionResult RankingAtleticas(int modalidadeId)
-        {
-            var resultado = _AtleticaBusiness.RankingAtleticas(modalidadeId);
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/AtleticaPIN/{id}")]
-        [HttpGet]
-        public IActionResult RenovarPIN(int id)
-        {
-            var resultado = _AtleticaBusiness.RenovarPIN(id);
-            return resultado.HttpResponse();
-        }
-
-        [Route("api/Atletica")]
-        [HttpPost]
-        public IActionResult Criar([FromBody] Atletica value)
-        {
-            var resultado = _AtleticaBusiness.Criar(value);
+            HttpRes resultado = _AtleticaBusiness.BuscaPorId(id);
             return resultado.HttpResponse();
         }
 
         [Authorize]
         [Route("api/Atletica/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] Atletica valor)
+        public IActionResult Atualizar(int id, [FromBody] AtleticaModel valor)
         {
-            var userId = HttpToken.GetUserId(HttpContext);
+            Atletica atletica = valor.Transform();
 
-            var resultado = _AtleticaBusiness.Atualizar(id, valor);
+            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds);
+
             return resultado.HttpResponse();
         }
 
-        [Route("api/Atletica/{id}")]
-        [HttpDelete]
-        public IActionResult Deletar(int id)
+        [Authorize]
+        [Route("api/Atletica/ResetPin/{atleticaId}")]
+        [HttpPut]
+        public IActionResult ResetPin(int atleticaId)
         {
-            var result = _AtleticaBusiness.Deletar(id);
+            HttpRes resultado = _AtleticaBusiness.ResetPin(atleticaId);
+
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
+        [Route("api/Atletica/{atleticaId}")]
+        [HttpDelete]
+        public IActionResult Deletar(int atleticaId)
+        {
+            var userId = HttpToken.GetUserId(HttpContext);
+
+            if (atleticaId != userId) return new HttpRes(401, "Você nao corresponde a atletica que deseja deletar").HttpResponse();
+
+            var result = _AtleticaBusiness.Deletar(atleticaId);
             return result.HttpResponse();
         }
     }

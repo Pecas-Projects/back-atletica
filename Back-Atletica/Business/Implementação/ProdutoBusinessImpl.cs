@@ -51,5 +51,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _ProdutoRepository.Atualizar(id, produto);
         }
+
+        public HttpRes BuscarCategorias()
+        {
+            return _ProdutoRepository.BuscarCategorias();
+        }
     }
 }

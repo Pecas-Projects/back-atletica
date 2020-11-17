@@ -22,9 +22,14 @@ namespace Back_Atletica.Business.Implementação
             return _EventoRepository.AtualizarEvento(eventoId, evento);
         }
 
-        public HttpRes BuscarPorCategoria(int atleticaId, string nomeCategoria)
+        public HttpRes BuscarCategoriasEvento()
         {
-            return _EventoRepository.BuscarPorCategoria(atleticaId, nomeCategoria);
+            return _EventoRepository.BuscarCategoriasEvento() ;
+        }
+
+        public HttpRes BuscarEvento(int eventoId)
+        {
+            return _EventoRepository.BuscarEvento(eventoId);
         }
 
         public HttpRes BuscarTodos(int atleticaId)

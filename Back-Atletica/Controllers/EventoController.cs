@@ -22,7 +22,7 @@ namespace Back_Atletica.Controllers
         }
 
         // GET: api/<EventoController>
-        [Route("api/Eventos/{atleticaId}")]
+        [Route("api/Eventos/Atletica/{atleticaId}")]
         [HttpGet]
         public IActionResult GetEventosAtletica(int atleticaId)
         {
@@ -30,12 +30,21 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // GET api/<EventoController>/5
-        [Route("api/Eventos/{atleticaId}/{nomeCategoria}")]
+        // GET api/<EventoController>/
+        [Route("api/Evento/{eventoId}")]
         [HttpGet]
-        public IActionResult GetEventosAtleticaCategoria(int atleticaId, string nomeCategoria)
+        public IActionResult GetEvento(int eventoId)
         {
-            var resultado = _EventoBusiness.BuscarPorCategoria(atleticaId, nomeCategoria);
+            var resultado = _EventoBusiness.BuscarEvento(eventoId);
+            return resultado.HttpResponse();
+        }
+
+        // GET api/<EventoController>/
+        [Route("api/Evento/Categorias")]
+        [HttpGet]
+        public IActionResult GetCategoriasEvento()
+        {
+            var resultado = _EventoBusiness.BuscarCategoriasEvento();
             return resultado.HttpResponse();
         }
 
@@ -45,9 +54,6 @@ namespace Back_Atletica.Controllers
         public IActionResult Post([FromBody] CriarEventoModel evento, int atleticaId)
         {
             Evento e = evento.Transform();
-            EventoCategoria categoria = new EventoCategoria();
-            categoria.Nome = evento.NomeCategoria;
-            e.EventoCategoria = categoria;
             var resultado = _EventoBusiness.CriarEvento(e, atleticaId);
             return resultado.HttpResponse();
         }
@@ -58,9 +64,6 @@ namespace Back_Atletica.Controllers
         public IActionResult Put(int id, [FromBody] CriarEventoModel evento, int eventoId)
         {
             Evento e = evento.Transform();
-            EventoCategoria categoria = new EventoCategoria();
-            categoria.Nome = evento.NomeCategoria;
-            e.EventoCategoria = categoria;
             var resultado = _EventoBusiness.AtualizarEvento(eventoId, e);
             return resultado.HttpResponse();
         }
@@ -73,5 +76,7 @@ namespace Back_Atletica.Controllers
             var resultado = _EventoBusiness.DeletarEvento(eventoId);
             return resultado.HttpResponse();
         }
+
     }
+
 }
