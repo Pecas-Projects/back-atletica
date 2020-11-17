@@ -10,6 +10,7 @@ namespace Back_Atletica.Utils.ResponseModels
     {
         public class ModalidadesAtletica
         {
+            public int AtleticaModalidadeId { get; set; }
             public string Modalidade { get; set; }
             public ImagemResponseModel ImagemModalidade { get; set; }
             public string Coordenador { get; set; }
@@ -27,9 +28,10 @@ namespace Back_Atletica.Utils.ResponseModels
 
                     ModalidadesAtletica m = new ModalidadesAtletica
                     {
+                        AtleticaModalidadeId = a.AtleticaModalidadeId,
                         Modalidade = a.Modalidade.Nome,
                         ImagemModalidade = a.Imagem != null ? img.Transform(a.Imagem) : null,
-                        Coordenador = a.Membro.Pessoa.Nome,
+                        Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome : null,
                         AgendaTreinos = a.AgendaTreinos != null ? treinos.Transform(a.AgendaTreinos) : null
                     };
 
