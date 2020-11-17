@@ -90,5 +90,16 @@ namespace Back_Atletica.Controllers
 
             return resultado.HttpResponse();
         }
+
+        [Route("api/AtleticaModalidade/{atleticaModalidadeId}")]
+        [HttpPut]
+        public IActionResult AtualizaModalidadeAtletica([FromBody] AtualizarModalidadeAtletica modalidade, int atleticaModalidadeId)
+        {
+            AtleticaModalidade atleticaModalidade = modalidade.Transform();
+
+            var resultado = _ModalidadeBusiness.AtualizaModalidadeAtletica(atleticaModalidadeId, atleticaModalidade);
+
+            return resultado.HttpResponse();
+        }
     }
 }
