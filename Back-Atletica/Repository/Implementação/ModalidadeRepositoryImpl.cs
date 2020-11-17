@@ -100,6 +100,34 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, modalidade);
         }
 
+        public HttpRes AtualizaModalidadeAtletica(int atleticaModalidadeId, AtleticaModalidade modalidade)
+        {
+            if (modalidade == null) return new HttpRes(400, "Verifique os dados enviados");
+
+            try
+            {
+                AtleticaModalidade modalidadeAtletica = _context.AtleticaModalidades
+                    .SingleOrDefault(m => m.AtleticaModalidadeId == atleticaModalidadeId);
+
+                if (modalidadeAtletica == null) 
+                    return new HttpRes(404, "Modalidade ou atlética não encontrada!");
+
+                _context.AtleticaModalidades.Remove(modalidadeAtletica);
+
+                _context.AtleticaModalidades.Add(modalidade);
+
+                _context.SaveChanges();               
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)                 
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
+            return new HttpRes(200, modalidade);
+        }
+
         public bool existeModalidade(int id)
         {
             return _context.Modalidades.Any(a => a.ModalidadeId == id);
