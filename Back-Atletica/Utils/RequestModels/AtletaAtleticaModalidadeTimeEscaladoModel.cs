@@ -25,6 +25,9 @@ namespace Back_Atletica.Utils.RequestModels
                 Pontos = Pontos,
                 Infracoes = Infracoes
             };
+
+            if (aamte.FuncaoId == 0) aamte.FuncaoId = null;
+
             return aamte;
         }
     }
