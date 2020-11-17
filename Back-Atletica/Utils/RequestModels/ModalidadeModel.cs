@@ -32,7 +32,32 @@ namespace Back_Atletica.Utils.RequestModels
 
                 return atleticaModalidade;
             }
+        }
 
+        public class AtualizarModalidadeAtletica
+        {
+            public int CoordenadorId { get; set; }
+
+            [Required]
+            public int ModalidadeId { get; set; }
+
+            public int ImagemId { get; set; }
+
+            [Required]
+            public int AtleticaId { get; set; }
+
+            public AtleticaModalidade Transform()
+            {
+                AtleticaModalidade modalidade = new AtleticaModalidade
+                {
+                    MembroId = this.CoordenadorId,
+                    ModalidadeId = this.ModalidadeId,
+                    ImagemId = this.ModalidadeId,
+                    AtleticaId = this.AtleticaId
+                };
+
+                return modalidade;
+            }
         }
     }
 }
