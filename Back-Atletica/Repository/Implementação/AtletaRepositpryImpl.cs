@@ -236,5 +236,10 @@ namespace Back_Atletica.Repository.Implementação
 
             return new HttpRes(200, query);
         }
+
+        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -23,6 +23,11 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.AdicionarAtletaModalidade(atletaId, atleticaModalidadeId);
         }
 
+        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        {
+            return _atletaRepository.AdicionarAtletaTime(atleticaId, jogoId, aamte);
+        }
+
         public HttpRes Atualizar(int atletaID, Atleta atleta)
         {
             return _atletaRepository.Atualizar(atletaID, atleta);

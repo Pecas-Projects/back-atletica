@@ -4,6 +4,7 @@ using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
 using static Back_Atletica.Utils.RequestModels.AtletaModel;
+using Back_Atletica.Utils.RequestModels;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -96,6 +97,16 @@ namespace Back_Atletica.Controllers
         //    var resultado = _AtletaBusiness.Deletar(atletaID);
         //    return resultado.HttpResponse();
         //}
+
+        [Authorize]
+        [Route("api/AtletaTime/{atleticaId}/{jogoId}")]
+        [HttpPost]
+        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] AtletaAtleticaModalidadeTimeEscaladoModel valor)
+        {
+            AtletaAtleticaModalidadeTimeEscalado aamte = valor.Transform();
+            var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, aamte);
+            return resultado.HttpResponse();
+        }
 
         [Authorize]
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
