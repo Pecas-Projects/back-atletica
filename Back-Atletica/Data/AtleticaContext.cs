@@ -555,6 +555,10 @@ namespace Back_Atletica.Data
                 .WithMany(m => m.AtletaAtleticaModalidades)
                 .HasForeignKey(am => am.AtleticaModalidadeId);
 
+            modelBuilder.Entity<AtletaAtleticaModalidade>()
+                .Property(p => p.Ativo)
+                .HasDefaultValue(true);
+
             /*AtleticaModalidade*/
             modelBuilder.Entity<AtleticaModalidade>().HasKey(am => new { am.AtleticaModalidadeId });
 
