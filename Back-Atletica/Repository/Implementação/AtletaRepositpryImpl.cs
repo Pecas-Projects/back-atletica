@@ -76,7 +76,7 @@ namespace Back_Atletica.Repository.Implementação
         {
 
             List<AtletaAtleticaModalidade> atletaAtleticaModalidades = _context.AtletaAtleticaModalidades
-                .Where(a => a.AtleticaModalidadeId == atleticaModalidadeId)
+                .Where(a => a.AtleticaModalidadeId == atleticaModalidadeId && a.Ativo)
                 .ToList();
 
             var query = from aam in atletaAtleticaModalidades

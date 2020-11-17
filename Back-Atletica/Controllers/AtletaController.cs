@@ -38,6 +38,7 @@ namespace Back_Atletica.Controllers
         //    return resultado.HttpResponse();
         //}
 
+        [Authorize]
         [Route("api/AtletaModalidade/{atleticaModalidadeId}")]
         [HttpGet]
         public IActionResult BuscarPorModalidade(int atleticaModalidadeId)
