@@ -220,17 +220,14 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
 
-            List<AtleticaModalidade> atleticaModalidades = _context.AtleticaModalidades
-                .Where(a => a.AtleticaId == atleticaId && a.ModalidadeId != modalidadeId)
-                .ToList();
-
-            var query = (from am in atleticaModalidades
+            var query = (from am in _context.AtleticaModalidades
                          join
                          aam in _context.AtletaAtleticaModalidades on am.AtleticaModalidadeId equals aam.AtleticaModalidadeId
                          join
                          a in _context.Atletas on aam.AtletaId equals a.AtletaId
                          join
                          p in _context.Pessoas on a.PessoaId equals p.PessoaId
+                         where am.AtleticaId == atleticaId && (am.ModalidadeId != modalidadeId || (am.ModalidadeId == modalidadeId && aam.Ativo == false))
                          select new
                          {
                              a.AtletaId,
