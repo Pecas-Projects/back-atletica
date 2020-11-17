@@ -44,7 +44,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/{atleticaId}/Modalidade")]
+        [Route("api/AtleticaModalidade/{atleticaId}")]
         [HttpGet]
         public IActionResult GetAll(int atleticaId)
         {
@@ -64,7 +64,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/{atleticaId}/Modalidade")]
+        [Route("api/AtleticaModalidade/{atleticaId}")]
         [HttpPost]
         public IActionResult CriarAtleticaModalidade([FromBody] ModalidadeAtletica modalidade, int atleticaId)
         {
