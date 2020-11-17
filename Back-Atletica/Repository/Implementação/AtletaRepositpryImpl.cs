@@ -182,7 +182,25 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                AtletaAtleticaModalidade aam = _context.AtletaAtleticaModalidades
+                    .SingleOrDefault(aam => aam.AtletaAtleticaModalidadeId == atletaAtleticaModalidadeId);
+
+                if (aam == null) return new HttpRes(404, "AtletaAtleticaModalidade não encontrada");
+
+                aam.Ativo = false;
+                _context.Entry(aam).CurrentValues.SetValues(aam);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
+
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
