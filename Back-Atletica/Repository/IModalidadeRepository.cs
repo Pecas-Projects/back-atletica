@@ -16,6 +16,7 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
         HttpRes ExcluiModalidade(int atleticaModalidadeId);
+        HttpRes AtualizaModalidadeAtletica(int atleticaModalidadeId, AtleticaModalidade modalidade);
         bool existeModalidade(int id);
     }
 }
