@@ -103,7 +103,7 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<AtleticaModalidadeJogo>()
                .HasOne<Jogo>(am => am.Jogo)
                .WithMany(a => a.AtleticaModalidadeJogos)
-               .HasForeignKey(am => am.AtleticaModalidadeId);
+               .HasForeignKey(am => am.JogoId);
 
             /* AgendaTreino */
             modelBuilder.Entity<AgendaTreino>()
@@ -598,7 +598,7 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
                 .HasOne<Funcao>(amt => amt.Funcao)
                 .WithMany(f => f.AtletaAtleticaModalidadeTimeEscalados)
-                .HasForeignKey(amt => amt.AtletaAtleticaModalidadeTimeEscaladoId);
+                .HasForeignKey(amt => amt.FuncaoId);
 
         }
 
