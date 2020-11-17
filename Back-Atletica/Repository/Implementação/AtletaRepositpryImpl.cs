@@ -239,7 +239,26 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
         {
-            throw new NotImplementedException();
+            TimeEscalado time = _context.TimeEscalados
+                .SingleOrDefault(te => te.AtleticaId == atleticaId && te.JogoId == jogoId);
+
+            if (time == null)
+            {
+                time = new TimeEscalado
+                {
+                    AtleticaId = atleticaId,
+                    JogoId = jogoId,
+                    Nome = "Time " + jogoId + atleticaId
+                };
+                _context.TimeEscalados.Add(time);
+                _context.SaveChanges();
+            }
+
+            aamte.TimeEscaladoId = time.TimeEscaladoId;
+            _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
+            _context.SaveChanges();
+
+            return new HttpRes(200, aamte);
         }
     }
 }
