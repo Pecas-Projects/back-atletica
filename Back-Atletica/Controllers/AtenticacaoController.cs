@@ -14,7 +14,6 @@ namespace Back_Atletica.Controllers
     public class AtenticacaoController : ControllerBase
     {
         IAutenticacaoBusiness _AutenticacaoBusiness;
-
         public AtenticacaoController(IAutenticacaoBusiness business)
         {
             _AutenticacaoBusiness = business;

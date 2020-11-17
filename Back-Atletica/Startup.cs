@@ -102,6 +102,8 @@ namespace Back_Atletica
             services.AddScoped<IEventoRepository, EventoRepositoryImpl>();
             services.AddScoped<ISolicitacaoAtletaBusiness, SolicitacaoAtletaBusinessImpl>();
             services.AddScoped<ISolicitacaoAtletaRepository, SolicitacaoAtletaRepositoryImpl>();
+            services.AddScoped<IImagemBusiness, ImageBusinessImpl>();
+            services.AddScoped<IImagemRepository, ImagemRepositoryImpl>();
 
         }
 
