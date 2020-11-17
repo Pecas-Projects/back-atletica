@@ -370,6 +370,11 @@ namespace Back_Atletica.Data
                 .HasMaxLength(10)
                 .IsRequired();
 
+            modelBuilder.Entity<Imagem>()
+                .Property(p => p.PublicId)
+                .HasMaxLength(255)
+                .IsRequired();
+
             /* Evento */
             modelBuilder.Entity<Evento>().HasKey(am => new { am.EventoId });
 
