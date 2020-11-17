@@ -13,7 +13,7 @@ namespace Back_Atletica.Models
         public int ProdutoCategoriaId { get; set; }
         public virtual ProdutoCategoria ProdutoCategoria { get; set; }
         public double Preco { get; set; }
-        public int Estoque { get; set; }
+        public bool Estoque { get; set; }
         public int ImagemId { get; set; }
         public virtual Imagem Imagem { get; set; }
         public int AtleticaId { get; set; }

@@ -15,7 +15,7 @@ namespace Back_Atletica.Utils.RequestModels
         [Required]
         public double Preco { get; set; }
         [Required]
-        public int Estoque { get; set; }
+        public bool Estoque { get; set; }
         [Required]
         public int ProdutoCategoriaId { get; set; }
         [Required]
