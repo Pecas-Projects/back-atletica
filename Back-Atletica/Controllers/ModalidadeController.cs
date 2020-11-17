@@ -6,6 +6,7 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
 using static Back_Atletica.Utils.RequestModels.ModalidadeModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,7 +25,6 @@ namespace Back_Atletica.Controllers
         }
 
 
-        // GET api/<ModalidadeController>/5
         [Route("api/Modalidade")]
         [HttpGet]
         public IActionResult GetAll()
@@ -33,7 +33,8 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // GET api/<ModalidadeController>/5
+        
+        [Authorize]
         [Route("api/Modalidade/{id}")]
         [HttpGet]
         public IActionResult Get(int id)
@@ -42,6 +43,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/{atleticaId}/Modalidade")]
         [HttpGet]
         public IActionResult GetAll(int atleticaId)
@@ -51,7 +53,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // POST api/<ModalidadeController>
+        [Authorize]
         [Route("api/Modalidade")]
         [HttpPost]
         public IActionResult Create([FromBody] Modalidade modalidade)
@@ -61,6 +63,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/{atleticaId}/Modalidade")]
         [HttpPost]
         public IActionResult CriarAtleticaModalidade([FromBody] ModalidadeAtletica modalidade, int atleticaId)
@@ -72,7 +75,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // DELETE api/<ModalidadeController>/5
+        
         [Route("api/Modalidade/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
@@ -82,6 +85,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/AtleticaModalidade/{atleticaModalidadeId}")]
         [HttpDelete]
         public IActionResult ExcluiModalidadeAtletica(int atleticaModalidadeId)
@@ -91,6 +95,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Authorize]
         [Route("api/AtleticaModalidade/{atleticaModalidadeId}")]
         [HttpPut]
         public IActionResult AtualizaModalidadeAtletica([FromBody] AtualizarModalidadeAtletica modalidade, int atleticaModalidadeId)
