@@ -20,13 +20,12 @@ namespace Back_Atletica.Utils.RequestModels
 
             public int ImagemId { get; set; }
 
-            public AtleticaModalidade Transform(int atleticaId)
+            public AtleticaModalidade Transform()
             {
                 AtleticaModalidade atleticaModalidade = new AtleticaModalidade
                 {
                     ModalidadeId = this.ModalidadeId,
                     MembroId = this.CoordenadorId,
-                    AtleticaId = atleticaId,
                     ImagemId = this.ImagemId
                 };
 

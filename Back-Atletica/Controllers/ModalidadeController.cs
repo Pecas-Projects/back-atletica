@@ -68,7 +68,9 @@ namespace Back_Atletica.Controllers
         [HttpPost]
         public IActionResult CriarAtleticaModalidade([FromBody] ModalidadeAtletica modalidade, int atleticaId)
         {
-            AtleticaModalidade atleticaModalidade = modalidade.Transform(atleticaId);
+            AtleticaModalidade atleticaModalidade = modalidade.Transform();
+
+            atleticaModalidade.AtleticaId = atleticaId;
 
             var resultado = _ModalidadeBusiness.CriarAtleticaModalidade(atleticaModalidade);
 
