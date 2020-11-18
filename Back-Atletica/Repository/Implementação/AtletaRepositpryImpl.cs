@@ -247,8 +247,7 @@ namespace Back_Atletica.Repository.Implementação
                 time = new TimeEscalado
                 {
                     AtleticaId = atleticaId,
-                    JogoId = jogoId,
-                    Nome = "Time " + jogoId + atleticaId
+                    JogoId = jogoId
                 };
                 _context.TimeEscalados.Add(time);
                 _context.SaveChanges();
