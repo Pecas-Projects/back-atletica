@@ -137,26 +137,41 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes CriarAtleta(Atleta atleta)
         {
-            atleta.Ativo = true;
-            _context.Atletas.Add(atleta);
-            _context.SaveChanges();
+            try
+            {
+                atleta.Ativo = true;
+                _context.Atletas.Add(atleta);
+                _context.SaveChanges();
 
-            return new HttpRes(200, atleta);
+                return new HttpRes(200, atleta);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes Deletar(int id)
         {
-            Atleta atleta = _context.Atletas.SingleOrDefault(a => a.AtletaId == id);
-            if (!ExisteAtleta(id))
+            try
             {
-                return new HttpRes(404, "Atleta não encontrado");
+                Atleta atleta = _context.Atletas.SingleOrDefault(a => a.AtletaId == id);
+                if (!ExisteAtleta(id))
+                {
+                    return new HttpRes(404, "Atleta não encontrado");
+                }
+
+                _context.Atletas.Remove(atleta);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
             }
-
-            _context.Atletas.Remove(atleta);
-            _context.SaveChanges();
-
-            return new HttpRes(204);
-
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public bool ExisteAtleta(int atletaID)
@@ -169,29 +184,37 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
         {
-            AtletaAtleticaModalidade aam = _context.AtletaAtleticaModalidades
-                .SingleOrDefault(aam => aam.AtletaId == atletaId && aam.AtleticaModalidadeId == atleticaModalidadeId);
-
-            if (aam == null)
+            try
             {
-                aam = new AtletaAtleticaModalidade
+                AtletaAtleticaModalidade aam = _context.AtletaAtleticaModalidades
+                    .SingleOrDefault(aam => aam.AtletaId == atletaId && aam.AtleticaModalidadeId == atleticaModalidadeId);
+
+                if (aam == null)
                 {
-                    AtletaId = atletaId,
-                    AtleticaModalidadeId = atleticaModalidadeId
-                };
-                _context.AtletaAtleticaModalidades.Add(aam);
+                    aam = new AtletaAtleticaModalidade
+                    {
+                        AtletaId = atletaId,
+                        AtleticaModalidadeId = atleticaModalidadeId
+                    };
+                    _context.AtletaAtleticaModalidades.Add(aam);
+                }
+                else if (aam.Ativo)
+                    return new HttpRes(404, "Este atleta já foi adicionado a esta modalidade");
+                else if (!aam.Ativo)
+                {
+                    aam.Ativo = true;
+                    _context.Entry(aam).CurrentValues.SetValues(aam);
+                }
+
+                _context.SaveChanges();
+
+                return new HttpRes(200, aam);
             }
-            else if (aam.Ativo)
-                return new HttpRes(404, "Este atleta já foi adicionado a esta modalidade");
-            else if (!aam.Ativo)
+            catch (Exception ex)
             {
-                aam.Ativo = true;
-                _context.Entry(aam).CurrentValues.SetValues(aam);
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
-
-            _context.SaveChanges();
-
-            return new HttpRes(200, aam);
         }
 
         public HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId)
@@ -211,7 +234,6 @@ namespace Back_Atletica.Repository.Implementação
             }
             catch (Exception ex)
             {
-
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
@@ -239,26 +261,34 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
         {
-            TimeEscalado time = _context.TimeEscalados
-                .SingleOrDefault(te => te.AtleticaId == atleticaId && te.JogoId == jogoId);
-
-            if (time == null)
+            try
             {
-                time = new TimeEscalado
+                TimeEscalado time = _context.TimeEscalados
+                    .SingleOrDefault(te => te.AtleticaId == atleticaId && te.JogoId == jogoId);
+
+                if (time == null)
                 {
-                    AtleticaId = atleticaId,
-                    JogoId = jogoId,
-                    Nome = "Time " + jogoId + atleticaId
-                };
-                _context.TimeEscalados.Add(time);
+                    time = new TimeEscalado
+                    {
+                        AtleticaId = atleticaId,
+                        JogoId = jogoId,
+                        Nome = "Time " + jogoId + atleticaId
+                    };
+                    _context.TimeEscalados.Add(time);
+                    _context.SaveChanges();
+                }
+
+                aamte.TimeEscaladoId = time.TimeEscaladoId;
+                _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
                 _context.SaveChanges();
+
+                return new HttpRes(200, aamte);
             }
-
-            aamte.TimeEscaladoId = time.TimeEscaladoId;
-            _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
-            _context.SaveChanges();
-
-            return new HttpRes(200, aamte);
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
     }
 }
