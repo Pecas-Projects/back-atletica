@@ -95,10 +95,19 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Produto produto)
         {
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
+            try
+            {
+                _context.Produtos.Add(produto);
+                _context.SaveChanges();
 
-            return new HttpRes(200, produto);
+                return new HttpRes(200, produto);
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
         }
 
         public HttpRes Deletar(int id)

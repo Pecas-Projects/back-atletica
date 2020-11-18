@@ -17,22 +17,15 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public HttpRes UploadImagemProduto(IFormFile Imagem, int produtoId, int userId)
+        public HttpRes Upload(IFormFile Imagem)
         {
             try
             {
-                Produto produto = _context.Produtos.SingleOrDefault(p => p.ProdutoId == produtoId && p.AtleticaId == userId);
-
-                if (produto == null) return new HttpRes(404, "O produto não existe nesta atletica");
 
                 Imagem img = ImageUpload.UploadImage(Imagem);
 
                 _context.Add(img);
 
-                Produto prod = produto;
-                prod.Imagem = img;
-
-                _context.Entry(produto).CurrentValues.SetValues(prod);
                 _context.SaveChanges();
 
                 return new HttpRes(201, img);
