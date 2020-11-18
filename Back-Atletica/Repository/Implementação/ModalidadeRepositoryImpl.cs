@@ -72,13 +72,16 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
-
+               
                 if (modalidade == null)
                 {
                     return new HttpRes(404, "Modalidade não encontrada.");
                 }
 
-                _context.AtleticaModalidades.Remove(modalidade);
+                AtleticaModalidade desativada = modalidade;
+                desativada.Ativo = false;
+
+                _context.Entry(modalidade).CurrentValues.SetValues(desativada);
                 _context.SaveChanges();
 
             }
