@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.AgendaTreinoResponseModel;
 
 namespace Back_Atletica.Utils.ResponseModels
 {
@@ -18,22 +19,29 @@ namespace Back_Atletica.Utils.ResponseModels
 
             public List<ModalidadesAtletica> Transform(List<AtleticaModalidade> atleticaModalidade)
             {
-
                 List<ModalidadesAtletica> ma = new List<ModalidadesAtletica>();
 
                 foreach(var a in atleticaModalidade)
                 {
                     ImagemResponseModel img = new ImagemResponseModel();
-                    Treinos treinos = new Treinos();
 
                     ModalidadesAtletica m = new ModalidadesAtletica
                     {
                         AtleticaModalidadeId = a.AtleticaModalidadeId,
                         Modalidade = a.Modalidade.Nome,
                         ImagemModalidade = a.Imagem != null ? img.Transform(a.Imagem) : null,
-                        Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome : null,
-                        AgendaTreinos = a.AgendaTreinos != null ? treinos.Transform(a.AgendaTreinos) : null
+                        Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome : null
                     };
+
+                    if(a.AgendaTreinos != null)
+                    {
+                        foreach (var t in a.AgendaTreinos)
+                        {
+                            Treinos agenda = new Treinos();
+
+                            m.AgendaTreinos.Add(agenda.Transform(t));
+                        }
+                    }                   
 
                     ma.Add(m);
                 }
@@ -56,32 +64,7 @@ namespace Back_Atletica.Utils.ResponseModels
 
                 return membro;
             }
-        }
-
-        public class Treinos
-        {
-            public string DiaSemana { get; set; }
-            public TimeSpan? HoraInicio { get; set; }
-            
-            public List<Treinos> Transform(ICollection<AgendaTreino> agenda)
-            {
-                List<Treinos> treinos = new List<Treinos>();
-
-                foreach(var a in agenda)
-                {
-                    Treinos treino = new Treinos
-                    {
-                        DiaSemana = a.DiaSemana,
-                        HoraInicio = a.HoraInicio
-                    };
-
-                    treinos.Add(treino);
-                }
-                
-
-                return treinos;
-            }
-        }
+        }      
 
     }
 }
