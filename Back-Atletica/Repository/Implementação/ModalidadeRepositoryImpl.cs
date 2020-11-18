@@ -113,7 +113,7 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(am => am.Imagem)
                 .Include(am => am.AgendaTreinos)
                 .Include(am => am.Membro).ThenInclude(a => a.Pessoa)
-                .Where(am => am.AtleticaId == atleticaId).ToList();
+                .Where(am => am.AtleticaId == atleticaId && am.Ativo == true).ToList();
 
             ModalidadesAtletica atleticaModalidades = new ModalidadesAtletica();
            
@@ -136,7 +136,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
              { 
-            modalidade.AtleticaModalidadeId = atleticaModalidadeId;
+                modalidade.AtleticaModalidadeId = atleticaModalidadeId;
                 AtleticaModalidade modalidadeAtletica = _context.AtleticaModalidades
                     .SingleOrDefault(m => m.AtleticaModalidadeId == atleticaModalidadeId);
 
