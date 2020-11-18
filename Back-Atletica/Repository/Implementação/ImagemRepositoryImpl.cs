@@ -31,14 +31,10 @@ namespace Back_Atletica.Repository.Implementação
             var deletionParams = new DeletionParams(imagem.PublicId);
             var deletionResult = cloudinary.Destroy(deletionParams);
 
-            if (deletionResult.Result.Equals("ok"))
-            {
-                return new HttpRes(204);
-            }
-            else
-            {
-                return new HttpRes(400, "Erro ao apagar a imagem");
-            }
+            if (deletionResult.Result.Equals("ok")) return new HttpRes(204);
+
+            else return new HttpRes(400, "Erro ao apagar a imagem");
+
         }
 
         public HttpRes Upload(IFormFile Imagem)
