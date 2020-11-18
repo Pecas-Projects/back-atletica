@@ -31,8 +31,8 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/Image/Delete/{imagemId}")]
-        [HttpPost]
+        [Route("api/Imagem/Delete/{imagemId}")]
+        [HttpDelete]
         public IActionResult Delete(int imagemId)
         {
             HttpRes result = _ImagemBusiness.Delete(imagemId);

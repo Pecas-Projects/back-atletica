@@ -71,6 +71,7 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Sub, membro.MembroId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, membro.Pessoa.Email),
                 new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Gender, "M"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -97,6 +98,7 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Sub, atletica.AtleticaId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, atletica.Email),
                 new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Gender, "A"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
