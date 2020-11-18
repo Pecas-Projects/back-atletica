@@ -46,7 +46,7 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/AtleticaModalidade/{atleticaId}")]
         [HttpGet]
-        public IActionResult GetAll(int atleticaId)
+        public IActionResult BuscarTodasNaAtletica(int atleticaId)
         {
             var resultado = _ModalidadeBusiness.BuscarTodasNaAtletica(atleticaId);
 
