@@ -109,6 +109,16 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
+        [Route("api/AtletaTime/{aamteId}")]
+        [HttpPut]
+        public IActionResult AtualizarAtletaTime(int aamteId, [FromBody] AtletaAtleticaModalidadeTimeEscaladoModel valor)
+        {
+            AtletaAtleticaModalidadeTimeEscalado aamte = valor.Transform();
+            var resultado = _AtletaBusiness.AtualizarAtletaTime(aamteId, aamte);
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
         [HttpPost]
         public IActionResult AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)

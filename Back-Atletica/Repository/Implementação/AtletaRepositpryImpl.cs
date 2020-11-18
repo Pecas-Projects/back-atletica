@@ -290,5 +290,10 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(400, ex.InnerException.Message);
             }
         }
+
+        public HttpRes AtualizarAtletaTime(int aamteId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
