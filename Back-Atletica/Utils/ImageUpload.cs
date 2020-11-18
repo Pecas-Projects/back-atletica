@@ -17,7 +17,6 @@ namespace Back_Atletica.Utils
             Cloudinary cloudinary = new Cloudinary(account);
 
             Imagem imagem = new Imagem();
-            imagem.Nome = ImagemData.FileName;
 
             try
             {

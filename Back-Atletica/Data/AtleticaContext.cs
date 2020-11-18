@@ -357,11 +357,6 @@ namespace Back_Atletica.Data
             modelBuilder.Entity<Imagem>().HasKey(am => new { am.ImagemId });
 
             modelBuilder.Entity<Imagem>()
-                .Property(p => p.Nome)
-                .HasMaxLength(45)
-                .IsRequired();
-
-            modelBuilder.Entity<Imagem>()
                 .Property(p => p.Path)
                 .HasMaxLength(255)
                 .IsRequired();
@@ -542,11 +537,6 @@ namespace Back_Atletica.Data
               .HasOne<Jogo>(am => am.Jogos)
               .WithMany(a => a.TimeEscalados)
               .HasForeignKey(am => am.JogoId);
-
-            modelBuilder.Entity<TimeEscalado>()
-                .Property(p => p.Nome)
-                .HasMaxLength(45)
-                .IsRequired();
 
             /*AtletaAtleticaModalidade*/
             modelBuilder.Entity<AtletaAtleticaModalidade>().HasKey(am => new { am.AtletaAtleticaModalidadeId });
