@@ -26,7 +26,8 @@ namespace Back_Atletica.Utils.RequestModels
                 {
                     ModalidadeId = this.ModalidadeId,
                     MembroId = this.CoordenadorId,
-                    ImagemId = this.ImagemId
+                    ImagemId = this.ImagemId,
+                    Ativo = true
                 };
 
                 if (atleticaModalidade.MembroId == 0) atleticaModalidade.MembroId = null;
