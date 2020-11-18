@@ -69,15 +69,24 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes ExcluiModalidadeAtletica(int atleticaModalidadeId)
         {
-            AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
-
-            if (modalidade == null)
+            try
             {
-                return new HttpRes(404, "Modalidade não encontrada");
-            }
+                AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
 
-            _context.AtleticaModalidades.Remove(modalidade);
-            _context.SaveChanges();
+                if (modalidade == null)
+                {
+                    return new HttpRes(404, "Modalidade não encontrada.");
+                }
+
+                _context.AtleticaModalidades.Remove(modalidade);
+                _context.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
 
             return new HttpRes(204);
         }
