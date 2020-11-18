@@ -20,7 +20,6 @@ namespace Back_Atletica.Utils.RequestModels
 
             Imagem img = new Imagem
             {
-                Nome = Nome,
                 Path = Path,
                 Extensao = Extensao
             };

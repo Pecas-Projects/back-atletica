@@ -3,15 +3,17 @@ using System;
 using Back_Atletica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Back_Atletica.Migrations
 {
     [DbContext(typeof(AtleticaContext))]
-    partial class AtleticaContextModelSnapshot : ModelSnapshot
+    [Migration("20201117200337_Consertando-FKs")]
+    partial class ConsertandoFKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,9 +53,7 @@ namespace Back_Atletica.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("Ativo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
+                        .HasColumnType("boolean");
 
                     b.Property<int>("PessoaId")
                         .HasColumnType("integer");
@@ -212,11 +212,6 @@ namespace Back_Atletica.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("Ativo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
 
                     b.Property<int>("AtleticaId")
                         .HasColumnType("integer");
@@ -450,6 +445,11 @@ namespace Back_Atletica.Migrations
                         .IsRequired()
                         .HasColumnType("character varying(10)")
                         .HasMaxLength(10);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("character varying(45)")
+                        .HasMaxLength(45);
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -875,6 +875,11 @@ namespace Back_Atletica.Migrations
 
                     b.Property<int>("JogoId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("character varying(45)")
+                        .HasMaxLength(45);
 
                     b.HasKey("TimeEscaladoId");
 
