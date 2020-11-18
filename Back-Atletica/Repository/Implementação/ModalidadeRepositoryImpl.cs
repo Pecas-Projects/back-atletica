@@ -21,8 +21,17 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Modalidade modalidade)
         {
-            _context.Modalidades.Add(modalidade);
-            _context.SaveChanges();
+            try
+            {
+                _context.Modalidades.Add(modalidade);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+
+                return new HttpRes(400, ex.InnerException.Message);
+            }
 
             return new HttpRes(200, modalidade);
         }
