@@ -149,8 +149,7 @@ namespace Back_Atletica.Utils.ResponseModels
             return new ImagemResponseModel
             { 
                 Extensao = img.Extensao,
-                Path = img.Path,
-                Nome = img.Nome
+                Path = img.Path
             };
 
         }
