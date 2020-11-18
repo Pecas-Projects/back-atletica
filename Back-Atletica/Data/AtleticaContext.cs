@@ -128,7 +128,8 @@ namespace Back_Atletica.Data
 
             modelBuilder.Entity<Atleta>()
                 .Property(p => p.Ativo)
-                .IsRequired();
+                .IsRequired()
+                .HasDefaultValue(true);
 
             /* Atletica */
             modelBuilder.Entity<Atletica>().HasKey(am => new { am.AtleticaId });
@@ -581,6 +582,11 @@ namespace Back_Atletica.Data
                 .HasOne<Membro>(m => m.Membro)
                 .WithMany(m => m.AtleticaModalidades)
                 .HasForeignKey(am => am.MembroId);
+
+            modelBuilder.Entity<AtleticaModalidade>()
+                .Property(p => p.Ativo)
+                .IsRequired()
+                .HasDefaultValue(true);
 
             /* AtletaAtleticaModalidadeTimeEscalado*/
             modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>().HasKey(am => new { am.AtletaAtleticaModalidadeTimeEscaladoId });
