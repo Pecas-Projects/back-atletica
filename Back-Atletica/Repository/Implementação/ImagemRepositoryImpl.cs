@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -17,12 +19,52 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
+        public HttpRes Delete(int imagemId)
+        {
+            Imagem imagem = _context.Imagens.SingleOrDefault(i => i.ImagemId == imagemId);
+
+            if (imagem == null) return new HttpRes(404, "Imagem não encontrada");
+
+            Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            var deletionParams = new DeletionParams(imagem.PublicId);
+            var deletionResult = cloudinary.Destroy(deletionParams);
+
+            return new HttpRes(200, deletionResult.Result);
+        }
+
         public HttpRes Upload(IFormFile Imagem)
         {
+            Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            Imagem img = new Imagem();
+            img.Nome = "Nome generico";
             try
             {
 
-                Imagem img = ImageUpload.UploadImage(Imagem);
+                ImageUploadResult uploadResult;
+
+                if (Imagem.Length > 0)
+                {
+                    using (var stream = Imagem.OpenReadStream())
+                    {
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(Imagem.Name, stream),
+                            Transformation = new Transformation()
+                            .Width(800),
+                        };
+
+                        uploadResult = cloudinary.Upload(uploadParams);
+                        img.Extensao = uploadResult.Format;
+                        img.Path = uploadResult.Url.ToString();
+                        img.PublicId = uploadResult.PublicId;
+
+                    }
+
+                }
 
                 _context.Add(img);
 
@@ -32,7 +74,10 @@ namespace Back_Atletica.Repository.Implementação
             }
             catch(Exception ex)
             {
-                if(ex.InnerException == null) return new HttpRes(400, ex.Message);
+                var deletionParams = new DeletionParams(img.PublicId);
+                var deletionResult = cloudinary.Destroy(deletionParams);
+
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
 

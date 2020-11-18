@@ -16,6 +16,12 @@ namespace Back_Atletica.Business.Implementação
         {
             _RepositorioImagem = repositorioImagem;
         }
+
+        public HttpRes Delete(int imagemId)
+        {
+            return _RepositorioImagem.Delete(imagemId);
+        }
+
         public HttpRes Upload(IFormFile Imagem)
         {
             return _RepositorioImagem.Upload(Imagem);
