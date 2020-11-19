@@ -30,9 +30,9 @@ namespace Back_Atletica.Business.Implementação
             return _JogoRepository.BuscarPorId(id);
         }
 
-        public HttpRes BuscarPorModalidade(int modalidadeId, long userId)
+        public HttpRes BuscarPorModalidade(int atleticaModalidadeId)
         {
-            return _JogoRepository.BuscarPorModalidade(modalidadeId, userId);
+            return _JogoRepository.BuscarPorModalidade(atleticaModalidadeId);
         }
 
         public HttpRes Deletar(int id)

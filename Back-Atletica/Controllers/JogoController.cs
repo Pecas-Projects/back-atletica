@@ -30,13 +30,11 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/JogosModalidade/{modalidadeId}")]
+        [Route("api/JogosModalidade/{atleticaModalidadeId}")]
         [HttpGet]
-        public IActionResult BuscarPorModalidade(int modalidadeId)
+        public IActionResult BuscarPorModalidade(int atleticaModalidadeId)
         {
-            var userId = HttpToken.GetUserId(HttpContext);
-
-            var resultado = _JogoBusiness.BuscarPorModalidade(modalidadeId, userId);
+            var resultado = _JogoBusiness.BuscarPorModalidade(atleticaModalidadeId);
             return resultado.HttpResponse();
         }
 

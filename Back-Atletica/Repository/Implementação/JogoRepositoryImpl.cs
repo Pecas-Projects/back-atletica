@@ -63,7 +63,7 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, jogo);
         }
 
-        public HttpRes BuscarPorModalidade(int modalidadeId, long userId)
+        public HttpRes BuscarPorModalidade(int atleticaModalidadeId)
         {
             throw new NotImplementedException();
         }
