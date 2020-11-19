@@ -59,10 +59,18 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "A atletica convidada não tem essa modalidade cadastrada");
             }
 
-            _context.SolicitacaoJogos.Add(solicitacaoJogo);
-            _context.SaveChanges();
+            try
+            {
+                _context.SolicitacaoJogos.Add(solicitacaoJogo);
+                _context.SaveChanges();
 
-            return new HttpRes(200, solicitacaoJogo);
+                return new HttpRes(200, solicitacaoJogo);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes DeletarSolicitacaoJogo(int solicitacaoJogoId)
@@ -75,9 +83,17 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Solicitacao não encontrada");
             }
 
-            _context.SolicitacaoJogos.Remove(solicitacao);
-            _context.SaveChanges();
-            return new HttpRes(204);
+            try
+            {
+                _context.SolicitacaoJogos.Remove(solicitacao);
+                _context.SaveChanges();
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoJogoId)
@@ -89,12 +105,21 @@ namespace Back_Atletica.Repository.Implementação
             {
                 return new HttpRes(404, "Solicitacao não encontrada");
             }
-            solicitacao.Aprovado = true;
-            _context.SaveChanges();
 
-            _context.SolicitacaoJogos.Remove(solicitacao);
-            _context.SaveChanges();
-            return new HttpRes(204);
+            try
+            {
+                solicitacao.Aprovado = true;
+                _context.SaveChanges();
+
+                _context.SolicitacaoJogos.Remove(solicitacao);
+                _context.SaveChanges();
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
     }
 }
