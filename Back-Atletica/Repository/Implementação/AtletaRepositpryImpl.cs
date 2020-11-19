@@ -321,7 +321,25 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RemoverAtletaTime(int aamteId)
         {
-            throw new NotImplementedException();
+            AtletaAtleticaModalidadeTimeEscalado aamte = _context.AtletaAtleticaModalidadeTimesEscalados
+                .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamteId);
+
+            if (aamte == null)
+            {
+                return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
+            }
+            try
+            {
+                _context.AtletaAtleticaModalidadeTimesEscalados.Remove(aamte);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
     }
 }
