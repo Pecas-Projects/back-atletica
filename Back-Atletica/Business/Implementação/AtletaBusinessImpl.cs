@@ -87,5 +87,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _atletaRepository.RemoverAtletaModalidade(atletaAtleticaModalidadeId);
         }
+
+        public HttpRes RemoverAtletaTime(int aamteId)
+        {
+            return _atletaRepository.RemoverAtletaTime(aamteId);
+        }
     }
 }

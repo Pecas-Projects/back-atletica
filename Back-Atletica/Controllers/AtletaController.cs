@@ -117,6 +117,15 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
+        [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
+        [HttpDelete]
+        public IActionResult RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
+        {
+            var resultado = _AtletaBusiness.RemoverAtletaTime(atletaAtleticaModalidadeTimeEscaladoId);
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
         [HttpPost]
         public IActionResult AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId)
