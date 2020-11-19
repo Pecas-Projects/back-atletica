@@ -292,7 +292,31 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes AtualizarAtletaTime(int aamteId, AtletaAtleticaModalidadeTimeEscalado aamte)
         {
-            throw new NotImplementedException();
+            if (aamte == null)
+            {
+                return new HttpRes(400, "Verifique os dados enviados");
+            }
+            try
+            {
+                AtletaAtleticaModalidadeTimeEscalado aamteData = _context.AtletaAtleticaModalidadeTimesEscalados
+                    .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamteId);
+
+                if (aamteData == null) return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
+
+                aamte.AtletaAtleticaModalidadeTimeEscaladoId = aamteId;
+                aamte.AtletaAtleticaModalidadeId = aamteData.AtletaAtleticaModalidadeId;
+                aamte.TimeEscaladoId = aamteData.TimeEscaladoId;
+
+                _context.Entry(aamteData).CurrentValues.SetValues(aamte);
+                _context.SaveChanges();
+
+                return new HttpRes(200, aamte);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
     }
 }
