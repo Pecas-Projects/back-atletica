@@ -8,6 +8,7 @@ namespace Back_Atletica.Models
     public class AtleticaModalidade
     {
         public int AtleticaModalidadeId { get; set; }
+        public bool Ativo { get; set; }
         public int AtleticaId { get; set; }
         public Atletica Atletica { get; set; }
         public int ModalidadeId { get; set; }

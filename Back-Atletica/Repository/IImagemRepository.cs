@@ -9,6 +9,7 @@ namespace Back_Atletica.Repository
 {
     public interface IImagemRepository
     {
-        HttpRes UploadImagemProduto(IFormFile Imagem, int produtoId, int userId);
+        HttpRes Upload(IFormFile Imagem);
+        HttpRes Delete(int imagemId);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Back_Atletica.Utils;
 using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
