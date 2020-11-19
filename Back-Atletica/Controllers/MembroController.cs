@@ -6,6 +6,7 @@ using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Back_Atletica.Utils.RequestModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using static Back_Atletica.Utils.RequestModels.MembroModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +24,7 @@ namespace Back_Atletica.Controllers
         }
 
         
-        
+        [Authorize]
         [Route("api/Membro/{atleticaId}/nome={nome}")]
         [HttpGet]
         public IActionResult BuscarPorNome(int atleticaId, string nome) {
@@ -43,7 +44,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // GET: api/<MembroController>
+        
         [Route("api/Membro/Atletica/{atleticaId}")]
         [HttpGet]
         public IActionResult BuscarTodos(int atleticaId)
@@ -53,7 +54,8 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // GET api/<MembroController>/5
+        
+        [Authorize]
         [Route("api/Membro/{id}")]
         [HttpGet]
         public IActionResult Get(int id)
@@ -63,7 +65,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // POST api/<MembroController>
+        
         [Route("api/Membro")]
         [HttpPost]
         public IActionResult Criar([FromBody] Membro membro)
@@ -73,7 +75,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // PUT api/<MembroController>/5
+        [Authorize]
         [Route("api/Membro/{id}")]
         [HttpPut]
         public IActionResult Atualizar(int id, [FromBody] AtualizarMembro value)
@@ -85,7 +87,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        // DELETE api/<MembroController>/5
+        [Authorize]
         [Route("api/Membro/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)

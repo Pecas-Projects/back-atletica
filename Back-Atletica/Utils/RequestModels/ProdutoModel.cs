@@ -15,13 +15,13 @@ namespace Back_Atletica.Utils.RequestModels
         [Required]
         public double Preco { get; set; }
         [Required]
-        public int Estoque { get; set; }
+        public bool Estoque { get; set; }
         [Required]
         public int ProdutoCategoriaId { get; set; }
         [Required]
         public int AtleticaId { get; set; }
+        [Required]
         public int ImagemId { get; set; }
-        public ImagemModel Imagem { get; set; }
         public Produto Transform()
         {
             Produto produto = new Produto
@@ -32,8 +32,7 @@ namespace Back_Atletica.Utils.RequestModels
                 Estoque = Estoque,
                 ProdutoCategoriaId = ProdutoCategoriaId,
                 AtleticaId = AtleticaId,
-                ImagemId = ImagemId,
-                Imagem = Imagem != null ? Imagem.Transform() : null
+                ImagemId = ImagemId
             };
 
             return produto;

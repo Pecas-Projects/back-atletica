@@ -27,18 +27,11 @@ namespace Back_Atletica.Repository.Implementação
             }
             try
             {
-                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id);
+                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id && a.AtleticaId == produto.AtleticaId);
 
                 if (produtoData == null) return new HttpRes(404, "Produto não encontrado");
 
                 produto.ProdutoId = id;
-
-                if (produto.Imagem != null)
-                {
-                    _context.Imagens.Add(produto.Imagem);
-                    _context.SaveChanges();
-                    produto.ImagemId = produto.Imagem.ImagemId;
-                }
 
                 _context.Entry(produtoData).CurrentValues.SetValues(produto);
                 _context.SaveChanges();
@@ -102,10 +95,19 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Produto produto)
         {
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
+            try
+            {
+                _context.Produtos.Add(produto);
+                _context.SaveChanges();
 
-            return new HttpRes(200, produto);
+                return new HttpRes(200, produto);
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
         }
 
         public HttpRes Deletar(int id)

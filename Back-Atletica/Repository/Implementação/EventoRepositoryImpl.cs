@@ -29,36 +29,7 @@ namespace Back_Atletica.Repository.Implementação
                 //if (!existeAtletica(id)) return new HttpRes(404, "Não existe nenhum atlética com este id");
 
                 Evento eventoData = _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
-                if (eventoData == null) return new HttpRes(404, "Evento não encontrada");
-
-                EventoCategoria categoria = new EventoCategoria();
-                categoria = _context.EventoCategorias.SingleOrDefault(e => e.EventoCategoriaId == eventoData.EventoCategoriaId);
-
-                if (evento.EventoCategoria.Nome != categoria.Nome)
-                {
-                    categoria = _context.EventoCategorias.SingleOrDefault(e => e.Nome == evento.EventoCategoria.Nome);
-
-                    if (categoria == null)
-                    {
-                        EventoCategoria novaCategoria = new EventoCategoria();
-
-                        novaCategoria.Nome = evento.EventoCategoria.Nome;
-                        _context.EventoCategorias.Add(novaCategoria);
-                        _context.SaveChanges();
-                        evento.EventoCategoria = novaCategoria;
-                        evento.EventoCategoriaId = novaCategoria.EventoCategoriaId;
-                    }
-                    {
-                        evento.EventoCategoria = categoria;
-                        evento.EventoCategoriaId = categoria.EventoCategoriaId;
-                    }
-                    
-                    
-                }
-                else
-                {
-                    evento.EventoCategoriaId = eventoData.EventoCategoriaId;
-                }
+                if (eventoData == null) return new HttpRes(404, "Evento não encontrado");
 
                 evento.EventoId = eventoId;
                 evento.AtleticaId = eventoData.AtleticaId;
@@ -75,25 +46,22 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
-        public HttpRes BuscarPorCategoria(int atleticaId, string nomeCategoria)
+        public HttpRes BuscarCategoriasEvento()
         {
-            EventoCategoria categoria = _context.EventoCategorias.SingleOrDefault(e => e.Nome == nomeCategoria);
-            if(categoria == null)
+            List<EventoCategoria> eventoCategorias = _context.EventoCategorias.ToList();
+
+            return new HttpRes(200, eventoCategorias);
+        }
+
+        public HttpRes BuscarEvento(int eventoId)
+        {
+            Evento evento= _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
+            if(evento == null)
             {
-                return new HttpRes(404, "Não existe nenhuma categoria com este nome");
+                return new HttpRes(404, "Evento não encontrado");
             }
 
-            Atletica atletica = _context.Atleticas.SingleOrDefault(e => e.AtleticaId == atleticaId);
-            if (atletica == null)
-            {
-                return new HttpRes(404, "Não existe nenhuma atlética com este id");
-            }
-
-            List<Evento> eventos = _context.Eventos
-                .Where(e => e.EventoCategoriaId.Equals(categoria.EventoCategoriaId) && (e.AtleticaId.Equals(atleticaId)))
-                .ToList();
-
-            return new HttpRes(200, eventos);
+            return new HttpRes(200, evento);
         }
 
         public HttpRes BuscarTodos(int atleticaId)
@@ -109,7 +77,6 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes CriarEvento(Evento evento, int atleticaId)
         {
             Atletica atletica = new Atletica();
-            EventoCategoria categoria = new EventoCategoria();
 
             atletica = _context.Atleticas.SingleOrDefault(e => e.AtleticaId == atleticaId);
             if (atletica == null)
@@ -117,23 +84,6 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Atletica não encontrada");
             }
             evento.AtleticaId = atleticaId;
-
-            categoria = _context.EventoCategorias.SingleOrDefault(e => e.Nome == evento.EventoCategoria.Nome);
-
-            if(categoria == null)
-            {
-                EventoCategoria novaCategoria = new EventoCategoria();
-                novaCategoria.Nome = evento.EventoCategoria.Nome;
-                _context.EventoCategorias.Add(novaCategoria);
-                _context.SaveChanges();
-                evento.EventoCategoria = novaCategoria;
-                evento.EventoCategoriaId = novaCategoria.EventoCategoriaId;
-            }
-            else
-            {
-                evento.EventoCategoria = categoria;
-                evento.EventoCategoriaId = categoria.EventoCategoriaId;
-            }
             
             _context.Eventos.Add(evento);
             _context.SaveChanges();
