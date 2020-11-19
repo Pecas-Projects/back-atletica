@@ -27,7 +27,26 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorAtletica(int atleticaId)
         {
-            throw new NotImplementedException();
+            var jogos = from j in _context.Jogos
+                        join
+                        jc in _context.JogoCategorias on j.JogoCategoriaId equals jc.JogoCategoriaId
+                        join
+                        amj in _context.AtleticaModalidadeJogos on j.JogoId equals amj.JogoId
+                        join
+                        am in _context.AtleticaModalidades on amj.AtleticaModalidadeId equals am.AtleticaModalidadeId
+                        join
+                        m in _context.Modalidades on am.ModalidadeId equals m.ModalidadeId
+                        where am.AtleticaId == atleticaId
+                        select new
+                        {
+                            j.JogoId,
+                            j.DataHora,
+                            m.Nome,
+                            m.Genero,
+                            jc.Cor
+                        };
+
+            return new HttpRes(200, jogos);
         }
 
         public HttpRes BuscarPorId(int id)
