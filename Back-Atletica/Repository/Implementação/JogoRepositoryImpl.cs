@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,16 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            Jogo jogo = _context.Jogos
+                .Include(j => j.JogoCategoria)
+                .Include(j => j.AtleticaModalidadeJogos)
+                .ThenInclude(amj => amj.AtleticaModalidade)
+                .ThenInclude(am => am.Atletica)
+                .SingleOrDefault(j => j.JogoId == id);
+
+            if (jogo == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
+
+            return new HttpRes(200, jogo);
         }
 
         public HttpRes BuscarPorModalidade(int modalidadeId, long userId)
