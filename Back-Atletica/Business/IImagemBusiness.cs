@@ -9,6 +9,7 @@ namespace Back_Atletica.Business
 {
     public interface IImagemBusiness
     {
-        HttpRes UploadImagemProduto(IFormFile Imagem, int produtoId, int userId);
+        HttpRes Upload(IFormFile Imagem);
+        HttpRes Delete(int imagemId);
     }
 }

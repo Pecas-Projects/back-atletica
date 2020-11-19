@@ -21,13 +21,21 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/Upload/Produto/{produtoId}")]
+        [Route("api/Imagem/Upload")]
         [HttpPost]
-        public IActionResult UploadImagemProduto([FromForm] IFormFile value, int produtoId)
+        public IActionResult UploadImagemProduto([FromForm] IFormFile value)
         {
-            int userId = (int)HttpToken.GetUserId(HttpContext);
+            HttpRes result = _ImagemBusiness.Upload(value);
 
-            HttpRes result = _ImagemBusiness.UploadImagemProduto(value, produtoId, userId);
+            return result.HttpResponse();
+        }
+
+        [Authorize]
+        [Route("api/Imagem/Delete/{imagemId}")]
+        [HttpDelete]
+        public IActionResult Delete(int imagemId)
+        {
+            HttpRes result = _ImagemBusiness.Delete(imagemId);
 
             return result.HttpResponse();
         }

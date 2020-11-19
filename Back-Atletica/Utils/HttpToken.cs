@@ -20,6 +20,16 @@ namespace Back_Atletica.Utils
             return Convert.ToInt32(id);
         }
 
+        public static string GetUserType(HttpContext context)
+        {
+            var identity = context.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+
+            var tipo = claim[3].Value;
+
+            return tipo;
+        }
+
         public static string GetTokenType(HttpContext context)
         {
             var identity = context.User.Identity as ClaimsIdentity;
