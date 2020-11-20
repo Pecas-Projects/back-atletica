@@ -1,11 +1,13 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Back_Atletica.Utils.ResponseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.JogoResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -65,7 +67,56 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorModalidade(int atleticaModalidadeId)
         {
-            throw new NotImplementedException();
+            List<Jogo> jogos = _context.Jogos
+                .Include(j => j.AtleticaModalidadeJogos)
+                    .ThenInclude(amj => amj.AtleticaModalidade)
+                        .ThenInclude(am => am.Atletica)
+                .Include(j => j.TimeEscalados)
+                    .ThenInclude(te => te.AtletaAtleticaModalidadeTimeEscalados)
+                .ToList();
+
+            List<JogoResponseModels> jogosResponse = new List<JogoResponseModels>();
+
+            foreach (Jogo jogo in jogos)
+            {
+                JogoResponseModels jogoRes = new JogoResponseModels();
+                jogoRes.JogoId = jogo.JogoId;
+                jogoRes.DataHora = jogo.DataHora;
+
+                foreach (TimeEscalado time in jogo.TimeEscalados)
+                {
+                    AtleticaJogoModel atletica = new AtleticaJogoModel();
+                    atletica.AtleticaId = time.AtleticaId;
+                    atletica.Nome = time.Atletica.Nome;
+
+                    int? pontos = 0;
+
+                    foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
+                    {
+                        if (time.Atletica.AtleticaModalidades.First().AtleticaModalidadeId == atleticaModalidadeId)
+                        {
+                            AtletaJogoModel ajm = new AtletaJogoModel
+                            {
+                                AtletaAtleticaModalidadeTimeEscaladoId = aamte.AtletaAtleticaModalidadeTimeEscaladoId,
+                                TimeEscaladoId = aamte.TimeEscaladoId,
+                                AtletaAtleticaModalidadeId = aamte.AtletaAtleticaModalidadeId,
+                                FuncaoId = aamte.FuncaoId,
+                                Numero = aamte.Numero,
+                                Infracoes = aamte.Infracoes,
+                                Pontos = aamte.Pontos
+                            };
+                            jogoRes.Atletas.Add(ajm);
+                        }
+                        pontos += aamte.Pontos;
+                    }
+
+                    atletica.Pontos = pontos;
+                    jogoRes.Atleticas.Add(atletica);
+                }
+                jogosResponse.Add(jogoRes);
+            }
+
+            return new HttpRes(200, jogosResponse);
         }
 
         public HttpRes Deletar(int id)

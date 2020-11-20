@@ -6,6 +6,7 @@ using Back_Atletica.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Back_Atletica.Utils;
+using Back_Atletica.Utils.ResponseModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,6 +30,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [ProducesResponseType(typeof(JogoResponseModels), 200)]
         [Authorize]
         [Route("api/JogosModalidade/{atleticaModalidadeId}")]
         [HttpGet]
