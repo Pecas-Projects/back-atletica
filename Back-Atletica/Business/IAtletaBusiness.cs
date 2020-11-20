@@ -13,9 +13,13 @@ namespace Back_Atletica.Business
         HttpRes BuscarTodos(int atleticaID);
         HttpRes BuscaPorID(int atletaID);
         HttpRes BuscaPorJogo(int JogoID);
-        HttpRes BuscaPorModalidade(int modalidadeID, int atleticaID);
+        HttpRes BuscaPorModalidade(int atleticaModalidadeId);
         HttpRes BuscaAtivos(int atleticaID);
         HttpRes Atualizar(int atletaID, Atleta atleta);
         HttpRes Deletar(int atletaID);
+        HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte);
+        HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId);
+        HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId);
+        HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId);
     }
 }

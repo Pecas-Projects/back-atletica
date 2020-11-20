@@ -1,11 +1,8 @@
 ﻿using Back_Atletica.Models;
 using Back_Atletica.Utils;
-using System.Security.Cryptography;
-using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Back_Atletica.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -25,18 +22,6 @@ namespace Back_Atletica.Repository.Implementação
         {
             _context = context;
         }
-
-        public string GerarPIN()
-        {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var random = new Random();
-            var result = new string(
-                Enumerable.Repeat(chars, 5)
-                          .Select(s => s[random.Next(s.Length)])
-                          .ToArray());
-            return result;
-        }
-
         public HttpRes LoginAtletica(Atletica atletica)
         {
             Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
@@ -86,6 +71,7 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Sub, membro.MembroId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, membro.Pessoa.Email),
                 new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Gender, "M"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -112,6 +98,7 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Sub, atletica.AtleticaId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, atletica.Email),
                 new Claim(JwtRegisteredClaimNames.Typ, tipo),
+                new Claim(JwtRegisteredClaimNames.Gender, "A"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -128,7 +115,7 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
-        public HttpRes RegistrarAtletica(Atletica atletica)
+        public HttpRes RegistrarAtletica(Atletica atletica, List<int> cursosIds)
         {
             Env hash = new Env();
 
@@ -137,9 +124,12 @@ namespace Back_Atletica.Repository.Implementação
                 string encrip = hash.Encriptografia(atletica.Senha);
 
                 atletica.Senha = encrip;
-                atletica.PIN = GerarPIN();
+                atletica.PIN = new AtleticaPin().GerarPIN();
 
-                _context.Add(atletica);
+                foreach(int i in cursosIds)
+                {
+                    _context.Add(new AtleticaCurso { CursoId = i, Atletica = atletica });
+                }
 
                 _context.SaveChanges();
 

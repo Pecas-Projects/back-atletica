@@ -18,38 +18,45 @@ namespace Back_Atletica.Repository.Implementação
         {
             _context = contxt;
         }
+
         public HttpRes Atualizar(int id, Produto produto)
         {
-            if (id != produto.ProdutoId)
+            if (produto == null)
             {
-                return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
+                return new HttpRes(400, "Verifique os dados enviados");
             }
-
-            _context.Entry(produto).State = EntityState.Modified;
-
             try
             {
+                Produto produtoData = _context.Produtos.SingleOrDefault(a => a.ProdutoId == id && a.AtleticaId == produto.AtleticaId);
+
+                if (produtoData == null) return new HttpRes(404, "Produto não encontrado");
+
+                produto.ProdutoId = id;
+
+                _context.Entry(produtoData).CurrentValues.SetValues(produto);
                 _context.SaveChanges();
+
+                return new HttpRes(200, produto);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!existeProduto(id))
-                {
-                    return new HttpRes(404, "Não existe nenhum produto com este id");
-                }
-                else
-                {
-                    throw;
-                }
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
-            return new HttpRes(200, produto);
+        }
+
+        public HttpRes BuscarCategorias()
+        {
+            List<ProdutoCategoria> categorias = _context.ProdutoCategorias.ToList();
+            return new HttpRes(200, categorias);
         }
 
         public HttpRes BuscarPorAtletica(int atleticaId)
         {
             var produtos = _context.Produtos
                 .Where(p => p.AtleticaId.Equals(atleticaId))
+                .Include(p => p.Imagem)
                 .ToList();
 
             return new HttpRes(200, produtos);
@@ -59,6 +66,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             var produtos = _context.Produtos
                 .Where(p => p.AtleticaId.Equals(atleticaId) && p.ProdutoCategoriaId.Equals(categoriaId))
+                .Include(p => p.Imagem)
                 .ToList();
 
             return new HttpRes(200, produtos);
@@ -87,10 +95,19 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Produto produto)
         {
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
+            try
+            {
+                _context.Produtos.Add(produto);
+                _context.SaveChanges();
 
-            return new HttpRes(200, produto);
+                return new HttpRes(200, produto);
+            }
+            catch(Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
         }
 
         public HttpRes Deletar(int id)

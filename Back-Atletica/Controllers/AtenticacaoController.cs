@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
-using static Back_Atletica.Utils.RequestModels.AutenticacaoModel;
 using Back_Atletica.Utils.RequestModels;
 using Back_Atletica.Utils;
+using static Back_Atletica.Utils.RequestModels.AutenticacaoModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +14,6 @@ namespace Back_Atletica.Controllers
     public class AtenticacaoController : ControllerBase
     {
         IAutenticacaoBusiness _AutenticacaoBusiness;
-
         public AtenticacaoController(IAutenticacaoBusiness business)
         {
             _AutenticacaoBusiness = business;
@@ -25,12 +21,12 @@ namespace Back_Atletica.Controllers
 
         [Route("api/Registro/Atletica")]
         [HttpPost]
-        public IActionResult RegistroAtletica([FromBody] RegistroAtleticaModel value)
+        public IActionResult RegistroAtletica([FromBody] AtleticaModel value)
         {
 
             Atletica atletica = value.Transform();
 
-            HttpRes result = _AutenticacaoBusiness.RegistrarAtletica(atletica);
+            HttpRes result = _AutenticacaoBusiness.RegistrarAtletica(atletica, value.CursosIds);
 
             return result.HttpResponse();
         }

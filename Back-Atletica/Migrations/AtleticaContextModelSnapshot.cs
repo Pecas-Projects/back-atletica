@@ -51,7 +51,9 @@ namespace Back_Atletica.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<int>("PessoaId")
                         .HasColumnType("integer");
@@ -71,6 +73,11 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
                     b.Property<int>("AtletaId")
                         .HasColumnType("integer");
 
@@ -89,7 +96,9 @@ namespace Back_Atletica.Migrations
             modelBuilder.Entity("Back_Atletica.Models.AtletaAtleticaModalidadeTimeEscalado", b =>
                 {
                     b.Property<int>("AtletaAtleticaModalidadeTimeEscaladoId")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AtletaAtleticaModalidadeId")
                         .HasColumnType("integer");
@@ -112,6 +121,8 @@ namespace Back_Atletica.Migrations
                     b.HasKey("AtletaAtleticaModalidadeTimeEscaladoId");
 
                     b.HasIndex("AtletaAtleticaModalidadeId");
+
+                    b.HasIndex("FuncaoId");
 
                     b.HasIndex("TimeEscaladoId");
 
@@ -202,6 +213,11 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
                     b.Property<int>("AtleticaId")
                         .HasColumnType("integer");
 
@@ -250,6 +266,8 @@ namespace Back_Atletica.Migrations
                     b.HasKey("AtleticaModalidadeJogoId");
 
                     b.HasIndex("AtleticaModalidadeId");
+
+                    b.HasIndex("JogoId");
 
                     b.ToTable("AtleticaModalidadeJogos");
                 });
@@ -433,12 +451,12 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("character varying(10)")
                         .HasMaxLength(10);
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("character varying(45)")
-                        .HasMaxLength(45);
-
                     b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PublicId")
                         .IsRequired()
                         .HasColumnType("character varying(255)")
                         .HasMaxLength(255);
@@ -644,8 +662,8 @@ namespace Back_Atletica.Migrations
                         .HasColumnType("character varying(300)")
                         .HasMaxLength(300);
 
-                    b.Property<int>("Estoque")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Estoque")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("ImagemId")
                         .HasColumnType("integer");
@@ -702,6 +720,9 @@ namespace Back_Atletica.Migrations
 
                     b.Property<int>("AtleticaId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("DataHora")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("character varying(500)")
@@ -855,11 +876,6 @@ namespace Back_Atletica.Migrations
                     b.Property<int>("JogoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("character varying(45)")
-                        .HasMaxLength(45);
-
                     b.HasKey("TimeEscaladoId");
 
                     b.HasIndex("AtleticaId");
@@ -912,9 +928,7 @@ namespace Back_Atletica.Migrations
 
                     b.HasOne("Back_Atletica.Models.Funcao", "Funcao")
                         .WithMany("AtletaAtleticaModalidadeTimeEscalados")
-                        .HasForeignKey("AtletaAtleticaModalidadeTimeEscaladoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FuncaoId");
 
                     b.HasOne("Back_Atletica.Models.TimeEscalado", "TimeEscalado")
                         .WithMany("AtletaAtleticaModalidadeTimeEscalados")
@@ -978,7 +992,7 @@ namespace Back_Atletica.Migrations
 
                     b.HasOne("Back_Atletica.Models.Jogo", "Jogo")
                         .WithMany("AtleticaModalidadeJogos")
-                        .HasForeignKey("AtleticaModalidadeId")
+                        .HasForeignKey("JogoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
