@@ -31,7 +31,10 @@ namespace Back_Atletica.Repository.Implementação
             var deletionParams = new DeletionParams(imagem.PublicId);
             var deletionResult = cloudinary.Destroy(deletionParams);
 
-            return new HttpRes(200, deletionResult.Result);
+            if (deletionResult.Result.Equals("ok")) return new HttpRes(204);
+
+            else return new HttpRes(400, "Erro ao apagar a imagem");
+
         }
 
         public HttpRes Upload(IFormFile Imagem)
@@ -40,10 +43,8 @@ namespace Back_Atletica.Repository.Implementação
             Cloudinary cloudinary = new Cloudinary(account);
 
             Imagem img = new Imagem();
-            img.Nome = "Nome generico";
             try
             {
-
                 ImageUploadResult uploadResult;
 
                 if (Imagem.Length > 0)
@@ -77,8 +78,16 @@ namespace Back_Atletica.Repository.Implementação
                 var deletionParams = new DeletionParams(img.PublicId);
                 var deletionResult = cloudinary.Destroy(deletionParams);
 
-                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
-                return new HttpRes(400, ex.InnerException.Message);
+                if (deletionResult.Result.Equals("ok"))
+                {
+                    if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                    return new HttpRes(400, ex.InnerException.Message);
+                }
+                else
+                {
+                    return new HttpRes(400, "Erro ao apagar a imagem");
+                }
+
             }
 
         }
