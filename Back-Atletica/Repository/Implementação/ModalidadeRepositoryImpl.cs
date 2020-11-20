@@ -103,17 +103,13 @@ namespace Back_Atletica.Repository.Implementação
         {
             Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
 
-            if(atletica == null)
-            {
-                return new HttpRes(404, "Atlética não encontrada!");
-            }
-
             List<AtleticaModalidade> atleticaModalidade = _context.AtleticaModalidades
                 .Include(am => am.Modalidade)
                 .Include(am => am.Imagem)
                 .Include(am => am.AgendaTreinos)
                 .Include(am => am.Membro).ThenInclude(a => a.Pessoa)
-                .Where(am => am.AtleticaId == atleticaId && am.Ativo == true).ToList();
+                .Where(am => am.AtleticaId == atleticaId && am.Ativo == true)
+                .ToList();
 
             ModalidadesAtletica atleticaModalidades = new ModalidadesAtletica();
            
