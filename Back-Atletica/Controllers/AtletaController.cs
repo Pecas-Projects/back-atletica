@@ -99,9 +99,9 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/AtletaTime/{atleticaId}/{jogoId}")]
         [HttpPost]
-        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] CriarAAMTEModel valor)
+        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] CriarAAMTEModel criarAAMTEModel)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = valor.Transform();
+            AtletaAtleticaModalidadeTimeEscalado aamte = criarAAMTEModel.Transform();
             var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, aamte);
             return resultado.HttpResponse();
         }
@@ -109,9 +109,9 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
         [HttpPut]
-        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAAMTEModel valor)
+        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAAMTEModel atualizarAAMTEModel)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = valor.Transform();
+            AtletaAtleticaModalidadeTimeEscalado aamte = atualizarAAMTEModel.Transform();
             var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscaladoId, aamte);
             return resultado.HttpResponse();
         }
