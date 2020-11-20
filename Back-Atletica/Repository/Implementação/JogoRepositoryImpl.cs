@@ -56,8 +56,8 @@ namespace Back_Atletica.Repository.Implementação
             Jogo jogo = _context.Jogos
                 .Include(j => j.JogoCategoria)
                 .Include(j => j.AtleticaModalidadeJogos)
-                .ThenInclude(amj => amj.AtleticaModalidade)
-                .ThenInclude(am => am.Atletica)
+                    .ThenInclude(amj => amj.AtleticaModalidade)
+                        .ThenInclude(am => am.Atletica)
                 .SingleOrDefault(j => j.JogoId == id);
 
             if (jogo == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -75,48 +75,57 @@ namespace Back_Atletica.Repository.Implementação
                     .ThenInclude(te => te.AtletaAtleticaModalidadeTimeEscalados)
                 .ToList();
 
-            List<JogoResponseModels> jogosResponse = new List<JogoResponseModels>();
-
-            foreach (Jogo jogo in jogos)
+            try
             {
-                JogoResponseModels jogoRes = new JogoResponseModels();
-                jogoRes.JogoId = jogo.JogoId;
-                jogoRes.DataHora = jogo.DataHora;
+                List<JogoResponseModels> jogosResponse = new List<JogoResponseModels>();
 
-                foreach (TimeEscalado time in jogo.TimeEscalados)
+                foreach (Jogo jogo in jogos)
                 {
-                    AtleticaJogoModel atletica = new AtleticaJogoModel();
-                    atletica.AtleticaId = time.AtleticaId;
-                    atletica.Nome = time.Atletica.Nome;
+                    JogoResponseModels jogoRes = new JogoResponseModels();
+                    jogoRes.JogoId = jogo.JogoId;
+                    jogoRes.DataHora = jogo.DataHora;
 
-                    int? pontos = 0;
-
-                    foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
+                    foreach (TimeEscalado time in jogo.TimeEscalados)
                     {
-                        if (time.Atletica.AtleticaModalidades.First().AtleticaModalidadeId == atleticaModalidadeId)
-                        {
-                            AtletaJogoModel ajm = new AtletaJogoModel
-                            {
-                                AtletaAtleticaModalidadeTimeEscaladoId = aamte.AtletaAtleticaModalidadeTimeEscaladoId,
-                                TimeEscaladoId = aamte.TimeEscaladoId,
-                                AtletaAtleticaModalidadeId = aamte.AtletaAtleticaModalidadeId,
-                                FuncaoId = aamte.FuncaoId,
-                                Numero = aamte.Numero,
-                                Infracoes = aamte.Infracoes,
-                                Pontos = aamte.Pontos
-                            };
-                            jogoRes.Atletas.Add(ajm);
-                        }
-                        pontos += aamte.Pontos;
-                    }
+                        AtleticaJogoModel atletica = new AtleticaJogoModel();
+                        atletica.AtleticaId = time.AtleticaId;
+                        atletica.Nome = time.Atletica.Nome;
 
-                    atletica.Pontos = pontos;
-                    jogoRes.Atleticas.Add(atletica);
+                        int? pontos = 0;
+
+                        foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
+                        {
+                            if (time.Atletica.AtleticaModalidades.First().AtleticaModalidadeId == atleticaModalidadeId)
+                            {
+                                AtletaJogoModel ajm = new AtletaJogoModel
+                                {
+                                    AtletaAtleticaModalidadeTimeEscaladoId = aamte.AtletaAtleticaModalidadeTimeEscaladoId,
+                                    TimeEscaladoId = aamte.TimeEscaladoId,
+                                    AtletaAtleticaModalidadeId = aamte.AtletaAtleticaModalidadeId,
+                                    FuncaoId = aamte.FuncaoId,
+                                    Numero = aamte.Numero,
+                                    Infracoes = aamte.Infracoes,
+                                    Pontos = aamte.Pontos
+                                };
+                                jogoRes.Atletas.Add(ajm);
+                            }
+                            pontos += aamte.Pontos;
+                        }
+
+                        atletica.Pontos = pontos;
+                        jogoRes.Atleticas.Add(atletica);
+                    }
+                    jogosResponse.Add(jogoRes);
                 }
-                jogosResponse.Add(jogoRes);
+
+                return new HttpRes(200, jogosResponse);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
-            return new HttpRes(200, jogosResponse);
         }
 
         public HttpRes Deletar(int id)
@@ -126,11 +135,18 @@ namespace Back_Atletica.Repository.Implementação
             {
                 return new HttpRes(404, "Jogo não encontrado");
             }
+            try
+            {
+                _context.Jogos.Remove(jogo);
+                _context.SaveChanges();
 
-            _context.Jogos.Remove(jogo);
-            _context.SaveChanges();
-
-            return new HttpRes(204);
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public bool existeJogo(int id)
