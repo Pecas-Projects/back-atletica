@@ -148,10 +148,5 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(400, ex.InnerException.Message);
             }
         }
-
-        public bool existeJogo(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

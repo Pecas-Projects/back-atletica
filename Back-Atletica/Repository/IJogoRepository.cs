@@ -13,6 +13,5 @@ namespace Back_Atletica.Repository
         HttpRes BuscarCategorias();
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
-        bool existeJogo(int id);
     }
 }
