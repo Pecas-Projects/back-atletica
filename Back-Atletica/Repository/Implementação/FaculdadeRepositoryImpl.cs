@@ -1,4 +1,5 @@
 ﻿using Back_Atletica.Data;
+using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodas()
         {
-            throw new NotImplementedException();
+            List<Faculdade> faculdades = _context.Faculdades.ToList();
+            return new HttpRes(200, faculdades);
         }
     }
 }
