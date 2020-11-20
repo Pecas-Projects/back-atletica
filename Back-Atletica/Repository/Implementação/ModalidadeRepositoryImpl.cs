@@ -101,7 +101,6 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodosNaAtletica(int atleticaId)
         {
-            Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
 
             List<AtleticaModalidade> atleticaModalidade = _context.AtleticaModalidades
                 .Include(am => am.Modalidade)
