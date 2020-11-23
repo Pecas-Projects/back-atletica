@@ -43,7 +43,6 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Authorize]
         [Route("api/AtleticaModalidade/{atleticaId}")]
         [HttpGet]
         public IActionResult BuscarTodasNaAtletica(int atleticaId)
