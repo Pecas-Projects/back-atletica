@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Back_Atletica.Utils;
 using static Back_Atletica.Utils.ResponseModels.AtleticaResponseModels;
 using Back_Atletica.Utils.RequestModels;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -67,8 +68,16 @@ namespace Back_Atletica.Controllers
         public IActionResult Atualizar(int id, [FromBody] AtleticaModel valor)
         {
             Atletica atletica = valor.Transform();
+            List<ImagemAtletica> Imagens = new List<ImagemAtletica>();
+            if(valor.Imagens.Count > 0)
+                foreach(ImagemAtleticaModel a in valor.Imagens)
+                {
+                    ImagemAtletica img = new ImagemAtletica();
+                    img = a.Transform();
+                    Imagens.Add(img);
+                }
 
-            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds, valor.ImagensIds);
+            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds, Imagens);
 
             return resultado.HttpResponse();
         }

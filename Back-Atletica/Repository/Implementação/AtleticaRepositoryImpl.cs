@@ -20,7 +20,7 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<int> ImagensIds)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<ImagemAtletica> ImagensIds)
         {
             if (atletica == null) return new HttpRes(400, "Verifique os dados enviados");
 
@@ -38,7 +38,7 @@ namespace Back_Atletica.Repository.Implementação
                 List<AtleticaCurso> atleticaCursoDado = atleticaDados.AtleticaCursos.ToList();
                 List<ImagemAtletica> imgAtletica = atleticaDados.ImagemAtleticas.ToList();
 
-                RemoveRelacoesAntigas(atleticaDados, atleticaCursoDado, imgAtletica);
+                RemoveRelacoesAntigas(atleticaCursoDado, imgAtletica);
 
                 atletica.AtleticaId = atleticaDados.AtleticaId;
                 atletica.PIN = atleticaDados.PIN;
@@ -63,7 +63,7 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
-        private void CriacaoDeNovosRelacionamentos(List<int> cursosId, List<int> imagensIds, int id)
+        private void CriacaoDeNovosRelacionamentos(List<int> cursosId, List<ImagemAtletica> ImagemAtletica, int id)
         {
             foreach (int a in cursosId)
             {
@@ -73,16 +73,17 @@ namespace Back_Atletica.Repository.Implementação
                 _context.Add(atleticaCurso);
             }
 
-            foreach (int i in imagensIds)
+            foreach (ImagemAtletica i in ImagemAtletica)
             {
                 ImagemAtletica img = new ImagemAtletica();
+                img.Tipo = i.Tipo;
                 img.AtleticaId = id;
-                img.ImagemId = i;
+                img.ImagemId = i.ImagemId;
                 _context.Add(img);
             }
         }
 
-        private void RemoveRelacoesAntigas(Atletica atleticaDados, List<AtleticaCurso> atleticaCursoDado, List<ImagemAtletica> imgAtletica)
+        private void RemoveRelacoesAntigas(List<AtleticaCurso> atleticaCursoDado, List<ImagemAtletica> imgAtletica)
         {
             if (atleticaCursoDado.Count > 0)
                 foreach (AtleticaCurso a in atleticaCursoDado) _context.Remove(a);
