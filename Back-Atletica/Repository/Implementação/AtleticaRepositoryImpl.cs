@@ -39,7 +39,8 @@ namespace Back_Atletica.Repository.Implementação
                 if (atleticaCursoDado.Count > 0)
                     foreach (AtleticaCurso a in atleticaCursoDado) _context.Remove(a);
 
-                foreach (ImagemAtletica i in imgAtletica) _context.Remove(i);
+                if(imgAtletica.Count > 0)
+                    foreach (ImagemAtletica i in imgAtletica) _context.Remove(i);
 
                 atletica.AtleticaId = atleticaDados.AtleticaId;
                 atletica.PIN = atleticaDados.PIN;
