@@ -10,8 +10,12 @@ namespace Back_Atletica.Business
     public interface IModalidadeBusiness
     {
         HttpRes Criar(Modalidade modalidade);
+        HttpRes CriarAtleticaModalidade(AtleticaModalidade modalidade);
         HttpRes BuscarPorTodos();
+        HttpRes BuscarTodasNaAtletica(int atleticaId);
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
+        HttpRes ExcluiModalidadeAtletica(int atleticaModalidadeId);
+        HttpRes AtualizaModalidadeAtletica(int atleticaModalidadeId, AtleticaModalidade modalidade);
     }
 }
