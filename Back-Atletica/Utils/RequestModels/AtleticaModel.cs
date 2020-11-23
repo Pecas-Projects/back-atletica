@@ -19,8 +19,9 @@ namespace Back_Atletica.Utils.RequestModels
             public string Descricao { get; set; }
             public CampusModel Campus { get; set; }
             public List<int> CursosIds { get; set; }
+            public List<int> ImagensIds { get; set; }
 
-            public Atletica Transform()
+        public Atletica Transform()
             {
                 Atletica atletica = new Atletica
                 {

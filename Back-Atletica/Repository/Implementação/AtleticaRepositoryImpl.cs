@@ -18,7 +18,7 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<int> ImagensIds)
         {
             if (atletica == null) return new HttpRes(400, "Verifique os dados enviados");
 
@@ -27,18 +27,19 @@ namespace Back_Atletica.Repository.Implementação
                 Atletica atleticaDados = _context.Atleticas
                     .Include(a => a.Campus)
                     .ThenInclude(a => a.Faculdade)
+                    .Include(i => i.ImagemAtleticas)
+                    .Include(c => c.AtleticaCursos)
                     .SingleOrDefault(a => a.AtleticaId == id);
 
                 if(atleticaDados == null) return new HttpRes(404, "Atletica não encontrada");
 
-                List<AtleticaCurso> atleticaCursoDado = _context.AtleticaCursos.Where(a => a.AtleticaId == id).ToList();
+                List<AtleticaCurso> atleticaCursoDado = atleticaDados.AtleticaCursos.ToList();
+                List<ImagemAtletica> imgAtletica = atleticaDados.ImagemAtleticas.ToList();
 
-                if (atleticaCursoDado.Count == 0) return new HttpRes(404, "Atletica não encontrada");
+                if (atleticaCursoDado.Count > 0)
+                    foreach (AtleticaCurso a in atleticaCursoDado) _context.Remove(a);
 
-                foreach (AtleticaCurso a in atleticaCursoDado)
-                {
-                    _context.Remove(a);
-                }
+                foreach (ImagemAtletica i in imgAtletica) _context.Remove(i);
 
                 atletica.AtleticaId = atleticaDados.AtleticaId;
                 atletica.PIN = atleticaDados.PIN;
@@ -54,6 +55,14 @@ namespace Back_Atletica.Repository.Implementação
                     atleticaCurso.AtleticaId = id;
                     atleticaCurso.CursoId = a;
                     _context.Add(atleticaCurso);
+                }
+
+                foreach (int i in ImagensIds)
+                {
+                    ImagemAtletica img = new ImagemAtletica();
+                    img.AtleticaId = id;
+                    img.ImagemId = i;
+                    _context.Add(img);
                 }
 
                 _context.SaveChanges();

@@ -68,7 +68,7 @@ namespace Back_Atletica.Controllers
         {
             Atletica atletica = valor.Transform();
 
-            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds);
+            var resultado = _AtleticaBusiness.Atualizar(id, atletica, valor.CursosIds, valor.ImagensIds);
 
             return resultado.HttpResponse();
         }
