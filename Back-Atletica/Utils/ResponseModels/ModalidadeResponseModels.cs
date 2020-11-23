@@ -12,6 +12,7 @@ namespace Back_Atletica.Utils.ResponseModels
         public class ModalidadesAtletica
         {
             public int AtleticaModalidadeId { get; set; }
+            public int ModalidadeId { get; set; }
             public string Modalidade { get; set; }
             public ImagemResponseModel ImagemModalidade { get; set; }
             public string Coordenador { get; set; }
@@ -21,19 +22,27 @@ namespace Back_Atletica.Utils.ResponseModels
             {
                 List<ModalidadesAtletica> ma = new List<ModalidadesAtletica>();
 
-                foreach(var a in atleticaModalidade)
+                foreach (var a in atleticaModalidade)
                 {
                     ImagemResponseModel img = new ImagemResponseModel();
+
+                    string genero = " Misto";
+
+                    if (a.Modalidade.Genero == "F")
+                        genero = " Feminino";
+                    else if (a.Modalidade.Genero == "M")
+                        genero = " Masculino";
 
                     ModalidadesAtletica m = new ModalidadesAtletica
                     {
                         AtleticaModalidadeId = a.AtleticaModalidadeId,
-                        Modalidade = a.Modalidade.Nome,
+                        ModalidadeId = a.Modalidade.ModalidadeId,
+                        Modalidade = a.Modalidade.Nome + genero,
                         ImagemModalidade = a.Imagem != null ? img.Transform(a.Imagem) : null,
                         Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome : null
                     };
 
-                    if(a.AgendaTreinos != null)
+                    if (a.AgendaTreinos != null)
                     {
                         foreach (var t in a.AgendaTreinos)
                         {
@@ -41,7 +50,7 @@ namespace Back_Atletica.Utils.ResponseModels
 
                             m.AgendaTreinos.Add(agenda.Transform(t));
                         }
-                    }                   
+                    }
 
                     ma.Add(m);
                 }
@@ -64,7 +73,7 @@ namespace Back_Atletica.Utils.ResponseModels
 
                 return membro;
             }
-        }      
+        }
 
     }
 }
