@@ -9,6 +9,7 @@ namespace Back_Atletica.Utils.RequestModels
 {
     public class ImagemModel
     {
+        public int ImagemId { get; set; }
         [Required]
         public string Nome { get; set; }
         [Required]
@@ -21,7 +22,8 @@ namespace Back_Atletica.Utils.RequestModels
             Imagem img = new Imagem
             {
                 Path = Path,
-                Extensao = Extensao
+                Extensao = Extensao,
+                ImagemId = this.ImagemId
             };
 
             return img;
