@@ -1,4 +1,6 @@
-﻿using Back_Atletica.Utils;
+﻿using Back_Atletica.Models;
+using Back_Atletica.Utils;
+using Back_Atletica.Utils.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,6 @@ namespace Back_Atletica.Repository
         HttpRes BuscarCategorias();
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
+        List<JogoResponseModels> OrganizaJogosModalidade(List<AtleticaModalidadeJogo> atleticaModalidadeJogos, int atleticaId, int modalidadeId);
     }
 }

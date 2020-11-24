@@ -77,61 +77,7 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                List<JogoResponseModels> jogosResponse = new List<JogoResponseModels>();
-
-                foreach (AtleticaModalidadeJogo amj in atleticaModalidadeJogos)
-                {
-                    if (amj.AtleticaModalidade.ModalidadeId == atleticaModalidade.ModalidadeId)
-                    {
-                        JogoResponseModels jogoRes = jogosResponse.SingleOrDefault(jr => jr.JogoId == amj.JogoId);
-
-                        if (jogoRes == null)
-                        {
-                            jogoRes = new JogoResponseModels();
-                            jogosResponse.Add(jogoRes);
-                        }
-
-                        AtleticaJogoModel atleticaJogo = new AtleticaJogoModel
-                        {
-                            AtleticaId = amj.AtleticaModalidade.AtleticaId,
-                            Nome = amj.AtleticaModalidade.Atletica.Nome,
-                            Pontos = 0
-                        };
-
-                        TimeEscalado time = amj.Jogo.TimeEscalados.SingleOrDefault(te => te.AtleticaId == atleticaJogo.AtleticaId);
-
-                        if (time != null)
-                        {
-                            foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
-                            {
-                                if (amj.AtleticaModalidadeId == atleticaModalidadeId)
-                                {
-                                    AtletaJogoModel atletaJogo = new AtletaJogoModel
-                                    {
-                                        AtletaAtleticaModalidadeTimeEscaladoId = aamte.AtletaAtleticaModalidadeTimeEscaladoId,
-                                        TimeEscaladoId = aamte.TimeEscaladoId,
-                                        AtletaAtleticaModalidadeId = aamte.AtletaAtleticaModalidadeId,
-                                        FuncaoId = aamte.FuncaoId,
-                                        Numero = aamte.Numero,
-                                        Infracoes = aamte.Infracoes,
-                                        Pontos = aamte.Pontos
-                                    };
-                                    jogoRes.Atletas.Add(atletaJogo);
-                                }
-                                atleticaJogo.Pontos += aamte.Pontos;
-                            }
-                        }
-
-                        jogoRes.JogoId = amj.Jogo.JogoId;
-                        jogoRes.DataHora = amj.Jogo.DataHora;
-                        jogoRes.Atleticas.Add(atleticaJogo);
-                    }
-                }
-
-                foreach (JogoResponseModels jogoRes in jogosResponse.ToList())
-                    if (!jogoRes.Atleticas.Any(a => a.AtleticaId == atleticaModalidade.AtleticaId))
-                        jogosResponse.Remove(jogoRes);
-
+                List<JogoResponseModels> jogosResponse = OrganizaJogosModalidade(atleticaModalidadeJogos, atleticaId, modalidadeId);
                 return new HttpRes(200, jogosResponse);
             }
             catch (Exception ex)
@@ -161,6 +107,57 @@ namespace Back_Atletica.Repository.Implementação
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
+        }
+
+        public List<JogoResponseModels> OrganizaJogosModalidade(List<AtleticaModalidadeJogo> atleticaModalidadeJogos, int atleticaId, int modalidadeId)
+        {
+            List<JogoResponseModels> jogosResponse = new List<JogoResponseModels>();
+
+            foreach (AtleticaModalidadeJogo amj in atleticaModalidadeJogos)
+            {
+                if (amj.AtleticaModalidade.ModalidadeId == modalidadeId)
+                {
+                    JogoResponseModels jogoRes = jogosResponse.SingleOrDefault(jr => jr.JogoId == amj.JogoId);
+
+                    if (jogoRes == null)
+                    {
+                        jogoRes = new JogoResponseModels();
+                        jogosResponse.Add(jogoRes);
+                    }
+
+                    AtleticaJogoModel atleticaJogo = new AtleticaJogoModel
+                    {
+                        AtleticaId = amj.AtleticaModalidade.AtleticaId,
+                        Nome = amj.AtleticaModalidade.Atletica.Nome,
+                        Pontos = 0
+                    };
+
+                    TimeEscalado time = amj.Jogo.TimeEscalados.SingleOrDefault(te => te.AtleticaId == atleticaJogo.AtleticaId);
+
+                    if (time != null)
+                    {
+                        foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
+                        {
+                            if (amj.AtleticaModalidade.AtleticaId == atleticaId)
+                            {
+                                AtletaJogoModel atletaJogo = new AtletaJogoModel();
+                                jogoRes.Atletas.Add(atletaJogo.Transform(aamte));
+                            }
+                            atleticaJogo.Pontos += aamte.Pontos;
+                        }
+                    }
+
+                    jogoRes.JogoId = amj.Jogo.JogoId;
+                    jogoRes.DataHora = amj.Jogo.DataHora;
+                    jogoRes.Atleticas.Add(atleticaJogo);
+                }
+            }
+
+            foreach (JogoResponseModels jogoRes in jogosResponse.ToList())
+                if (!jogoRes.Atleticas.Any(a => a.AtleticaId == atleticaId))
+                    jogosResponse.Remove(jogoRes);
+
+            return jogosResponse;
         }
     }
 }
