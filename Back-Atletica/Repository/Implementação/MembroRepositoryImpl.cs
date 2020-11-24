@@ -1,6 +1,8 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,11 @@ namespace Back_Atletica.Repository.Implementação
 {
     public class MembroRepositoryImpl : IMembroRepository
     {
-        AtleticaContext context;
+        AtleticaContext _context;
 
         public MembroRepositoryImpl(AtleticaContext contxt)
         {
-            context = contxt;
+            _context = contxt;
         }
 
         public HttpRes Atualizar(int id, Membro membro)
@@ -27,22 +29,29 @@ namespace Back_Atletica.Repository.Implementação
 
             try
             {
-                Membro membroDate = context.Membros.SingleOrDefault(a => a.MembroId == id);
-                Pessoa pessoaDate = context.Pessoas.SingleOrDefault(p => p.PessoaId == membroDate.PessoaId);
+                Membro membroDate = _context.Membros.Include(i => i.Imagem).Include(p => p.Pessoa).SingleOrDefault(a => a.MembroId == id);
 
                 if (membroDate == null) return new HttpRes(404, "Membro não encontrado");
 
-                membro.Pessoa.AtleticaId = pessoaDate.AtleticaId;
+                membro.Pessoa.AtleticaId = membroDate.Pessoa.AtleticaId;
                 membro.MembroId = id;
                 membro.Senha = membroDate.Senha;
-                membro.ImagemId = membroDate.ImagemId;
                 membro.PessoaId = membroDate.PessoaId;
                 membro.Pessoa.PessoaId = membroDate.PessoaId;
 
-                context.Entry(membroDate).CurrentValues.SetValues(membro);
-                context.Entry(pessoaDate).CurrentValues.SetValues(membro.Pessoa);
+                if(membro.ImagemId != membroDate.ImagemId)
+                {
+                    Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+                    Cloudinary cloudinary = new Cloudinary(account);
+                    var deletionParams = new DeletionParams(membroDate.Imagem.PublicId);
+                    cloudinary.Destroy(deletionParams);
 
-                context.SaveChanges();
+                    _context.Remove(membroDate.Imagem);
+                }
+
+                _context.Entry(membroDate).CurrentValues.SetValues(membro);
+
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -57,7 +66,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             Membro membro = new Membro();
 
-            membro = context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
+            membro = _context.Membros.Include(m => m.Pessoa).SingleOrDefault(m => m.MembroId == id);
 
             return new HttpRes(200, membro);
         }
@@ -67,14 +76,14 @@ namespace Back_Atletica.Repository.Implementação
         {
             var membros = new List<Membro>();
 
-            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(_context);
 
             if (!atletica.existeAtletica(atleticaId))
             {
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
 
-            membros = context.Membros.Include(m => m.Pessoa)
+            membros = _context.Membros.Include(m => m.Pessoa)
                 .Where(m => m.Pessoa.AtleticaId == atleticaId &&
                 (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
                 m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
@@ -94,7 +103,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             List<Membro> membros = new List<Membro>();
 
-            membros = context.Membros.Include(a => a.Pessoa).ToList<Membro>();
+            membros = _context.Membros.Include(a => a.Pessoa).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
@@ -103,14 +112,14 @@ namespace Back_Atletica.Repository.Implementação
         {
             List<Membro> membros = new List<Membro>();
 
-            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(context);
+            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(_context);
 
             if (!atletica.existeAtletica(atleticaId))
             {
                 return new HttpRes(404, "Não existe nenhuma atlética com este id");
             }
 
-            membros = context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
+            membros = _context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
 
             return new HttpRes(200, membros);
         }
@@ -131,8 +140,8 @@ namespace Back_Atletica.Repository.Implementação
             Pessoa pessoa = new Pessoa();
             
 
-            membro = context.Membros.SingleOrDefault(m => m.MembroId == id);
-            pessoa = context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
+            membro = _context.Membros.SingleOrDefault(m => m.MembroId == id);
+            pessoa = _context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
 
             if(pessoa.Tipo == "AM")
             {
@@ -140,13 +149,13 @@ namespace Back_Atletica.Repository.Implementação
             }
             else if(pessoa.Tipo == "M")
             {
-                context.Pessoas.Remove(pessoa);
+                _context.Pessoas.Remove(pessoa);
             }
 
-            context.Membros.Remove(membro);
-            pessoa.Atletica.PIN = new AtleticaPin().GerarPIN(); 
+            _context.Membros.Remove(membro);
+            pessoa.Atletica.PIN = new AtleticaPin().GerarPIN();
 
-            context.SaveChanges();
+            _context.SaveChanges();
 
             
 
@@ -156,7 +165,7 @@ namespace Back_Atletica.Repository.Implementação
         public bool existeMembro(Membro membro)
         {
 
-            return context.Membros
+            return _context.Membros
                 .Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && 
                 m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
                        
@@ -164,7 +173,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public bool existeMembro(int membroId)
         {
-            return context.Membros.Any(m => m.MembroId == membroId);
+            return _context.Membros.Any(m => m.MembroId == membroId);
         }
     }
 }
