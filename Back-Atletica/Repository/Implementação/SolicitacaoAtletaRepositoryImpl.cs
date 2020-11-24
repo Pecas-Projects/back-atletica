@@ -34,18 +34,26 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Atletica não encontrada");
             }
 
-            solicitacaoAtleta.AtleticaId = solicitacaoAtleta.AtleticaId;
-            _context.SolicitacaoAtletas.Add(solicitacaoAtleta);
-            _context.SaveChanges();
-
-            foreach (int modalidadeId in ModalidadesId)
+            try
             {
-                SolicitacaoAtletaModalidade solicitacaoAtletaModalidade = new SolicitacaoAtletaModalidade();
-                solicitacaoAtletaModalidade.SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId;
-                solicitacaoAtletaModalidade.ModalidadeId = modalidadeId;
-                _context.SolicitacaoAtletaModalidades.Add(solicitacaoAtletaModalidade);
+                solicitacaoAtleta.AtleticaId = solicitacaoAtleta.AtleticaId;
+                _context.SolicitacaoAtletas.Add(solicitacaoAtleta);
+                _context.SaveChanges();
+
+                foreach (int modalidadeId in ModalidadesId)
+                {
+                    SolicitacaoAtletaModalidade solicitacaoAtletaModalidade = new SolicitacaoAtletaModalidade();
+                    solicitacaoAtletaModalidade.SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId;
+                    solicitacaoAtletaModalidade.ModalidadeId = modalidadeId;
+                    _context.SolicitacaoAtletaModalidades.Add(solicitacaoAtletaModalidade);
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
 
             return new HttpRes(200, solicitacaoAtleta);
         }
@@ -59,11 +67,22 @@ namespace Back_Atletica.Repository.Implementação
             {
                 return new HttpRes(404, "Solicitacao não encontrada");
             }
-            solicitacao.Aprovado = true;
-            _context.SaveChanges();
 
-            _context.SolicitacaoAtletas.Remove(solicitacao);
-            _context.SaveChanges();
+            try
+            {
+                solicitacao.Aprovado = true;
+                _context.SaveChanges();
+
+                _context.SolicitacaoAtletas.Remove(solicitacao);
+                _context.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
             return new HttpRes(204);
         }
 
@@ -77,8 +96,17 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(404, "Solicitacao não encontrada");
             }
 
-            _context.SolicitacaoAtletas.Remove(solicitacao);
-            _context.SaveChanges();
+            try
+            {
+                _context.SolicitacaoAtletas.Remove(solicitacao);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
             return new HttpRes(204);
         }
     }
