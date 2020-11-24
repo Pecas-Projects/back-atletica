@@ -136,14 +136,14 @@ namespace Back_Atletica.Repository.Implementação
 
                     if (time != null)
                     {
-                        foreach (AtletaAtleticaModalidadeTimeEscalado aamte in time.AtletaAtleticaModalidadeTimeEscalados)
+                        foreach (AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado in time.AtletaAtleticaModalidadeTimeEscalados)
                         {
                             if (amj.AtleticaModalidade.AtleticaId == atleticaId)
                             {
                                 AtletaJogoModel atletaJogo = new AtletaJogoModel();
-                                jogoRes.Atletas.Add(atletaJogo.Transform(aamte));
+                                jogoRes.Atletas.Add(atletaJogo.Transform(atletaAtleticaModalidadeTimeEscalado));
                             }
-                            atleticaJogo.Pontos += aamte.Pontos;
+                            atleticaJogo.Pontos += atletaAtleticaModalidadeTimeEscalado.Pontos;
                         }
                     }
 

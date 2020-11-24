@@ -15,17 +15,17 @@ namespace Back_Atletica.Utils.ResponseModels
         public int? Numero { get; set; }
         public int? Infracoes { get; set; }
         public int? Pontos { get; set; }
-        public AtletaJogoModel Transform(AtletaAtleticaModalidadeTimeEscalado aamte)
+        public AtletaJogoModel Transform(AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
         {
             AtletaJogoModel atletaJogo = new AtletaJogoModel
             {
-                AtletaAtleticaModalidadeTimeEscaladoId = aamte.AtletaAtleticaModalidadeTimeEscaladoId,
-                TimeEscaladoId = aamte.TimeEscaladoId,
-                AtletaAtleticaModalidadeId = aamte.AtletaAtleticaModalidadeId,
-                FuncaoId = aamte.FuncaoId,
-                Numero = aamte.Numero,
-                Infracoes = aamte.Infracoes,
-                Pontos = aamte.Pontos
+                AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId,
+                TimeEscaladoId = atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId,
+                AtletaAtleticaModalidadeId = atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeId,
+                FuncaoId = atletaAtleticaModalidadeTimeEscalado.FuncaoId,
+                Numero = atletaAtleticaModalidadeTimeEscalado.Numero,
+                Infracoes = atletaAtleticaModalidadeTimeEscalado.Infracoes,
+                Pontos = atletaAtleticaModalidadeTimeEscalado.Pontos
             };
             return atletaJogo;
         }
