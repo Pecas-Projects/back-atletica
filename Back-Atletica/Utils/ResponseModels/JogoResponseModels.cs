@@ -26,15 +26,5 @@ namespace Back_Atletica.Utils.ResponseModels
             public int? Pontos { get; set; }
         }
 
-        public class AtletaJogoModel
-        {
-            public int AtletaAtleticaModalidadeTimeEscaladoId { get; set; }
-            public int TimeEscaladoId { get; set; }
-            public int AtletaAtleticaModalidadeId { get; set; }
-            public int? FuncaoId { get; set; }
-            public int? Numero { get; set; }
-            public int? Infracoes { get; set; }
-            public int? Pontos { get; set; }
-        }
     }
 }
