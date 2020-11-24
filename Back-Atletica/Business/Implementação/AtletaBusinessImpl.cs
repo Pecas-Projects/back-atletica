@@ -33,9 +33,9 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.Atualizar(atletaID, atleta);
         }
 
-        public HttpRes AtualizarAtletaTime(int aamteId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado aamte)
         {
-            return _atletaRepository.AtualizarAtletaTime(aamteId, aamte);
+            return _atletaRepository.AtualizarAtletaTime(aamte);
         }
 
         public HttpRes BuscaAtivos(int atleticaID)

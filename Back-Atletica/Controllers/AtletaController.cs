@@ -112,7 +112,9 @@ namespace Back_Atletica.Controllers
         public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAAMTEModel atualizarAAMTEModel)
         {
             AtletaAtleticaModalidadeTimeEscalado aamte = atualizarAAMTEModel.Transform();
-            var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscaladoId, aamte);
+            aamte.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
+
+            var resultado = _AtletaBusiness.AtualizarAtletaTime(aamte);
             return resultado.HttpResponse();
         }
 

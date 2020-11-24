@@ -290,7 +290,7 @@ namespace Back_Atletica.Repository.Implementação
             }
         }
 
-        public HttpRes AtualizarAtletaTime(int aamteId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado aamte)
         {
             if (aamte == null)
             {
@@ -299,11 +299,10 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 AtletaAtleticaModalidadeTimeEscalado aamteData = _context.AtletaAtleticaModalidadeTimesEscalados
-                    .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamteId);
+                    .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamte.AtletaAtleticaModalidadeTimeEscaladoId);
 
                 if (aamteData == null) return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
 
-                aamte.AtletaAtleticaModalidadeTimeEscaladoId = aamteId;
                 aamte.AtletaAtleticaModalidadeId = aamteData.AtletaAtleticaModalidadeId;
                 aamte.TimeEscaladoId = aamteData.TimeEscaladoId;
 
