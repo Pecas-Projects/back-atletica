@@ -9,7 +9,7 @@ namespace Back_Atletica.Business
     public interface IJogoBusiness
     {
         HttpRes BuscarPorAtletica(int atleticaId);
-        HttpRes BuscarPorModalidade(int atleticaModalidadeId);
+        HttpRes BuscarPorModalidade(int atleticaId, int modalidadeId);
         HttpRes BuscarCategorias();
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);

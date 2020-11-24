@@ -65,13 +65,8 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, jogo);
         }
 
-        public HttpRes BuscarPorModalidade(int atleticaModalidadeId)
+        public HttpRes BuscarPorModalidade(int atleticaId, int modalidadeId)
         {
-            AtleticaModalidade atleticaModalidade = _context.AtleticaModalidades
-                .SingleOrDefault(am => am.AtleticaModalidadeId == atleticaModalidadeId);
-
-            if (atleticaModalidade == null) return new HttpRes(404, "Atletica modalidade não encontrada");
-
             List<AtleticaModalidadeJogo> atleticaModalidadeJogos = _context.AtleticaModalidadeJogos
                 .Include(amj => amj.Jogo)
                     .ThenInclude(j => j.TimeEscalados)

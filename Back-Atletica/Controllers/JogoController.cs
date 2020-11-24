@@ -32,11 +32,11 @@ namespace Back_Atletica.Controllers
 
         [ProducesResponseType(typeof(JogoResponseModels), 200)]
         [Authorize]
-        [Route("api/JogosModalidade/{atleticaModalidadeId}")]
+        [Route("api/JogosModalidade/{atleticaId}/{modalidadeId}")]
         [HttpGet]
-        public IActionResult BuscarPorModalidade(int atleticaModalidadeId)
+        public IActionResult BuscarPorModalidade(int atleticaId, int modalidadeId)
         {
-            var resultado = _JogoBusiness.BuscarPorModalidade(atleticaModalidadeId);
+            var resultado = _JogoBusiness.BuscarPorModalidade(atleticaId, modalidadeId);
             return resultado.HttpResponse();
         }
 
