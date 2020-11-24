@@ -101,7 +101,7 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, membros);
         }
 
-        public HttpRes BuscarTodos(int atleticaId)
+        public HttpRes BuscarTodosNaAtletica(int atleticaId)
         {
             List<Membro> membros = new List<Membro>();
 
