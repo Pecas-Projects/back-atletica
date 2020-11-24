@@ -23,9 +23,9 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.AdicionarAtletaModalidade(atletaId, atleticaModalidadeId);
         }
 
-        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
         {
-            return _atletaRepository.AdicionarAtletaTime(atleticaId, jogoId, aamte);
+            return _atletaRepository.AdicionarAtletaTime(atleticaId, jogoId, atletaAtleticaModalidadeTimeEscalado);
         }
 
         public HttpRes Atualizar(int atletaID, Atleta atleta)
@@ -33,9 +33,9 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.Atualizar(atletaID, atleta);
         }
 
-        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
         {
-            return _atletaRepository.AtualizarAtletaTime(aamte);
+            return _atletaRepository.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscalado);
         }
 
         public HttpRes BuscaAtivos(int atleticaID)
@@ -88,9 +88,9 @@ namespace Back_Atletica.Business.Implementação
             return _atletaRepository.RemoverAtletaModalidade(atletaAtleticaModalidadeId);
         }
 
-        public HttpRes RemoverAtletaTime(int aamteId)
+        public HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
         {
-            return _atletaRepository.RemoverAtletaTime(aamteId);
+            return _atletaRepository.RemoverAtletaTime(atletaAtleticaModalidadeTimeEscaladoId);
         }
     }
 }

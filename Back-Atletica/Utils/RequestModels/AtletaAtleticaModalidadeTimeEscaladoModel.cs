@@ -9,7 +9,7 @@ namespace Back_Atletica.Utils.RequestModels
 {
     public class AtletaAtleticaModalidadeTimeEscaladoModel
     {
-        public class CriarAAMTEModel
+        public class CriarAtletaAtleticaModalidadeTimeEscaladoModel
         {
             [Required]
             public int AtletaAtleticaModalidadeId { get; set; }
@@ -19,7 +19,7 @@ namespace Back_Atletica.Utils.RequestModels
             public int Infracoes { get; set; }
             public AtletaAtleticaModalidadeTimeEscalado Transform()
             {
-                AtletaAtleticaModalidadeTimeEscalado aamte = new AtletaAtleticaModalidadeTimeEscalado
+                AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = new AtletaAtleticaModalidadeTimeEscalado
                 {
                     AtletaAtleticaModalidadeId = AtletaAtleticaModalidadeId,
                     FuncaoId = FuncaoId,
@@ -28,13 +28,13 @@ namespace Back_Atletica.Utils.RequestModels
                     Infracoes = Infracoes
                 };
 
-                if (aamte.FuncaoId == 0) aamte.FuncaoId = null;
+                if (atletaAtleticaModalidadeTimeEscalado.FuncaoId == 0) atletaAtleticaModalidadeTimeEscalado.FuncaoId = null;
 
-                return aamte;
+                return atletaAtleticaModalidadeTimeEscalado;
             }
         }
 
-        public class AtualizarAAMTEModel
+        public class AtualizarAtletaAtleticaModalidadeTimeEscaladoModel
         {
             public int FuncaoId { get; set; }
             public int Numero { get; set; }
@@ -42,7 +42,7 @@ namespace Back_Atletica.Utils.RequestModels
             public int Infracoes { get; set; }
             public AtletaAtleticaModalidadeTimeEscalado Transform()
             {
-                AtletaAtleticaModalidadeTimeEscalado aamte = new AtletaAtleticaModalidadeTimeEscalado
+                AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = new AtletaAtleticaModalidadeTimeEscalado
                 {
                     FuncaoId = FuncaoId,
                     Numero = Numero,
@@ -50,9 +50,9 @@ namespace Back_Atletica.Utils.RequestModels
                     Infracoes = Infracoes
                 };
 
-                if (aamte.FuncaoId == 0) aamte.FuncaoId = null;
+                if (atletaAtleticaModalidadeTimeEscalado.FuncaoId == 0) atletaAtleticaModalidadeTimeEscalado.FuncaoId = null;
 
-                return aamte;
+                return atletaAtleticaModalidadeTimeEscalado;
             }
         }
     }

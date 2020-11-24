@@ -108,9 +108,9 @@ namespace Back_Atletica.Repository.Implementação
             List<AtletaAtleticaModalidadeTimeEscalado> _atletaAtleticaModalidadeTimeEscalados = _context.AtletaAtleticaModalidadeTimesEscalados
                 .Where(t => t.TimeEscaladoId == timeEscalado.TimeEscaladoId).ToList();
 
-            var query = from aamte in _atletaAtleticaModalidadeTimeEscalados
+            var query = from atletaAtleticaModalidadeTimeEscalado in _atletaAtleticaModalidadeTimeEscalados
                         join
-                   aam in _context.AtletaAtleticaModalidades on aamte.AtletaAtleticaModalidadeId equals aam.AtletaAtleticaModalidadeId
+                   aam in _context.AtletaAtleticaModalidades on atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeId equals aam.AtletaAtleticaModalidadeId
                         join
                    a in _context.Atletas on aam.AtletaId equals a.AtletaId
                         join
@@ -259,7 +259,7 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, query);
         }
 
-        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
         {
             try
             {
@@ -277,11 +277,11 @@ namespace Back_Atletica.Repository.Implementação
                     _context.SaveChanges();
                 }
 
-                aamte.TimeEscaladoId = time.TimeEscaladoId;
-                _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
+                atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = time.TimeEscaladoId;
+                _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaAtleticaModalidadeTimeEscalado);
                 _context.SaveChanges();
 
-                return new HttpRes(200, aamte);
+                return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
             }
             catch (Exception ex)
             {
@@ -290,26 +290,26 @@ namespace Back_Atletica.Repository.Implementação
             }
         }
 
-        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado aamte)
+        public HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
         {
-            if (aamte == null)
+            if (atletaAtleticaModalidadeTimeEscalado == null)
             {
                 return new HttpRes(400, "Verifique os dados enviados");
             }
             try
             {
-                AtletaAtleticaModalidadeTimeEscalado aamteData = _context.AtletaAtleticaModalidadeTimesEscalados
-                    .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamte.AtletaAtleticaModalidadeTimeEscaladoId);
+                AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscaladoData = _context.AtletaAtleticaModalidadeTimesEscalados
+                    .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId);
 
-                if (aamteData == null) return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
+                if (atletaAtleticaModalidadeTimeEscaladoData == null) return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
 
-                aamte.AtletaAtleticaModalidadeId = aamteData.AtletaAtleticaModalidadeId;
-                aamte.TimeEscaladoId = aamteData.TimeEscaladoId;
+                atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeId = atletaAtleticaModalidadeTimeEscaladoData.AtletaAtleticaModalidadeId;
+                atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoData.TimeEscaladoId;
 
-                _context.Entry(aamteData).CurrentValues.SetValues(aamte);
+                _context.Entry(atletaAtleticaModalidadeTimeEscaladoData).CurrentValues.SetValues(atletaAtleticaModalidadeTimeEscalado);
                 _context.SaveChanges();
 
-                return new HttpRes(200, aamte);
+                return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
             }
             catch (Exception ex)
             {
@@ -318,18 +318,18 @@ namespace Back_Atletica.Repository.Implementação
             }
         }
 
-        public HttpRes RemoverAtletaTime(int aamteId)
+        public HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = _context.AtletaAtleticaModalidadeTimesEscalados
-                .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == aamteId);
+            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = _context.AtletaAtleticaModalidadeTimesEscalados
+                .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == atletaAtleticaModalidadeTimeEscaladoId);
 
-            if (aamte == null)
+            if (atletaAtleticaModalidadeTimeEscalado == null)
             {
                 return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
             }
             try
             {
-                _context.AtletaAtleticaModalidadeTimesEscalados.Remove(aamte);
+                _context.AtletaAtleticaModalidadeTimesEscalados.Remove(atletaAtleticaModalidadeTimeEscalado);
                 _context.SaveChanges();
 
                 return new HttpRes(204);

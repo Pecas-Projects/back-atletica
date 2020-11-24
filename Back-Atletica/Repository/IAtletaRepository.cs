@@ -17,9 +17,9 @@ namespace Back_Atletica.Repository
         HttpRes BuscaAtivos(int atleticaID);
         HttpRes Atualizar(int atletaID, Atleta atleta);
         HttpRes Deletar(int atletaID);
-        HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado aamte);
-        HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado aamte);
-        HttpRes RemoverAtletaTime(int aamteId);
+        HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado);
+        HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado);
+        HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId);
         HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId);
         HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId);
         HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId);

@@ -99,22 +99,22 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/AtletaTime/{atleticaId}/{jogoId}")]
         [HttpPost]
-        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] CriarAAMTEModel criarAAMTEModel)
+        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] CriarAtletaAtleticaModalidadeTimeEscaladoModel criarAtletaAtleticaModalidadeTimeEscaladoModel)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = criarAAMTEModel.Transform();
-            var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, aamte);
+            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = criarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
+            var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, atletaAtleticaModalidadeTimeEscalado);
             return resultado.HttpResponse();
         }
 
         [Authorize]
         [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
         [HttpPut]
-        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAAMTEModel atualizarAAMTEModel)
+        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAtletaAtleticaModalidadeTimeEscaladoModel atualizarAtletaAtleticaModalidadeTimeEscaladoModel)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = atualizarAAMTEModel.Transform();
-            aamte.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
+            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = atualizarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
+            atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
 
-            var resultado = _AtletaBusiness.AtualizarAtletaTime(aamte);
+            var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscalado);
             return resultado.HttpResponse();
         }
 
