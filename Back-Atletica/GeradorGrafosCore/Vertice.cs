@@ -15,6 +15,7 @@ namespace GeradorGrafosCore
         public int PosX { get; set; }
         public int PosY { get; set; }
         public List<double> PageRank { get; set; }
+        public int PosicaoRank { get; set; }
         public int GrauAdj { get; set; }
         public int GrauInc { get; set; }
 
