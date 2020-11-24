@@ -2,6 +2,7 @@
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using Back_Atletica.Utils.ResponseModels;
+using GeradorGrafosCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,26 @@ namespace Back_Atletica.Repository.Implementação
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
+
+        }
+
+        public void CalculaRanking(int modalidadeId)
+        {
+            Grafo grafo = new Grafo();
+
+            //List<AtleticaModalidadeJogo>AMJ = _context.AtleticaModalidadeJogos.Where(a => a.)
+
+            var query = from amj in _context.AtleticaModalidadeJogos
+                        join
+                        am in _context.AtleticaModalidades on amj.AtleticaModalidadeId equals am.AtleticaModalidadeId
+                        where am.ModalidadeId == modalidadeId
+                        select new
+                        {
+                            amj.AtleticaModalidadeId,
+                            amj.JogoId,
+                            amj.Vencedor
+                        };
+                        
 
         }
 
