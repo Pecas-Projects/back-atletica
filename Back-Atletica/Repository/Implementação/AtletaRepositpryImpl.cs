@@ -258,7 +258,8 @@ namespace Back_Atletica.Repository.Implementação
             _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
             _context.SaveChanges();
 
-            //this.CalculaRanking()
+            //depois de cadastrar marca o bool registrouEscalacao em TimeEscalado como true
+            //this.CalculaRanking() if o bool jogoFinalizado de jogo for igual a true
             //precisa passar como parâmetro a moalidade do jogo
             return new HttpRes(200, aamte);
         }
