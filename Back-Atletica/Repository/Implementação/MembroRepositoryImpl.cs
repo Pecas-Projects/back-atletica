@@ -76,13 +76,6 @@ namespace Back_Atletica.Repository.Implementação
         {
             var membros = new List<Membro>();
 
-            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(_context);
-
-            if (!atletica.existeAtletica(atleticaId))
-            {
-                return new HttpRes(404, "Não existe nenhuma atlética com este id");
-            }
-
             membros = _context.Membros.Include(m => m.Pessoa)
                 .Where(m => m.Pessoa.AtleticaId == atleticaId &&
                 (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
@@ -108,16 +101,9 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, membros);
         }
 
-        public HttpRes BuscarTodos(int atleticaId)
+        public HttpRes BuscarTodosNaAtletica(int atleticaId)
         {
             List<Membro> membros = new List<Membro>();
-
-            AtleticaRepositoryImpl atletica = new AtleticaRepositoryImpl(_context);
-
-            if (!atletica.existeAtletica(atleticaId))
-            {
-                return new HttpRes(404, "Não existe nenhuma atlética com este id");
-            }
 
             membros = _context.Membros.Include(a => a.Pessoa).Where(m => m.Pessoa.AtleticaId.Equals(atleticaId)).ToList<Membro>();
 
