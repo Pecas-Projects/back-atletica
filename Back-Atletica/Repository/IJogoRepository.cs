@@ -16,6 +16,5 @@ namespace Back_Atletica.Repository
         HttpRes BuscarPorId(int id);
         HttpRes Deletar(int id);
         List<JogoResponseModels> OrganizaJogosModalidade(List<AtleticaModalidadeJogo> atleticaModalidadeJogos, int atleticaId, int modalidadeId);
-        void CalculaRanking(int modalidadeId);
     }
 }

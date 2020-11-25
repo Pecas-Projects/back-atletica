@@ -68,7 +68,6 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorModalidade(int atleticaId, int modalidadeId)
         {
-            this.CalculaRanking(modalidadeId);
 
             List<AtleticaModalidadeJogo> atleticaModalidadeJogos = _context.AtleticaModalidadeJogos
                 .Include(amj => amj.Jogo)
@@ -91,77 +90,6 @@ namespace Back_Atletica.Repository.Implementação
 
         }
 
-        public void CalculaRanking(int modalidadeId)
-        {
-            Grafo grafo = new Grafo();
-            List<double> posicoes = new List<double>();
-            List<AtleticaModalidade> atleticas = _context.AtleticaModalidades.Where(am => am.ModalidadeId == modalidadeId).ToList();
-
-            //List<AtleticaModalidadeJogo>AMJ = _context.AtleticaModalidadeJogos.Where(a => a.)
-
-            var jogos = from amj in _context.AtleticaModalidadeJogos
-                        join
-                        am in _context.AtleticaModalidades on amj.AtleticaModalidadeId equals am.AtleticaModalidadeId
-                        where am.ModalidadeId == modalidadeId
-                        select new
-                        {
-                            amj.AtleticaModalidadeId,
-                            amj.JogoId,
-                            amj.Vencedor
-                        };
-
-            foreach (AtleticaModalidade am in atleticas)
-            {
-                Vertice v = new Vertice();
-                v.id = am.AtleticaModalidadeId;
-                v.etiqueta = am.AtleticaId.ToString();
-                grafo.AdicionaVertice(v);
-            }
-
-            foreach (var jogo in jogos)
-            {
-                List<AtleticaModalidadeJogo> participantes = _context.AtleticaModalidadeJogos.Where(amj => amj.JogoId == jogo.JogoId).ToList();
-                List<AtleticaModalidadeJogo> vencedores = _context.AtleticaModalidadeJogos.Where(amj => amj.JogoId == jogo.JogoId && amj.Vencedor == true).ToList();
-                
-                foreach ( AtleticaModalidadeJogo amj in participantes)
-                {
-                    if (amj.Vencedor == false)
-                    {
-                        foreach (AtleticaModalidadeJogo vencedor in vencedores)
-                        {
-                            Arco a = new Arco();
-                            a.saida = grafo.ProcuraVertice(amj.AtleticaModalidadeId);
-                            a.entrada = grafo.ProcuraVertice(vencedor.AtleticaModalidadeId);
-                            grafo.AdicionarArco(a);
-                        }
-                    }
-                }           
-            }
-
-            grafo.PageRank();
-            int cont = 0;
-
-            foreach (Vertice v in grafo.Vertices)
-            {
-                posicoes.Add(v.PageRank[(v.PageRank.Count - 1)]);
-            }
-
-            posicoes.Sort();
-            posicoes.Reverse();
-
-            foreach (Vertice v in grafo.Vertices)
-            {
-                v.PosicaoRank = posicoes.IndexOf(v.PageRank[(v.PageRank.Count - 1)]);
-            }
-
-            foreach (Vertice v in grafo.Vertices)
-            {
-                atleticas[cont].PosicaoRanking = v.PosicaoRank;
-                cont++;
-            }
-
-            _context.SaveChanges();
-        }
 
         public HttpRes Deletar(int id)
         {

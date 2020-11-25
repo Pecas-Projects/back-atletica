@@ -1,6 +1,7 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using GeradorGrafosCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -257,7 +258,98 @@ namespace Back_Atletica.Repository.Implementação
             _context.AtletaAtleticaModalidadeTimesEscalados.Add(aamte);
             _context.SaveChanges();
 
+            //this.CalculaRanking()
+            //precisa passar como parâmetro a moalidade do jogo
             return new HttpRes(200, aamte);
+        }
+
+        public void CalculaRanking(int modalidadeId)
+        {
+
+            Grafo grafo = new Grafo();
+            int cont = 0;
+            List<double> posicoes = new List<double>();
+            List<int> idJogos = new List<int>();
+            List<AtleticaModalidade> atleticas = _context.AtleticaModalidades.Where(am => am.ModalidadeId == modalidadeId).ToList();
+
+            //List<AtleticaModalidadeJogo>AMJ = _context.AtleticaModalidadeJogos.Where(a => a.)
+
+            var jogos = from amj in _context.AtleticaModalidadeJogos
+                        join
+                        am in _context.AtleticaModalidades on amj.AtleticaModalidadeId equals am.AtleticaModalidadeId
+                        where am.ModalidadeId == modalidadeId
+                        select new
+                        {
+                            amj.AtleticaModalidadeId,
+                            amj.JogoId,
+                            amj.Vencedor
+                        };
+
+            foreach (AtleticaModalidade am in atleticas)
+            {
+                Vertice v = new Vertice();
+                v.id = am.AtleticaModalidadeId;
+                v.etiqueta = am.AtleticaId.ToString();
+                grafo.AdicionaVertice(v);
+            }
+
+            foreach (var jogo in jogos)
+            {
+                idJogos.Add(jogo.JogoId);
+            }
+
+            foreach (int idJogo in idJogos)
+            {
+
+                List<AtleticaModalidadeJogo> participantes = _context.AtleticaModalidadeJogos.Where(amj => amj.JogoId == idJogo).ToList();
+                List<AtleticaModalidadeJogo> vencedores = new List<AtleticaModalidadeJogo>();
+
+                foreach (AtleticaModalidadeJogo participante in participantes)
+                {
+                    if (participante.Vencedor == true)
+                    {
+                        vencedores.Add(participante);
+                    }
+                }
+
+                foreach (var amj in participantes)
+                {
+                    if (amj.Vencedor == false)
+                    {
+                        foreach (var vencedor in vencedores)
+                        {
+                            Arco a = new Arco();
+                            a.saida = grafo.ProcuraVertice(((AtleticaModalidadeJogo)amj).AtleticaModalidadeId);
+                            a.entrada = grafo.ProcuraVertice(vencedor.AtleticaModalidadeId);
+                            grafo.AdicionarArco(a);
+                        }
+                    }
+                }
+            }
+
+            grafo.PageRank();
+            cont = 0;
+
+            foreach (Vertice v in grafo.Vertices)
+            {
+                posicoes.Add(v.PageRank[(v.PageRank.Count - 1)]);
+            }
+
+            posicoes.Sort();
+            posicoes.Reverse();
+
+            foreach (Vertice v in grafo.Vertices)
+            {
+                v.PosicaoRank = posicoes.IndexOf(v.PageRank[(v.PageRank.Count - 1)]);
+            }
+
+            foreach (Vertice v in grafo.Vertices)
+            {
+                atleticas[cont].PosicaoRanking = v.PosicaoRank;
+                cont++;
+            }
+
+            _context.SaveChanges();
         }
     }
 }
