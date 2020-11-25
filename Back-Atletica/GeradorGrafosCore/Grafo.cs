@@ -740,9 +740,6 @@ namespace GeradorGrafosCore
 
                 if (contConvergence == Vertices.Count || contInteracoes >= 100) done = true; 
             }
-
-
-
         }
 
     }

@@ -89,7 +89,6 @@ namespace Back_Atletica.Repository.Implementação
                 }
 
             }
-
         }
     }
 }

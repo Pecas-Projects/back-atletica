@@ -20,6 +20,9 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodas(int atleticaId)
         {
+            AtletaRepositpryImpl a = new AtletaRepositpryImpl(_context);
+            a.CalculaRanking(1);
+
             List<SolicitacaoJogo> solicitacoesJogo = _context.SolicitacaoJogos
                 .Where(s => s.AtleticaId == atleticaId)
                 .ToList();

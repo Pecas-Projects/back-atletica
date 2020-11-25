@@ -220,6 +220,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
+            this.CalculaRanking(1);
 
             var query = (from am in _context.AtleticaModalidades
                          join
@@ -298,6 +299,8 @@ namespace Back_Atletica.Repository.Implementação
             {
                 idJogos.Add(jogo.JogoId);
             }
+
+            idJogos = idJogos.Distinct().ToList();
 
             foreach (int idJogo in idJogos)
             {
