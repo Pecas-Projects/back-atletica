@@ -74,6 +74,6 @@ namespace Back_Atletica.Utils.ResponseModels
                 return membro;
             }
         }
-
     }
+
 }

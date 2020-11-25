@@ -110,12 +110,11 @@ namespace Back_Atletica.Controllers
 
 
         [Authorize]
-        [Route("api/AtleticaModalidade/{ModalidadeId}")]
+        [Route("api/RankingModalidade/{modalidadeId}")]
         [HttpGet]
         public IActionResult BuscarRanking(int modalidadeId)
         {
             var resultado = _ModalidadeBusiness.BuscarRanking(modalidadeId);
-
             return resultado.HttpResponse();
         }
     }

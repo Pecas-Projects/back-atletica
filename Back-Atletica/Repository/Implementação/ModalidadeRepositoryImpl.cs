@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.AtleticaModalidadeResponseModels;
 using static Back_Atletica.Utils.ResponseModels.ModalidadeResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
@@ -159,7 +160,23 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarRanking(int modalidadeId)
         {
-            throw new NotImplementedException();
+            List<AtleticaModalidadeResponse> amResponses = new List<AtleticaModalidadeResponse>();
+            List<AtleticaModalidade> atleticaModalidades = 
+                _context.AtleticaModalidades
+                .Include(am => am.Atletica)
+                .ThenInclude(a => a.Campus)
+                .ThenInclude(c => c.Faculdade)
+                .ToList();
+
+            foreach (AtleticaModalidade am in atleticaModalidades)
+            {
+                AtleticaModalidadeResponse amr = new AtleticaModalidadeResponse();
+                amResponses.Add(amr.Transform(am));
+            }
+
+            amResponses = amResponses.OrderBy(amR => amR.PosicaoRanking).ToList();
+
+            return new HttpRes(200, amResponses);
         }
     }
 }
