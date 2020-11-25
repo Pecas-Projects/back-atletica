@@ -49,11 +49,13 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            var cursos = new List<Curso>();
+            List<Curso> cursos = new List<Curso>();
 
             try
             {
-                cursos = context.Cursos.ToList<Curso>();
+                cursos = context.Cursos
+                    .OrderBy(c => c.Nome)
+                    .ToList();
             }
             catch
             {

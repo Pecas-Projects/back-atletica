@@ -14,8 +14,8 @@ namespace Back_Atletica.Utils.RequestModels
             public string Sobrenome { get; set; }
             public string WhatsApp { get; set; }
             public string Email { get; set; }
-            public int AtleticaId { get; set; }
             public int CursoId { get; set; }
+            public char Genero { get; set; }
             public DateTime AnoEntradaFacul { get; set; }
             public List<int> ModalidadesId { get; set; }
 
@@ -28,9 +28,9 @@ namespace Back_Atletica.Utils.RequestModels
                     Sobrenome = Sobrenome,
                     WhatsApp = WhatsApp,
                     Email = Email,
-                    AtleticaId = AtleticaId,
                     AnoEntradaFacul = AnoEntradaFacul,
                     CursoId = CursoId,
+                    Genero = Genero,
                     Aprovado = false
                 };
 

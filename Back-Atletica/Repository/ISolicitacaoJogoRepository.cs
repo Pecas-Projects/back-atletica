@@ -11,7 +11,7 @@ namespace Back_Atletica.Repository
     {
         HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo);
         HttpRes BuscarTodas(int atleticaId);
-        HttpRes DeletarSolicitacaoJogo(int solicitacaoAtletaId);
-        HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoAtletaId);
+        HttpRes DeletarSolicitacaoJogo(int solicitacaoJogoId);
+        HttpRes DeletarSolicitacaoJogoAprovado(int solicitacaoJogoId);
     }
 }

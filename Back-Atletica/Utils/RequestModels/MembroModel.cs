@@ -13,12 +13,14 @@ namespace Back_Atletica.Utils.RequestModels
         {
             [Required]
             public PessoaModel Pessoa { get; set; }
+            public int ImagemId { get; set; }
 
             public Membro Transform()
             {
                 Membro membro = new Membro
                 {
-                    Pessoa = this.Pessoa.Transform()                
+                    Pessoa = this.Pessoa.Transform(),
+                    ImagemId = this.ImagemId
                 };
 
                 return membro;

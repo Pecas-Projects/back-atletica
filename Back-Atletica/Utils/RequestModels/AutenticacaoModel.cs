@@ -86,6 +86,8 @@ namespace Back_Atletica.Utils.RequestModels
             [Required]
             public string Senha { get; set; }
 
+            public int ImagemId { get; set; }
+
             [Required]
             public PessoaModel Pessoa { get; set; }
 
@@ -95,6 +97,7 @@ namespace Back_Atletica.Utils.RequestModels
             {
                 Membro membro = new Membro
                 {
+                    ImagemId = this.ImagemId,
                     Senha = this.Senha,
                     Pessoa = this.Pessoa.Transform()
                     

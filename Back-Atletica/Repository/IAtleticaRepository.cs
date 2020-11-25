@@ -11,7 +11,7 @@ namespace Back_Atletica.Repository
         HttpRes BuscaPorNome(string nome);
         HttpRes BuscaPorInstituicao(int faculdadeId);
         HttpRes Deletar(int atleticaId);
-        HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId);
+        HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<ImagemAtletica> ImagensIds);
         HttpRes ResetPin(int atleticaId);
         HttpRes RemoverMembro(int membroId, int atleticaId);
         HttpRes RankingAtleticas(int modalidadeId, int alteticaId);
