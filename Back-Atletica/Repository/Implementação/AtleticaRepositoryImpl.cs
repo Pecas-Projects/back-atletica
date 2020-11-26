@@ -1,6 +1,8 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Back_Atletica.Repository.Implementação
             _context = context;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<ImagemAtletica> ImagensIds)
         {
             if (atletica == null) return new HttpRes(400, "Verifique os dados enviados");
 
@@ -27,18 +29,16 @@ namespace Back_Atletica.Repository.Implementação
                 Atletica atleticaDados = _context.Atleticas
                     .Include(a => a.Campus)
                     .ThenInclude(a => a.Faculdade)
+                    .Include(i => i.ImagemAtleticas).ThenInclude(i => i.Imagem)
+                    .Include(c => c.AtleticaCursos)
                     .SingleOrDefault(a => a.AtleticaId == id);
 
                 if(atleticaDados == null) return new HttpRes(404, "Atletica não encontrada");
 
-                List<AtleticaCurso> atleticaCursoDado = _context.AtleticaCursos.Where(a => a.AtleticaId == id).ToList();
+                List<AtleticaCurso> atleticaCursoDado = atleticaDados.AtleticaCursos.ToList();
+                List<ImagemAtletica> imgAtletica = atleticaDados.ImagemAtleticas.ToList();
 
-                if (atleticaCursoDado.Count == 0) return new HttpRes(404, "Atletica não encontrada");
-
-                foreach (AtleticaCurso a in atleticaCursoDado)
-                {
-                    _context.Remove(a);
-                }
+                RemoveRelacoesAntigas(atleticaCursoDado, imgAtletica);
 
                 atletica.AtleticaId = atleticaDados.AtleticaId;
                 atletica.PIN = atleticaDados.PIN;
@@ -48,13 +48,8 @@ namespace Back_Atletica.Repository.Implementação
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
 
-                foreach (int a in CursosId)
-                {
-                    AtleticaCurso atleticaCurso = new AtleticaCurso();
-                    atleticaCurso.AtleticaId = id;
-                    atleticaCurso.CursoId = a;
-                    _context.Add(atleticaCurso);
-                }
+                CriacaoDeNovosRelacionamentos(CursosId, ImagensIds, id);
+               
 
                 _context.SaveChanges();
 
@@ -66,6 +61,44 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(400, ex.InnerException.Message);
             }
 
+        }
+
+        private void CriacaoDeNovosRelacionamentos(List<int> cursosId, List<ImagemAtletica> ImagemAtletica, int id)
+        {
+            foreach (int a in cursosId)
+            {
+                AtleticaCurso atleticaCurso = new AtleticaCurso();
+                atleticaCurso.AtleticaId = id;
+                atleticaCurso.CursoId = a;
+                _context.Add(atleticaCurso);
+            }
+
+            foreach (ImagemAtletica i in ImagemAtletica)
+            {
+                ImagemAtletica img = new ImagemAtletica();
+                img.Tipo = i.Tipo;
+                img.AtleticaId = id;
+                img.ImagemId = i.ImagemId;
+                _context.Add(img);
+            }
+        }
+
+        private void RemoveRelacoesAntigas(List<AtleticaCurso> atleticaCursoDado, List<ImagemAtletica> imgAtletica)
+        {
+            if (atleticaCursoDado.Count > 0)
+                foreach (AtleticaCurso a in atleticaCursoDado) _context.Remove(a);
+
+            if (imgAtletica.Count > 0)
+            {
+                Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+                Cloudinary cloudinary = new Cloudinary(account);
+                foreach (ImagemAtletica i in imgAtletica)
+                {
+                    var deletionParams = new DeletionParams(i.Imagem.PublicId);
+                    cloudinary.Destroy(deletionParams);
+                    _context.Remove(i);
+                }
+            }
         }
 
         public HttpRes BuscaPorId(int id)

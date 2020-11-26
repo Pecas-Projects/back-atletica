@@ -47,9 +47,9 @@ namespace Back_Atletica.Controllers
         
         [Route("api/Membro/Atletica/{atleticaId}")]
         [HttpGet]
-        public IActionResult BuscarTodos(int atleticaId)
+        public IActionResult BuscarTodosNaAtletica(int atleticaId)
         {
-            var resultado = _MembroBusiness.BuscarTodos(atleticaId);
+            var resultado = _MembroBusiness.BuscarTodosNaAtletica(atleticaId);
 
             return resultado.HttpResponse();
         }

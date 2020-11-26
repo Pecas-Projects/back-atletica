@@ -105,6 +105,10 @@ namespace Back_Atletica.Data
                .WithMany(a => a.AtleticaModalidadeJogos)
                .HasForeignKey(am => am.JogoId);
 
+            modelBuilder.Entity<AtleticaModalidadeJogo>()
+                .Property(amj => amj.Vencedor)
+                .HasDefaultValue(true);
+
             /* AgendaTreino */
             modelBuilder.Entity<AgendaTreino>()
                 .Property(p => p.DiaSemana)
@@ -180,6 +184,11 @@ namespace Back_Atletica.Data
                 .Property(p => p.PIN)
                 .HasMaxLength(5)
                 .IsRequired();
+
+            modelBuilder
+                .Entity<Atletica>()
+                .HasIndex(u => u.Username)
+                    .IsUnique();
 
             /* SolicitacaoAtleta*/
             modelBuilder.Entity<SolicitacaoAtleta>().HasKey(am => new { am.SolicitacaoAtletaId });
@@ -338,6 +347,9 @@ namespace Back_Atletica.Data
                 .Property(p => p.Local)
                 .HasMaxLength(45)
                 .IsRequired();
+            modelBuilder.Entity<Jogo>()
+                .Property(j => j.Finalizado)
+                .HasDefaultValue(true);
 
             /* Membro */
             modelBuilder.Entity<Membro>()
@@ -538,6 +550,10 @@ namespace Back_Atletica.Data
               .WithMany(a => a.TimeEscalados)
               .HasForeignKey(am => am.JogoId);
 
+            modelBuilder.Entity<TimeEscalado>()
+               .Property(t => t.RegistrouEscalacao)
+               .HasDefaultValue(true);
+
             /*AtletaAtleticaModalidade*/
             modelBuilder.Entity<AtletaAtleticaModalidade>().HasKey(am => new { am.AtletaAtleticaModalidadeId });
 
@@ -601,6 +617,7 @@ namespace Back_Atletica.Data
         public void Start()
         {
             this.Database.EnsureCreated();
+           // this.Database.Migrate();
         }
 
     }

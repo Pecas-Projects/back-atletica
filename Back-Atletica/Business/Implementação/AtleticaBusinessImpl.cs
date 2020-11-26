@@ -15,9 +15,9 @@ namespace Back_Atletica.Business.Implementação
             _AtleticaRepository = atleticaRepository;
         }
 
-        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId)
+        public HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<ImagemAtletica> ImagensIds)
         {
-            return _AtleticaRepository.Atualizar(id, atletica, CursosId);
+            return _AtleticaRepository.Atualizar(id, atletica, CursosId, ImagensIds);
         }
 
         public HttpRes BuscaPorId(int id)

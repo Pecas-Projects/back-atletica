@@ -82,6 +82,8 @@ namespace Back_Atletica
 
             services.AddScoped<IFaculdadeBusiness, FaculdadeBusinessImpl>();
             services.AddScoped<IFaculdadeRepository, FaculdadeRepositoryImpl>();
+            services.AddScoped<IJogoBusiness, JogoBusinessImpl>();
+            services.AddScoped<IJogoRepository, JogoRepositoryImpl>();
             services.AddScoped<IModalidadeBusiness, ModalidadeBusinessImpl>();
             services.AddScoped<IModalidadeRepository, ModalidadeRepositoryImpl>();
             services.AddScoped<IPublicacaoBusiness, PublicacaoBusinessImpl>();
