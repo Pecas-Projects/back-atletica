@@ -13,6 +13,7 @@ namespace Back_Atletica.Utils.ResponseModels
             public int AtleticaId { get; set; }
             public string Nome { get; set; }
             public string Email { get; set; }
+            public string Username { get; set; }
             public string Descricao { get; set; }
             public string PIN { get; set; }
             public string Telefone { get; set; }
@@ -31,7 +32,8 @@ namespace Back_Atletica.Utils.ResponseModels
                     Descricao = atletica.Descricao,
                     PIN = atletica.PIN,
                     Telefone = atletica.Telefone,
-                    LinkProsel = atletica.LinkProsel
+                    LinkProsel = atletica.LinkProsel,
+                    Username = atletica.Username
                 };
 
                 if (atletica.Campus != null)
