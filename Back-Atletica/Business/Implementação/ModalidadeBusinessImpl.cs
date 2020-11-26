@@ -56,5 +56,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _ModalidadeRepository.AtualizaModalidadeAtletica(atleticaId, modalidade);
         }
+
+        public HttpRes BuscarRanking(int modalidadeId)
+        {
+            return _ModalidadeRepository.BuscarRanking(modalidadeId);
+        }
     }
 }

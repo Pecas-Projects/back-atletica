@@ -22,5 +22,6 @@ namespace Back_Atletica.Repository
         HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId);
         HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId);
         bool ExisteAtleta(int atletaID);
+        void CalculaRanking(int modalidadeId);
     }
 }
