@@ -280,7 +280,18 @@ namespace Back_Atletica.Repository.Implementação
 
                 atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = time.TimeEscaladoId;
                 _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaAtleticaModalidadeTimeEscalado);
-                _context.SaveChanges();
+                
+                 List<AtletaAtleticaModalidadeTimeEscalado> atletasTime =
+                _context.AtletaAtleticaModalidadeTimesEscalados.Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId).ToList();
+
+                foreach (AtletaAtleticaModalidadeTimeEscalado a in atletasTime)
+                 {
+                time.PontuacaoJogo += (int)a.Pontos;
+                  }
+
+                 _context.SaveChanges();
+                time.RegistrouEscalacao = true;
+                 _context.SaveChanges();
 
                 return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
             }
@@ -303,6 +314,7 @@ namespace Back_Atletica.Repository.Implementação
                     .SingleOrDefault(a => a.AtletaAtleticaModalidadeTimeEscaladoId == atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId);
 
                 if (atletaAtleticaModalidadeTimeEscaladoData == null) return new HttpRes(404, "AtletaAtleticaModalidadeTimeEscalado não encontrado");
+
 
                 atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeId = atletaAtleticaModalidadeTimeEscaladoData.AtletaAtleticaModalidadeId;
                 atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoData.TimeEscaladoId;
