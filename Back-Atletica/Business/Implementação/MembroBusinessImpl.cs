@@ -37,9 +37,9 @@ namespace Back_Atletica.Business.Implementação
             return _MembroRepository.BuscarTodos();
         }
 
-        public HttpRes BuscarTodos(int atleticaId)
+        public HttpRes BuscarTodosNaAtletica(int atleticaId)
         {
-            return _MembroRepository.BuscarTodos(atleticaId);
+            return _MembroRepository.BuscarTodosNaAtletica(atleticaId);
         }
 
         public HttpRes Criar(Membro membro)

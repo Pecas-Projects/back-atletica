@@ -12,7 +12,7 @@ namespace Back_Atletica.Repository
         HttpRes Criar(Membro membro);
         HttpRes BuscarPorNome(int atleticaId, string nome);
         HttpRes BuscarPorId(int id);
-        HttpRes BuscarTodos(int atleticaId);
+        HttpRes BuscarTodosNaAtletica(int atleticaId);
         HttpRes BuscarTodos();
         HttpRes Atualizar(int id, Membro membro);
         HttpRes Deletar(int id);

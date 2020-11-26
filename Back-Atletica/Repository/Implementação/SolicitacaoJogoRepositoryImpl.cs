@@ -20,6 +20,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodas(int atleticaId)
         {
+
             List<SolicitacaoJogo> solicitacoesJogo = _context.SolicitacaoJogos
                 .Where(s => s.AtleticaId == atleticaId)
                 .ToList();
