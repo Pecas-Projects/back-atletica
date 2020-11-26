@@ -2,9 +2,7 @@
 using Back_Atletica.Business;
 using Back_Atletica.Models;
 using Microsoft.AspNetCore.Mvc;
-using Back_Atletica.Utils;
-using static Back_Atletica.Utils.RequestModels.AtletaModel;
-using Back_Atletica.Utils.RequestModels;
+using static Back_Atletica.Utils.RequestModels.AtletaAtleticaModalidadeTimeEscaladoModel;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -101,10 +99,31 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/AtletaTime/{atleticaId}/{jogoId}")]
         [HttpPost]
-        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] AtletaAtleticaModalidadeTimeEscaladoModel valor)
+        public IActionResult AdicionarAtletaTime(int atleticaId, int jogoId, [FromBody] CriarAtletaAtleticaModalidadeTimeEscaladoModel criarAtletaAtleticaModalidadeTimeEscaladoModel)
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = valor.Transform();
-            var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, aamte);
+            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = criarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
+            var resultado = _AtletaBusiness.AdicionarAtletaTime(atleticaId, jogoId, atletaAtleticaModalidadeTimeEscalado);
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
+        [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
+        [HttpPut]
+        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAtletaAtleticaModalidadeTimeEscaladoModel atualizarAtletaAtleticaModalidadeTimeEscaladoModel)
+        {
+            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = atualizarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
+            atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
+
+            var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscalado);
+            return resultado.HttpResponse();
+        }
+
+        [Authorize]
+        [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
+        [HttpDelete]
+        public IActionResult RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
+        {
+            var resultado = _AtletaBusiness.RemoverAtletaTime(atletaAtleticaModalidadeTimeEscaladoId);
             return resultado.HttpResponse();
         }
 

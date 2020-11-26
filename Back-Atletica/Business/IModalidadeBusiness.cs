@@ -17,5 +17,6 @@ namespace Back_Atletica.Business
         HttpRes Deletar(int id);
         HttpRes ExcluiModalidadeAtletica(int atleticaModalidadeId);
         HttpRes AtualizaModalidadeAtletica(int atleticaModalidadeId, AtleticaModalidade modalidade);
+        HttpRes BuscarRanking(int modalidadeId);
     }
 }
