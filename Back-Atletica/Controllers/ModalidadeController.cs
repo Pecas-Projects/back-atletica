@@ -107,5 +107,15 @@ namespace Back_Atletica.Controllers
 
             return resultado.HttpResponse();
         }
+
+
+        //[Authorize]
+        [Route("api/RankingModalidade/{modalidadeId}")]
+        [HttpGet]
+        public IActionResult BuscarRanking(int modalidadeId)
+        {
+            var resultado = _ModalidadeBusiness.BuscarRanking(modalidadeId);
+            return resultado.HttpResponse();
+        }
     }
 }

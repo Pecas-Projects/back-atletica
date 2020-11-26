@@ -9,23 +9,51 @@ namespace Back_Atletica.Utils.RequestModels
 {
     public class AtletaAtleticaModalidadeTimeEscaladoModel
     {
-        [Required]
-        public int AtletaAtleticaModalidadeId { get; set; }
-        public int FuncaoId { get; set; }
-        public int Numero { get; set; }
-        public int Pontos { get; set; }
-        public int Infracoes { get; set; }
-        public AtletaAtleticaModalidadeTimeEscalado Transform()
+        public class CriarAtletaAtleticaModalidadeTimeEscaladoModel
         {
-            AtletaAtleticaModalidadeTimeEscalado aamte = new AtletaAtleticaModalidadeTimeEscalado
+            [Required]
+            public int AtletaAtleticaModalidadeId { get; set; }
+            public int FuncaoId { get; set; }
+            public int Numero { get; set; }
+            public int Pontos { get; set; }
+            public int Infracoes { get; set; }
+            public AtletaAtleticaModalidadeTimeEscalado Transform()
             {
-                AtletaAtleticaModalidadeId = AtletaAtleticaModalidadeId,
-                FuncaoId = FuncaoId,
-                Numero = Numero,
-                Pontos = Pontos,
-                Infracoes = Infracoes
-            };
-            return aamte;
+                AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = new AtletaAtleticaModalidadeTimeEscalado
+                {
+                    AtletaAtleticaModalidadeId = AtletaAtleticaModalidadeId,
+                    FuncaoId = FuncaoId,
+                    Numero = Numero,
+                    Pontos = Pontos,
+                    Infracoes = Infracoes
+                };
+
+                if (atletaAtleticaModalidadeTimeEscalado.FuncaoId == 0) atletaAtleticaModalidadeTimeEscalado.FuncaoId = null;
+
+                return atletaAtleticaModalidadeTimeEscalado;
+            }
+        }
+
+        public class AtualizarAtletaAtleticaModalidadeTimeEscaladoModel
+        {
+            public int FuncaoId { get; set; }
+            public int Numero { get; set; }
+            public int Pontos { get; set; }
+            public int Infracoes { get; set; }
+            public AtletaAtleticaModalidadeTimeEscalado Transform()
+            {
+                AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = new AtletaAtleticaModalidadeTimeEscalado
+                {
+                    FuncaoId = FuncaoId,
+                    Numero = Numero,
+                    Pontos = Pontos,
+                    Infracoes = Infracoes
+                };
+
+                if (atletaAtleticaModalidadeTimeEscalado.FuncaoId == 0) atletaAtleticaModalidadeTimeEscalado.FuncaoId = null;
+
+                return atletaAtleticaModalidadeTimeEscalado;
+            }
         }
     }
 }

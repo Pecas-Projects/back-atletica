@@ -2,6 +2,7 @@
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
 using Back_Atletica.Utils.ResponseModels;
+using GeradorGrafosCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarCategorias()
         {
             List<JogoCategoria> categorias = _context.JogoCategorias.ToList();
-
+            
             return new HttpRes(200, categorias);
         }
 
@@ -67,6 +68,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorModalidade(int atleticaId, int modalidadeId)
         {
+
             List<AtleticaModalidadeJogo> atleticaModalidadeJogos = _context.AtleticaModalidadeJogos
                 .Include(amj => amj.Jogo)
                     .ThenInclude(j => j.TimeEscalados)
@@ -87,6 +89,7 @@ namespace Back_Atletica.Repository.Implementação
             }
 
         }
+
 
         public HttpRes Deletar(int id)
         {
