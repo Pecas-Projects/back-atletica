@@ -185,6 +185,11 @@ namespace Back_Atletica.Data
                 .HasMaxLength(5)
                 .IsRequired();
 
+            modelBuilder
+                .Entity<Atletica>()
+                .HasIndex(u => u.Username)
+                    .IsUnique();
+
             /* SolicitacaoAtleta*/
             modelBuilder.Entity<SolicitacaoAtleta>().HasKey(am => new { am.SolicitacaoAtletaId });
 
