@@ -171,7 +171,12 @@ namespace Back_Atletica.Repository.Implementação
             foreach (AtleticaModalidade am in atleticaModalidades)
             {
                 AtleticaModalidadeResponse amr = new AtleticaModalidadeResponse();
-                amResponses.Add(amr.Transform(am));
+                amr = amr.Transform(am);
+
+                amr.NumeroJogos = _context.AtleticaModalidadeJogos
+                    .Where(amj => amj.AtleticaModalidadeId == amr.AtleticaModalidadeId).Count();
+
+                amResponses.Add(amr);
             }
 
             amResponses = amResponses.OrderBy(amR => amR.PosicaoRanking).ToList();

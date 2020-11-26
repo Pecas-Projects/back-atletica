@@ -12,6 +12,7 @@ namespace Back_Atletica.Utils.ResponseModels
         {
             public int AtleticaModalidadeId { get; set; }
             public int PosicaoRanking { get; set; }
+            public int NumeroJogos { get; set; }
             public AtleticaResponseModel Atletica{ get; set; }
 
             public AtleticaModalidadeResponse Transform(AtleticaModalidade atleticaModalidade)

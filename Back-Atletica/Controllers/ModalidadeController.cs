@@ -109,7 +109,7 @@ namespace Back_Atletica.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         [Route("api/RankingModalidade/{modalidadeId}")]
         [HttpGet]
         public IActionResult BuscarRanking(int modalidadeId)
