@@ -56,13 +56,13 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Authorize]
-        [Route("api/Jogo/{id}")]
-        [HttpDelete]
-        public IActionResult Deletar(int id)
-        {
-            var resultado = _JogoBusiness.Deletar(id);
-            return resultado.HttpResponse();
-        }
+        //[Authorize]
+        //[Route("api/Jogo/{id}")]
+        //[HttpDelete]
+        //public IActionResult Deletar(int id)
+        //{
+        //    var resultado = _JogoBusiness.Deletar(id);
+        //    return resultado.HttpResponse();
+        //}
     }
 }
