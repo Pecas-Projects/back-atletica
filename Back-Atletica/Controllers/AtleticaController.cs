@@ -38,6 +38,14 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/Atletica/BuscaPorUsername/{username}")]
+        [HttpGet]
+        public IActionResult BuscarPorUsername(string username)
+        {
+            var resultado = _AtleticaBusiness.BuscaPorUsername(username);
+            return resultado.HttpResponse();
+        }
+
         [Route("api/Atletica")]
         [HttpGet]
         public IActionResult Get()

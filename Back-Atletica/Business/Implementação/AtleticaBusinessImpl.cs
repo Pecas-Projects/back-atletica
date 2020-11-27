@@ -59,5 +59,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _AtleticaRepository.RankingAtleticas(modalidadeId, alteticaId);
         }
+
+        public HttpRes BuscaPorUsername(string username)
+        {
+            return _AtleticaRepository.BuscaPorUsername(username);
+        }
     }
 }

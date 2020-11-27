@@ -8,7 +8,7 @@ namespace Back_Atletica.Utils.ResponseModels
 {
     public class AtleticaResponseModels
     {
-        public class AtleticaPorId 
+        public class AtleticaPorId
         {
             public int AtleticaId { get; set; }
             public string Nome { get; set; }
@@ -47,14 +47,14 @@ namespace Back_Atletica.Utils.ResponseModels
                     foreach (Pessoa p in atletica.Pessoas)
                     {
                         PessoaResponseModel m = new PessoaResponseModel().Transform(p);
-                        if(m != null) list.Add(m);
+                        if (m != null) list.Add(m);
                     }
                     a.Membros = list;
                 }
                 if (atletica.ImagemAtleticas.Count > 0)
                 {
                     List<ImagemAtleticasResponseModel> listImg = new List<ImagemAtleticasResponseModel>();
-                    
+
                     foreach (ImagemAtletica i in atletica.ImagemAtleticas)
                     {
                         ImagemAtleticasResponseModel img = new ImagemAtleticasResponseModel().Transform(i);
@@ -68,9 +68,9 @@ namespace Back_Atletica.Utils.ResponseModels
 
     }
 
-       
 
-    public class ImagemAtleticasResponseModel 
+
+    public class ImagemAtleticasResponseModel
     {
         public char Tipo { get; set; }
         public int ImagemId { get; set; }
@@ -102,7 +102,7 @@ namespace Back_Atletica.Utils.ResponseModels
         public char Genero { get; set; }
 
         public MembroModel Membro { get; set; }
-        
+
 
         public PessoaResponseModel Transform(Pessoa pessoa)
         {
@@ -129,33 +129,34 @@ namespace Back_Atletica.Utils.ResponseModels
 
     public class MembroModel
     {
-        public ImagemResponseModel Imagem {get; set;}
+        public ImagemResponseModel Imagem { get; set; }
 
-        public MembroModel Transform (Membro membro)
+        public MembroModel Transform(Membro membro)
         {
+            ImagemResponseModel img = new ImagemResponseModel();
+
             return new MembroModel
             {
-                Imagem = Imagem.Transform(membro.Imagem)
+                Imagem = img.Transform(membro.Imagem)
             };
         }
     }
 
     public class ImagemResponseModel
     {
-        public string Nome { get; set; }
         public string Path { get; set; }
         public string Extensao { get; set; }
 
         public ImagemResponseModel Transform(Imagem img)
         {
             return new ImagemResponseModel
-            { 
+            {
                 Extensao = img.Extensao,
                 Path = img.Path
             };
 
         }
-    } 
+    }
 
     public class CampusResponseModel
     {
@@ -170,7 +171,7 @@ namespace Back_Atletica.Utils.ResponseModels
         public CampusResponseModel Transform(Campus campus)
         {
             CampusResponseModel c = new CampusResponseModel
-            { 
+            {
                 Nome = campus.Nome,
                 Cidade = campus.Cidade,
                 Bairro = campus.Bairro,
@@ -178,7 +179,7 @@ namespace Back_Atletica.Utils.ResponseModels
                 Estado = campus.Estado,
                 CEP = campus.CEP,
                 Complemento = campus.Complemento,
-                
+
             };
             if (campus.Faculdade != null)
             {
