@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back_Atletica.Business;
 using Back_Atletica.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Back_Atletica.Utils.RequestModels.SolicitacaoAtletaModel;
 
@@ -22,6 +23,7 @@ namespace Back_Atletica.Controllers
         }
 
         // GET: api/<SolicitacaoAtletaController>
+        [Authorize]
         [Route("api/SolicitacaoAtleta/{atleticaId}")]
         [HttpGet]
         public IActionResult GetSolicitacoesAtleta(int atleticaId)
@@ -31,6 +33,7 @@ namespace Back_Atletica.Controllers
         }
 
         // POST api/<SolicitacaoAtletaController>
+        [Authorize]
         [Route("api/SolicitacaoAtleta/{atleticaId}")]
         [HttpPost]
         public IActionResult Post([FromBody] CriarSolicitacaoAtletaModel solicitacaoAtleta, int atleticaId)
@@ -42,6 +45,7 @@ namespace Back_Atletica.Controllers
         }
 
         // DELETE api/<SolicitacaoAtletaController>/5
+        [Authorize]
         [Route("api/SolicitacaoAtleta/{solicitacaoAtletaId}/aprovado")]
         [HttpDelete]
         public IActionResult DeleteAprovado(int solicitacaoAtletaId)
@@ -51,6 +55,7 @@ namespace Back_Atletica.Controllers
         }
 
         // DELETE api/<SolicitacaoAtletaController>/5
+        [Authorize]
         [Route("api/SolicitacaoAtleta/{solicitacaoAtletaId}/reprovado")]
         [HttpDelete]
         public IActionResult DeleteReprovado(int solicitacaoAtletaId)
