@@ -33,7 +33,7 @@ namespace Back_Atletica.Repository.Implementação
                     .Include(c => c.AtleticaCursos)
                     .SingleOrDefault(a => a.AtleticaId == id);
 
-                if(atleticaDados == null) return new HttpRes(404, "Atletica não encontrada");
+                if (atleticaDados == null) return new HttpRes(404, "Atletica não encontrada");
 
                 List<AtleticaCurso> atleticaCursoDado = atleticaDados.AtleticaCursos.ToList();
                 List<ImagemAtletica> imgAtletica = atleticaDados.ImagemAtleticas.ToList();
@@ -49,7 +49,7 @@ namespace Back_Atletica.Repository.Implementação
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
 
                 CriacaoDeNovosRelacionamentos(CursosId, ImagensIds, id);
-               
+
 
                 _context.SaveChanges();
 
@@ -119,8 +119,8 @@ namespace Back_Atletica.Repository.Implementação
                             where p.Tipo != "A"
                             join
                             m in _context.Membros on p.PessoaId equals m.PessoaId
-                            select new { a }; 
-                            
+                            select new { a };
+
 
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -166,10 +166,10 @@ namespace Back_Atletica.Repository.Implementação
         {
             return new HttpRes(200, _context.Atleticas.ToList());
         }
- 
+
         public HttpRes Deletar(int atleticaId)
         {
-            
+
             Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == atleticaId);
 
             if (atletica == null)
@@ -202,7 +202,7 @@ namespace Back_Atletica.Repository.Implementação
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
@@ -224,12 +224,31 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(200, atletica);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
             }
 
+        }
+
+        public HttpRes BuscaPorUsername(string username)
+        {
+            Atletica atletica = _context.Atleticas
+               .Include(a => a.Campus)
+                    .ThenInclude(a => a.Faculdade)
+               .Include(a => a.ImagemAtleticas)
+                    .ThenInclude(a => a.Imagem)
+               .Include(a => a.Pessoas)
+                    .ThenInclude(a => a.Membro)
+                         .ThenInclude(a => a.Imagem)
+               .SingleOrDefault(a => a.Username == username);
+
+            if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
+
+            AtleticaPorId result = new AtleticaPorId();
+
+            return new HttpRes(200, result.Transform(atletica));
         }
     }
 }
