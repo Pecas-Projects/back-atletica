@@ -104,42 +104,20 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscaPorId(int id)
         {
             Atletica atletica = _context.Atleticas
-                .Include(a => a.Campus).ThenInclude(a => a.Faculdade)
-                .Include(a => a.ImagemAtleticas).ThenInclude(a => a.Imagem)
-                .Include(a => a.Pessoas).ThenInclude(a => a.Membro).ThenInclude(a => a.Imagem)
+                .Include(a => a.Campus)
+                    .ThenInclude(a => a.Faculdade)
+                .Include(a => a.ImagemAtleticas)
+                    .ThenInclude(a => a.Imagem)
+                .Include(a => a.Pessoas)
+                    .ThenInclude(a => a.Membro)
+                        .ThenInclude(a => a.Imagem)
                 .SingleOrDefault(a => a.AtleticaId == id);
-
-            var qAtletica = from a in _context.Atleticas
-                            join
-                            c in _context.Campus on a.CampusId equals c.CampusId
-                            join
-                            f in _context.Faculdades on c.FaculdadeId equals f.FaculdadeId
-                            join
-                            p in _context.Pessoas on a.AtleticaId equals p.AtleticaId
-                            where p.Tipo != "A"
-                            join
-                            m in _context.Membros on p.PessoaId equals m.PessoaId
-                            select new { a };
-
-
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
 
-            //if(atletica.Pessoas != null)
-            //{
-            //    List<Pessoa> pessoas = new List<Pessoa>();
-
-            //    foreach (Pessoa p in atletica.Pessoas)
-            //    {
-            //        if (p.Tipo != "A") pessoas.Add(p);
-            //    }
-            //    atletica.Pessoas = pessoas;
-            //}
-
             AtleticaPorId result = new AtleticaPorId();
 
-            //return new HttpRes(200, result.Transform(atletica));
-            return new HttpRes(200, qAtletica);
+            return new HttpRes(200, result.Transform(atletica));
         }
 
         public HttpRes BuscaPorInstituicao(int faculdadeId)
