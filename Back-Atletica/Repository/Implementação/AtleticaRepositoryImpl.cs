@@ -209,5 +209,24 @@ namespace Back_Atletica.Repository.Implementação
             }
 
         }
+
+        public HttpRes BuscaPorUsername(string username)
+        {
+            Atletica atletica = _context.Atleticas
+               .Include(a => a.Campus)
+                    .ThenInclude(a => a.Faculdade)
+               .Include(a => a.ImagemAtleticas)
+                    .ThenInclude(a => a.Imagem)
+               .Include(a => a.Pessoas)
+                    .ThenInclude(a => a.Membro)
+                         .ThenInclude(a => a.Imagem)
+               .SingleOrDefault(a => a.Username == username);
+
+            if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
+
+            AtleticaPorId result = new AtleticaPorId();
+
+            return new HttpRes(200, result.Transform(atletica));
+        }
     }
 }
