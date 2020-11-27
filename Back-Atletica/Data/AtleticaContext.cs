@@ -181,6 +181,10 @@ namespace Back_Atletica.Data
                     .IsUnique();
 
             modelBuilder.Entity<Atletica>()
+                .Property(p => p.Username)
+                .IsRequired();
+
+            modelBuilder.Entity<Atletica>()
                 .Property(p => p.PIN)
                 .HasMaxLength(5)
                 .IsRequired();
