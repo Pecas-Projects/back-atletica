@@ -10,32 +10,38 @@ namespace Back_Atletica.Utils.RequestModels
 {
     public class AtleticaModel
     {
-            [Required]
-            public string Nome { get; set; }
-            [Required]
-            public string Email { get; set; }
-            [Required]
-            public string Senha { get; set; }
-            [Required]
-            public string Username { get; set; }
-            public string Descricao { get; set; }
-            public CampusModel Campus { get; set; }
-            public List<int> CursosIds { get; set; }
-            public List<ImagemAtleticaModel> Imagens { get; set; }
+        [Required]
+        public string Nome { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Senha { get; set; }
+        [Required]
+        public string Username { get; set; }
+        public string Descricao { get; set; }
+        public CampusModel Campus { get; set; }
+        public List<int> CursosIds { get; set; }
+        public List<ImagemAtleticaModel> Imagens { get; set; }
 
         public Atletica Transform()
+        {
+            Atletica atletica = new Atletica
             {
-                Atletica atletica = new Atletica
-                {
-                    Nome = Nome,
-                    Email = Email,
-                    Senha = Senha,
-                    Descricao = Descricao,
-                    Campus = Campus.Transform(),
-                    Username = Username
-                };
+                Nome = Nome,
+                Email = Email,
+                Senha = Senha,
+                Descricao = Descricao,
+                Campus = Campus.Transform(),
+                Username = Username
+            };
 
-                return atletica;
-            }  
+            atletica.ImagemAtleticas = new List<ImagemAtletica>();
+
+            if (Imagens != null)
+                foreach (ImagemAtleticaModel imagemAtletica in Imagens)
+                    atletica.ImagemAtleticas.Add(imagemAtletica.Transform());
+
+            return atletica;
+        }
     }
 }

@@ -131,6 +131,11 @@ namespace Back_Atletica.Repository.Implementação
                     _context.Add(new AtleticaCurso { CursoId = i, Atletica = atletica });
                 }
 
+                foreach (ImagemAtletica imagem in atletica.ImagemAtleticas)
+                {
+                    _context.ImagemAtleticas.Add(imagem);
+                }
+
                 _context.SaveChanges();
 
                 return new HttpRes(201, atletica);
