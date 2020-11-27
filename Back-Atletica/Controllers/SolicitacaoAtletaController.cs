@@ -33,7 +33,7 @@ namespace Back_Atletica.Controllers
         }
 
         // POST api/<SolicitacaoAtletaController>
-        [Authorize]
+ 
         [Route("api/SolicitacaoAtleta/{atleticaId}")]
         [HttpPost]
         public IActionResult Post([FromBody] CriarSolicitacaoAtletaModel solicitacaoAtleta, int atleticaId)
