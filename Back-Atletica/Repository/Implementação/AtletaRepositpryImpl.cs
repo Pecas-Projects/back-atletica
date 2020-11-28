@@ -76,20 +76,17 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscaPorModalidade(int atleticaModalidadeId)
         {
 
-            List<AtletaAtleticaModalidade> atletaAtleticaModalidades = _context.AtletaAtleticaModalidades
-                .Where(a => a.AtleticaModalidadeId == atleticaModalidadeId && a.Ativo)
-                .ToList();
-
-            var query = from atletaAtleticaModalidade in atletaAtleticaModalidades
+            var query = from aam in _context.AtletaAtleticaModalidades
                         join
-                        a in _context.Atletas on atletaAtleticaModalidade.AtletaId equals a.AtletaId
+                        a in _context.Atletas on aam.AtletaId equals a.AtletaId
                         join
                         p in _context.Pessoas on a.PessoaId equals p.PessoaId
+                        where aam.AtleticaModalidadeId == atleticaModalidadeId && aam.Ativo
 
                         select new
                         {
-                            atletaAtleticaModalidade.AtletaAtleticaModalidadeId,
-                            atletaAtleticaModalidade.AtleticaModalidadeId,
+                            aam.AtletaAtleticaModalidadeId,
+                            aam.AtleticaModalidadeId,
                             a.AtletaId,
                             p.PessoaId,
                             p.Nome
