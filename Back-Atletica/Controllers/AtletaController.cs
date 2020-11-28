@@ -146,11 +146,11 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/AtletaForaModalidade/{atleticaId}/{modalidadeId}")]
+        [Route("api/AtletaForaModalidade/{atleticaModalidadeId}")]
         [HttpGet]
-        public IActionResult BuscarForaModalidade(int atleticaId, int modalidadeId)
+        public IActionResult BuscarForaModalidade(int atleticaModalidadeId)
         {
-            var resultado = _AtletaBusiness.BuscarForaModalidade(atleticaId, modalidadeId);
+            var resultado = _AtletaBusiness.BuscarForaModalidade(atleticaModalidadeId);
             return resultado.HttpResponse();
         }
     }

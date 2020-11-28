@@ -22,7 +22,7 @@ namespace Back_Atletica.Repository
         HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId);
         HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId);
         HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId);
-        HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId);
+        HttpRes BuscarForaModalidade(int atleticaModalidadeId);
         bool ExisteAtleta(int atletaID);
         void CalculaRanking(int modalidadeId);
     }
