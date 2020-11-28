@@ -9,6 +9,7 @@ namespace Back_Atletica.Business
         HttpRes BuscarTodos();
         HttpRes BuscaPorId(int id);
         HttpRes BuscaPorNome(string nome);
+        HttpRes BuscaPorUsername(string username);
         HttpRes BuscaPorInstituicao(int faculdadeId);
         HttpRes Deletar(int atleticaId);
         HttpRes Atualizar(int id, Atletica atletica, List<int> CursosId, List<ImagemAtletica> ImagensIds);

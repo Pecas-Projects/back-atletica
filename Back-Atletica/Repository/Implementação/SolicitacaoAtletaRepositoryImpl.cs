@@ -1,10 +1,13 @@
 ﻿using Back_Atletica.Data;
 using Back_Atletica.Models;
 using Back_Atletica.Utils;
+using Back_Atletica.Utils.ResponseModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.SolicitacaoAtletaResponseModels;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -19,11 +22,22 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodas(int atleticaId)
         {
-            List<SolicitacaoAtleta> solicitacoesAtleta = _context.SolicitacaoAtletas
+            List<SolicitacaoAtleta> solicitacoesAtleta =
+                _context.SolicitacaoAtletas
+                .Include(s => s.SolicitacaoAtletaModalidades)
+                .ThenInclude(sam => sam.Modalidade)
                 .Where(s => s.AtleticaId == atleticaId)
                 .ToList();
 
-            return new HttpRes(200, solicitacoesAtleta);
+            List<SolicitacaoAtletaResponse> solicitacaoAtletaResponses = new List<SolicitacaoAtletaResponse>();
+
+            foreach(SolicitacaoAtleta solicitacao in solicitacoesAtleta)
+            {
+                SolicitacaoAtletaResponse s = new SolicitacaoAtletaResponse();
+                solicitacaoAtletaResponses.Add(s.Transform(solicitacao));
+            }
+
+            return new HttpRes(200, solicitacaoAtletaResponses);
         }
 
         public HttpRes CriarSolicitacaoAtletas(SolicitacaoAtleta solicitacaoAtleta, List<int> ModalidadesId)
