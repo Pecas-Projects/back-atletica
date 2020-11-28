@@ -239,23 +239,31 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
-            throw new NotImplementedException();
-            //var query = (from am in _context.AtleticaModalidades
-            //             join
-            //             atletaAtleticaModalidade in _context.AtletaAtleticaModalidades on am.AtleticaModalidadeId equals atletaAtleticaModalidade.AtleticaModalidadeId
-            //             join
-            //             a in _context.Atletas on atletaAtleticaModalidade.AtletaId equals a.AtletaId
-            //             join
-            //             p in _context.Pessoas on a.PessoaId equals p.PessoaId
-            //             where am.AtleticaId == atleticaId && (am.ModalidadeId != modalidadeId ||
-            //             (am.ModalidadeId == modalidadeId && atletaAtleticaModalidade.Ativo == false))
-            //             select new
-            //             {
-            //                 a.AtletaId,
-            //                 p.Nome
-            //             }).Distinct();
+            var atletasModalidade = from aam in _context.AtletaAtleticaModalidades
+                                    join
+                                    a in _context.Atletas on aam.AtletaId equals a.AtletaId
+                                    join
+                                    am in _context.AtleticaModalidades on aam.AtleticaModalidadeId equals am.AtleticaModalidadeId
+                                    where am.AtleticaId == atleticaId && am.ModalidadeId == modalidadeId && am.Ativo && aam.Ativo
 
-            //return new HttpRes(200, query);
+                                    select new
+                                    {
+                                        a.AtletaId
+                                    };
+
+            List<int> atletasIds = new List<int>();
+
+            foreach (var atletaModalidade in atletasModalidade)
+                atletasIds.Add(atletaModalidade.AtletaId);
+
+            var atletasFora = _context.Atletas
+                .Include(a => a.Pessoa)
+                .Where(a => !atletasIds.Contains(a.AtletaId) && a.Pessoa.AtleticaId == atleticaId)
+                .Select(a => new { a.AtletaId, a.PessoaId, a.Pessoa.Nome })
+                .Distinct()
+                .ToList();
+
+            return new HttpRes(200, atletasFora);
         }
 
         public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
@@ -278,18 +286,18 @@ namespace Back_Atletica.Repository.Implementação
 
                 atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = time.TimeEscaladoId;
                 _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaAtleticaModalidadeTimeEscalado);
-                
-                 List<AtletaAtleticaModalidadeTimeEscalado> atletasTime =
-                _context.AtletaAtleticaModalidadeTimesEscalados.Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId).ToList();
+
+                List<AtletaAtleticaModalidadeTimeEscalado> atletasTime =
+               _context.AtletaAtleticaModalidadeTimesEscalados.Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId).ToList();
 
                 foreach (AtletaAtleticaModalidadeTimeEscalado a in atletasTime)
-                 {
-                time.PontuacaoJogo += (int)a.Pontos;
-                  }
+                {
+                    time.PontuacaoJogo += (int)a.Pontos;
+                }
 
-                 _context.SaveChanges();
+                _context.SaveChanges();
                 time.RegistrouEscalacao = true;
-                 _context.SaveChanges();
+                _context.SaveChanges();
 
                 return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
             }
