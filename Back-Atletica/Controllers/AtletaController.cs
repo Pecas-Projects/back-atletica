@@ -146,7 +146,7 @@ namespace Back_Atletica.Controllers
         }
 
         [Authorize]
-        [Route("api/AtletaModalidade/{atleticaId}/{modalidadeId}")]
+        [Route("api/AtletaForaModalidade/{atleticaId}/{modalidadeId}")]
         [HttpGet]
         public IActionResult BuscarForaModalidade(int atleticaId, int modalidadeId)
         {
