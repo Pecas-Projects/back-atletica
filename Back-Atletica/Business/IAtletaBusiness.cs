@@ -22,6 +22,6 @@ namespace Back_Atletica.Business
         HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId);
         HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId);
         HttpRes RemoverAtletaModalidade(int atletaAtleticaModalidadeId);
-        HttpRes BuscarForaModalidade(int atleticaModalidadeId);
+        HttpRes BuscarForaModalidade(int atleticaId, int modalidadeId);
     }
 }
