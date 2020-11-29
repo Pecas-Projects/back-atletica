@@ -44,4 +44,35 @@ namespace Back_Atletica.Utils.RequestModels
             return atletica;
         }
     }
+
+    public class UpdateAtletica 
+    {
+        public int AtleticaId { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public CampusModel Campus { get; set; }
+        public List<int> CursosIds { get; set; }
+        public List<ImagemAtleticaModel> Imagens { get; set; }
+
+        public Atletica Transform()
+        {
+            Atletica atletica = new Atletica
+            {
+                Nome = Nome,
+                Descricao = Descricao,
+                Campus = Campus.Transform()
+            };
+
+            atletica.ImagemAtleticas = new List<ImagemAtletica>();
+
+            if (Imagens != null)
+                foreach (ImagemAtleticaModel imagemAtletica in Imagens)
+                    atletica.ImagemAtleticas.Add(imagemAtletica.Transform());
+
+            return atletica;
+        }
+    }
+
+   
+
 }

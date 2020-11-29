@@ -43,6 +43,7 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.AtleticaId = atleticaDados.AtleticaId;
                 atletica.PIN = atleticaDados.PIN;
                 atletica.Senha = atleticaDados.Senha;
+                atletica.Username = atleticaDados.Username;
                 atletica.CampusId = atleticaDados.CampusId;
                 atletica.Campus.FaculdadeId = atletica.Campus.FaculdadeId;
 
