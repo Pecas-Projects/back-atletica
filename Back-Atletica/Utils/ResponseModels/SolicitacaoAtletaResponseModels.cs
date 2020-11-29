@@ -25,6 +25,7 @@ namespace Back_Atletica.Utils.ResponseModels
                 SolicitacaoAtletaResponse sa = new SolicitacaoAtletaResponse
                 {
                     SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId,
+                    Nome = solicitacaoAtleta.Nome,
                     Sobrenome = solicitacaoAtleta.Sobrenome,
                     WhatsApp = solicitacaoAtleta.WhatsApp,
                     Email = solicitacaoAtleta.Email,
