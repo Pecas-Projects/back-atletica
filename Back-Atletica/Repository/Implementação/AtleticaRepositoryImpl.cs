@@ -202,6 +202,7 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.PIN = new AtleticaPin().GerarPIN();
 
                 _context.Entry(atleticaDado).CurrentValues.SetValues(atletica);
+                _context.SaveChanges();
 
                 return new HttpRes(200, atletica);
 
