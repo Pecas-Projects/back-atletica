@@ -44,7 +44,9 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.PIN = atleticaDados.PIN;
                 atletica.Senha = atleticaDados.Senha;
                 atletica.CampusId = atleticaDados.CampusId;
-                atletica.Campus.FaculdadeId = atletica.Campus.FaculdadeId;
+                atletica.Campus.CampusId = atleticaDados.Campus.CampusId;
+                atletica.Campus.FaculdadeId = atleticaDados.Campus.FaculdadeId;
+                atletica.Campus.Faculdade.FaculdadeId = atleticaDados.Campus.Faculdade.FaculdadeId;
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
                 _context.Entry(atleticaDados.Campus).CurrentValues.SetValues(atletica.Campus);
