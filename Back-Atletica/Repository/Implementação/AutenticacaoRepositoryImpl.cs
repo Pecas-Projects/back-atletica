@@ -75,13 +75,28 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken();
+
+            if (tipo == "Reset")
+            {
+            token = new JwtSecurityToken(
                 issuer: Env.Issuer,
                 audience: Env.Issuer,
                 claims,
-                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials
                 );
+            }
+            else
+            {
+            token = new JwtSecurityToken(
+                issuer: Env.Issuer,
+                audience: Env.Issuer,
+                claims,
+                expires: DateTime.Now.AddYears(6000),
+                signingCredentials: credentials
+                );
+            }
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
@@ -102,13 +117,28 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var token = new JwtSecurityToken(
-                issuer: Env.Issuer,
-                audience: Env.Issuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
-                signingCredentials: credentials
-                );
+            var token = new JwtSecurityToken();
+
+            if (tipo == "Reset")
+            {
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddMinutes(60),
+                    signingCredentials: credentials
+                    );
+            }
+            else
+            {
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddYears(6000),
+                    signingCredentials: credentials
+                    );
+            }
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
