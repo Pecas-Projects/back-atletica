@@ -64,5 +64,10 @@ namespace Back_Atletica.Business.Implementação
         {
             return _AtleticaRepository.BuscaPorUsername(username);
         }
+
+        public HttpRes VerificacaoUsername(string username)
+        {
+            return _AtleticaRepository.VerificacaoUsername(username);
+        }
     }
 }

@@ -99,6 +99,15 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
+        [Route("api/Atletica/VericiacaoUsername/{username}")]
+        [HttpPost]
+        public IActionResult VericiacaoUsername(string username)
+        {
+            HttpRes resultado = _AtleticaBusiness.VerificacaoUsername(username);
+
+            return resultado.HttpResponse();
+        }
+
         [Authorize]
         [Route("api/Atletica/{atleticaId}")]
         [HttpDelete]
