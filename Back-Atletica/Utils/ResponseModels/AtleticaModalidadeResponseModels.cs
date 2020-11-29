@@ -42,6 +42,7 @@ namespace Back_Atletica.Utils.ResponseModels
         public int AtleticaId { get; set; }
         public string Nome { get; set; }
         public string NomeFaculdade { get; set; }
+        public ImagemAtleticasResponseModel LogoAtletica { get; set; }
         public CampusResponseModel Campus { get; set; }
 
         public AtleticaResponseModel Transform(Atletica atletica)
@@ -55,6 +56,19 @@ namespace Back_Atletica.Utils.ResponseModels
             {
                 CampusResponseModel campus = new CampusResponseModel();
                 a.Campus = campus.Transform(atletica.Campus);
+            }
+            if (atletica.ImagemAtleticas.Count > 0)
+            {
+                ImagemAtleticasResponseModel img = new ImagemAtleticasResponseModel();
+
+                foreach (ImagemAtletica i in atletica.ImagemAtleticas)
+                {
+                    if (i != null && i.Tipo == 'P')
+                    {
+                        img = img.Transform(i);
+                    }
+                }
+                a.LogoAtletica = img;
             }
             return a;
         }
