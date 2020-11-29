@@ -114,26 +114,26 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        [Authorize]
-        [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
-        [HttpPut]
-        public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAtletaAtleticaModalidadeTimeEscaladoModel atualizarAtletaAtleticaModalidadeTimeEscaladoModel)
-        {
-            AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = atualizarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
-            atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
+        //[Authorize]
+        //[Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
+        //[HttpPut]
+        //public IActionResult AtualizarAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId, [FromBody] AtualizarAtletaAtleticaModalidadeTimeEscaladoModel atualizarAtletaAtleticaModalidadeTimeEscaladoModel)
+        //{
+        //    AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = atualizarAtletaAtleticaModalidadeTimeEscaladoModel.Transform();
+        //    atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeTimeEscaladoId = atletaAtleticaModalidadeTimeEscaladoId;
 
-            var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscalado);
-            return resultado.HttpResponse();
-        }
+        //    var resultado = _AtletaBusiness.AtualizarAtletaTime(atletaAtleticaModalidadeTimeEscalado);
+        //    return resultado.HttpResponse();
+        //}
 
-        [Authorize]
-        [Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
-        [HttpDelete]
-        public IActionResult RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
-        {
-            var resultado = _AtletaBusiness.RemoverAtletaTime(atletaAtleticaModalidadeTimeEscaladoId);
-            return resultado.HttpResponse();
-        }
+        //[Authorize]
+        //[Route("api/AtletaTime/{atletaAtleticaModalidadeTimeEscaladoId}")]
+        //[HttpDelete]
+        //public IActionResult RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId)
+        //{
+        //    var resultado = _AtletaBusiness.RemoverAtletaTime(atletaAtleticaModalidadeTimeEscaladoId);
+        //    return resultado.HttpResponse();
+        //}
 
         [Authorize]
         [Route("api/AtletaModalidade/{atletaId}/{atleticaModalidadeId}")]
