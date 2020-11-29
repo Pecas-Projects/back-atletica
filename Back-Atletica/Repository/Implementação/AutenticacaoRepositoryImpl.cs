@@ -135,7 +135,7 @@ namespace Back_Atletica.Repository.Implementação
                     issuer: Env.Issuer,
                     audience: Env.Issuer,
                     claims,
-                    expires: DateTime.Now.AddYears(6000),
+                    expires: DateTime.Now.AddHours(60000),
                     signingCredentials: credentials
                     );
             }
