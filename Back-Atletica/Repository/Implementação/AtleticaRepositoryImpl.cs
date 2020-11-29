@@ -47,6 +47,8 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.Campus.FaculdadeId = atletica.Campus.FaculdadeId;
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
+                _context.Entry(atleticaDados.Campus).CurrentValues.SetValues(atletica.Campus);
+                _context.Entry(atleticaDados.Campus.Faculdade).CurrentValues.SetValues(atletica.Campus.Faculdade);
 
                 CriacaoDeNovosRelacionamentos(CursosId, ImagensIds, id);
 
