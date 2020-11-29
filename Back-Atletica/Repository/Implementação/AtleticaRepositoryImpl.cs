@@ -111,6 +111,8 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(a => a.Pessoas)
                     .ThenInclude(a => a.Membro)
                         .ThenInclude(a => a.Imagem)
+                .Include(a => a.AtleticaCursos)
+                    .ThenInclude(c => c.Curso)
                 .SingleOrDefault(a => a.AtleticaId == id);
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -220,6 +222,8 @@ namespace Back_Atletica.Repository.Implementação
                .Include(a => a.Pessoas)
                     .ThenInclude(a => a.Membro)
                          .ThenInclude(a => a.Imagem)
+              .Include(a => a.AtleticaCursos)
+                    .ThenInclude(c => c.Curso)
                .SingleOrDefault(a => a.Username == username);
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
