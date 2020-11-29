@@ -163,9 +163,10 @@ namespace Back_Atletica.Repository.Implementação
             List<AtleticaModalidadeResponse> amResponses = new List<AtleticaModalidadeResponse>();
             List<AtleticaModalidade> atleticaModalidades = 
                 _context.AtleticaModalidades
-                .Include(am => am.Atletica)
-                .ThenInclude(a => a.Campus)
+                .Include(am => am.Atletica).ThenInclude(a => a.ImagemAtleticas).ThenInclude(i => i.Imagem)
+                .Include(am => am.Atletica).ThenInclude(a => a.Campus)
                 .ThenInclude(c => c.Faculdade)
+                .Where(am => am.ModalidadeId == modalidadeId)
                 .ToList();
 
             foreach (AtleticaModalidade am in atleticaModalidades)
