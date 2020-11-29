@@ -25,7 +25,7 @@ namespace Back_Atletica.Utils.RequestModels
                     Rua = Rua,
                     Estado = Estado,
                     CEP = CEP,
-                    Complemento = Complemento
+                    Complemento = Complemento,
                     Faculdade = Faculdade.Transform()
                 };
 
