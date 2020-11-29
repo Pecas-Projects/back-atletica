@@ -21,6 +21,7 @@ namespace Back_Atletica.Utils.ResponseModels
             public List<ImagemAtleticasResponseModel> AtleticaImagens { get; set; }
             public CampusResponseModel Campus { get; set; }
             public List<PessoaResponseModel> Membros { get; set; }
+            public List<CursosResponseModel> Cursos { get; set; }
 
             public AtleticaPorId Transform(Atletica atletica)
             {
@@ -62,13 +63,39 @@ namespace Back_Atletica.Utils.ResponseModels
                     }
                     a.AtleticaImagens = listImg;
                 }
+                if(atletica.AtleticaCursos.Count > 0)
+                {
+                    List<CursosResponseModel> cursoList = new List<CursosResponseModel>();
+
+                    foreach(AtleticaCurso c in atletica.AtleticaCursos)
+                    {
+                        CursosResponseModel curso = new CursosResponseModel().Transform(c.Curso);
+                        if (curso != null) cursoList.Add(curso);
+                    }
+                    a.Cursos = cursoList;
+                }
                 return a;
             }
         }
 
     }
 
+    public class CursosResponseModel
+    {
+        public int CursoId { get; set; }
+        public string Nome { get; set; }
 
+        public CursosResponseModel Transform(Curso curso)
+        {
+            CursosResponseModel cur = new CursosResponseModel
+            {
+                CursoId = curso.CursoId,
+                Nome = curso.Nome
+            };
+
+            return cur;
+        }
+    }
 
     public class ImagemAtleticasResponseModel
     {

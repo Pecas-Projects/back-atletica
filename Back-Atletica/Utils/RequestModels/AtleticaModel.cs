@@ -20,6 +20,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Username { get; set; }
         public string Telefone { get; set; }
         public string Descricao { get; set; }
+        public string LinkProsel { get; set; }
         public CampusModel Campus { get; set; }
         public List<int> CursosIds { get; set; }
         public List<ImagemAtleticaModel> Imagens { get; set; }
@@ -35,6 +36,7 @@ namespace Back_Atletica.Utils.RequestModels
                 Campus = Campus.Transform(),
                 Username = Username,
                 Telefone = Telefone
+                LinkProsel = LinkProsel
             };
 
             atletica.ImagemAtleticas = new List<ImagemAtletica>();

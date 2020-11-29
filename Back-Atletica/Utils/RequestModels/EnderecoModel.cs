@@ -27,6 +27,7 @@ namespace Back_Atletica.Utils.RequestModels
                     CEP = CEP,
                     Complemento = Complemento,
                     Faculdade = Faculdade.Transform()
+
                 };
 
                 return campos;

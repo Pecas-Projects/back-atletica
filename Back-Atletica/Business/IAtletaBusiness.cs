@@ -17,7 +17,7 @@ namespace Back_Atletica.Business
         HttpRes BuscaAtivos(int atleticaID);
         HttpRes Atualizar(int atletaID, Atleta atleta);
         HttpRes Deletar(int atletaID);
-        HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado);
+        HttpRes AdicionarAtletaTime(int timeId, List<AtletaAtleticaModalidadeTimeEscalado> atletaAtleticaModalidadeTimeEscalados);
         HttpRes AtualizarAtletaTime(AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado);
         HttpRes RemoverAtletaTime(int atletaAtleticaModalidadeTimeEscaladoId);
         HttpRes AdicionarAtletaModalidade(int atletaId, int atleticaModalidadeId);
