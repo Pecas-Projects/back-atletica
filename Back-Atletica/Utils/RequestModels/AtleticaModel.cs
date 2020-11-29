@@ -18,6 +18,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Senha { get; set; }
         [Required]
         public string Username { get; set; }
+        public string Telefone { get; set; }
         public string Descricao { get; set; }
         public CampusModel Campus { get; set; }
         public List<int> CursosIds { get; set; }
@@ -32,7 +33,8 @@ namespace Back_Atletica.Utils.RequestModels
                 Senha = Senha,
                 Descricao = Descricao,
                 Campus = Campus.Transform(),
-                Username = Username
+                Username = Username,
+                Telefone = Telefone
             };
 
             atletica.ImagemAtleticas = new List<ImagemAtletica>();
