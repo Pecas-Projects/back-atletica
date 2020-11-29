@@ -47,9 +47,10 @@ namespace Back_Atletica.Utils.RequestModels
 
     public class UpdateAtletica 
     {
-        public int AtleticaId { get; set; }
         public string Nome { get; set; }
+        public string Username { get; set; }
         public string Descricao { get; set; }
+        public string Telefone { get; set; }
         public CampusModel Campus { get; set; }
         public List<int> CursosIds { get; set; }
         public List<ImagemAtleticaModel> Imagens { get; set; }
@@ -59,8 +60,10 @@ namespace Back_Atletica.Utils.RequestModels
             Atletica atletica = new Atletica
             {
                 Nome = Nome,
+                Username = Username,
                 Descricao = Descricao,
-                Campus = Campus.Transform()
+                Campus = Campus.Transform(),
+                Telefone = Telefone
             };
 
             atletica.ImagemAtleticas = new List<ImagemAtletica>();
