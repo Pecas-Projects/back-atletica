@@ -18,6 +18,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Senha { get; set; }
         [Required]
         public string Username { get; set; }
+        public string Telefone { get; set; }
         public string Descricao { get; set; }
         public string LinkProsel { get; set; }
         public CampusModel Campus { get; set; }
@@ -34,6 +35,7 @@ namespace Back_Atletica.Utils.RequestModels
                 Descricao = Descricao,
                 Campus = Campus.Transform(),
                 Username = Username,
+                Telefone = Telefone
                 LinkProsel = LinkProsel
             };
 
@@ -46,4 +48,38 @@ namespace Back_Atletica.Utils.RequestModels
             return atletica;
         }
     }
+
+    public class UpdateAtletica 
+    {
+        public string Nome { get; set; }
+        public string Username { get; set; }
+        public string Descricao { get; set; }
+        public string Telefone { get; set; }
+        public CampusModel Campus { get; set; }
+        public List<int> CursosIds { get; set; }
+        public List<ImagemAtleticaModel> Imagens { get; set; }
+
+        public Atletica Transform()
+        {
+            Atletica atletica = new Atletica
+            {
+                Nome = Nome,
+                Username = Username,
+                Descricao = Descricao,
+                Campus = Campus.Transform(),
+                Telefone = Telefone
+            };
+
+            atletica.ImagemAtleticas = new List<ImagemAtletica>();
+
+            if (Imagens != null)
+                foreach (ImagemAtleticaModel imagemAtletica in Imagens)
+                    atletica.ImagemAtleticas.Add(imagemAtletica.Transform());
+
+            return atletica;
+        }
+    }
+
+   
+
 }

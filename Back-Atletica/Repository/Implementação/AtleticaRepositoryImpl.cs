@@ -235,5 +235,13 @@ namespace Back_Atletica.Repository.Implementação
 
             return new HttpRes(200, result.Transform(atletica));
         }
+
+        public HttpRes VerificacaoUsername(string username)
+        {
+            bool exist = _context.Atleticas.Any(a => a.Username.Equals(username));
+
+            if (exist) return new HttpRes(400, "Username ja esta em uso");
+            return new HttpRes(204);
+        }
     }
 }

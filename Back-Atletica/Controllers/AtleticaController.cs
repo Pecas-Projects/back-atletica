@@ -73,15 +73,14 @@ namespace Back_Atletica.Controllers
         [Authorize]
         [Route("api/Atletica/{id}")]
         [HttpPut]
-        public IActionResult Atualizar(int id, [FromBody] AtleticaModel valor)
+        public IActionResult Atualizar(int id, [FromBody] UpdateAtletica valor)
         {
             Atletica atletica = valor.Transform();
             List<ImagemAtletica> Imagens = new List<ImagemAtletica>();
             if(valor.Imagens.Count > 0)
                 foreach(ImagemAtleticaModel a in valor.Imagens)
                 {
-                    ImagemAtletica img = new ImagemAtletica();
-                    img = a.Transform();
+                    ImagemAtletica img = a.Transform();
                     Imagens.Add(img);
                 }
 
@@ -96,6 +95,15 @@ namespace Back_Atletica.Controllers
         public IActionResult ResetPin(int atleticaId)
         {
             HttpRes resultado = _AtleticaBusiness.ResetPin(atleticaId);
+
+            return resultado.HttpResponse();
+        }
+
+        [Route("api/Atletica/VericiacaoUsername/{username}")]
+        [HttpPost]
+        public IActionResult VericiacaoUsername(string username)
+        {
+            HttpRes resultado = _AtleticaBusiness.VerificacaoUsername(username);
 
             return resultado.HttpResponse();
         }
