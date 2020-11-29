@@ -271,6 +271,7 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 TimeEscalado time = _context.TimeEscalados
+                    .Include(te => te.AtletaAtleticaModalidadeTimeEscalados)
                     .SingleOrDefault(te => te.AtleticaId == atleticaId && te.JogoId == jogoId);
 
                 if (time == null)
@@ -298,6 +299,19 @@ namespace Back_Atletica.Repository.Implementação
                 _context.SaveChanges();
                 time.RegistrouEscalacao = true;
                 _context.SaveChanges();
+
+                Jogo j = _context.Jogos.SingleOrDefault(j => j.JogoId == time.JogoId);
+
+                if (j.Finalizado)
+                {
+                    List<AtletaAtleticaModalidade> aam =
+                        _context.AtletaAtleticaModalidades
+                        .Include(aam => aam.AtleticaModalidade)
+                        .Where(aam => aam.AtletaAtleticaModalidadeId == time.AtletaAtleticaModalidadeTimeEscalados[0].AtletaAtleticaModalidadeId)
+                        .ToList();
+
+                    this.CalculaRanking(aam[0].AtleticaModalidade.ModalidadeId);
+                }
 
                 return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
             }
