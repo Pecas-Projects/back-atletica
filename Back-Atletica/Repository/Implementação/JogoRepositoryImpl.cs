@@ -73,6 +73,9 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(amj => amj.Jogo)
                     .ThenInclude(j => j.TimeEscalados)
                         .ThenInclude(te => te.AtletaAtleticaModalidadeTimeEscalados)
+                            .ThenInclude(aamte => aamte.AtletaAtleticaModalidade)
+                                .ThenInclude(aam => aam.Atleta)
+                                    .ThenInclude(aam => aam.Pessoa)
                 .Include(amj => amj.AtleticaModalidade)
                     .ThenInclude(am => am.Atletica)
                 .ToList();
@@ -138,7 +141,8 @@ namespace Back_Atletica.Repository.Implementação
                                 TimeId = time.TimeEscaladoId,
                                 AtleticaId = amj.AtleticaModalidade.AtleticaId,
                                 Nome = amj.AtleticaModalidade.Atletica.Nome,
-                                Pontos = time.PontuacaoJogo
+                                Pontos = time.PontuacaoJogo,
+                                RegistrouEscalacao = time.RegistrouEscalacao
                             };
 
                             foreach (AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado in time.AtletaAtleticaModalidadeTimeEscalados)

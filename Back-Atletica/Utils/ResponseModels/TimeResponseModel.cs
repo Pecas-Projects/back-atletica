@@ -11,6 +11,7 @@ namespace Back_Atletica.Utils.ResponseModels
         public int AtleticaId { get; set; }
         public string Nome { get; set; }
         public int? Pontos { get; set; }
+        public bool RegistrouEscalacao { get; set; }
         public List<AtletaJogoModel> Atletas { get; set; }
 
         public TimeResponseModel()

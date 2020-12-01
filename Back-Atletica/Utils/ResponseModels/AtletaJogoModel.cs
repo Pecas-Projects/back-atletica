@@ -11,6 +11,8 @@ namespace Back_Atletica.Utils.ResponseModels
         public int AtletaAtleticaModalidadeTimeEscaladoId { get; set; }
         public int TimeEscaladoId { get; set; }
         public int AtletaAtleticaModalidadeId { get; set; }
+        public int AtletaId { get; set; }
+        public string Nome { get; set; }
         public int? FuncaoId { get; set; }
         public int? Numero { get; set; }
         public int? Infracoes { get; set; }
@@ -23,6 +25,8 @@ namespace Back_Atletica.Utils.ResponseModels
                 TimeEscaladoId = atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId,
                 AtletaAtleticaModalidadeId = atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidadeId,
                 FuncaoId = atletaAtleticaModalidadeTimeEscalado.FuncaoId,
+                AtletaId = atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidade.AtletaId,
+                Nome = atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidade.Atleta.Pessoa.Nome + " " + atletaAtleticaModalidadeTimeEscalado.AtletaAtleticaModalidade.Atleta.Pessoa.Sobrenome,
                 Numero = atletaAtleticaModalidadeTimeEscalado.Numero,
                 Infracoes = atletaAtleticaModalidadeTimeEscalado.Infracoes,
                 Pontos = atletaAtleticaModalidadeTimeEscalado.Pontos
