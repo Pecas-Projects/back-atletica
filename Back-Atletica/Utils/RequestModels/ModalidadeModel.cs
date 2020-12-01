@@ -13,7 +13,7 @@ namespace Back_Atletica.Utils.RequestModels
 
         public class ModalidadeAtletica
         {
-            public List<AgendaTreinoModel>AgendaTreinos { get; set; }
+            public List<AgendaTreinoModel> AgendaTreinos { get; set; }
 
             public int CoordenadorId { get; set; }
 
@@ -26,11 +26,11 @@ namespace Back_Atletica.Utils.RequestModels
             {
                 AtleticaModalidade atleticaModalidade = new AtleticaModalidade
                 {
-                    ModalidadeId = this.ModalidadeId, 
+                    ModalidadeId = this.ModalidadeId,
                     MembroId = this.CoordenadorId,
                     ImagemId = this.ImagemId,
                     Ativo = true,
-                   
+
                 };
 
                 if (atleticaModalidade.MembroId == 0) atleticaModalidade.MembroId = null;
@@ -39,14 +39,9 @@ namespace Back_Atletica.Utils.RequestModels
 
                 atleticaModalidade.AgendaTreinos = new List<AgendaTreino>();
 
-                if (atleticaModalidade.AgendaTreinos != null)
-                {
-
+                if (AgendaTreinos != null)
                     foreach (AgendaTreinoModel at in AgendaTreinos)
-                    {
                         atleticaModalidade.AgendaTreinos.Add(at.Transform());
-                    }
-                }
 
                 return atleticaModalidade;
             }
@@ -99,14 +94,9 @@ namespace Back_Atletica.Utils.RequestModels
 
                 modalidade.AgendaTreinos = new List<AgendaTreino>();
 
-                if (modalidade.AgendaTreinos != null)
-                {
-
+                if (AgendaTreinos != null)
                     foreach (AgendaTreinoModel at in AgendaTreinos)
-                    {
                         modalidade.AgendaTreinos.Add(at.Transform());
-                    }
-                }
 
                 return modalidade;
             }
