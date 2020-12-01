@@ -35,7 +35,7 @@ namespace Back_Atletica.Utils.RequestModels
                 Descricao = Descricao,
                 Campus = Campus.Transform(),
                 Username = Username,
-                Telefone = Telefone
+                Telefone = Telefone,
                 LinkProsel = LinkProsel
             };
 
