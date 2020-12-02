@@ -123,29 +123,32 @@ namespace GeradorGrafosCore
 
         public void AdicionarArco(Arco a)
         {
-            this.Arcos.Add(a);
-
-            a.saida.ListaAdjacencia.Add(a.entrada);
-            a.entrada.ListaIncidencia.Add(a.saida);
-
-            if (!this.dirigido)
+            if(a.entrada.id != a.saida.id)
             {
-                a.entrada.ListaAdjacencia.Add(a.saida);
+                this.Arcos.Add(a);
 
-            }          
-            
-            if(a.peso == 0)
-            {
-                a.peso = 1;
-            }
+                a.saida.ListaAdjacencia.Add(a.entrada);
+                a.entrada.ListaIncidencia.Add(a.saida);
 
-            if(a.peso > 1 && !this.ponderado)
-            {
-                this.ponderado = true;
-            }
+                if (!this.dirigido)
+                {
+                    a.entrada.ListaAdjacencia.Add(a.saida);
 
-            a.saida.GrauAdj = a.saida.ListaAdjacencia.Count;
-            a.entrada.GrauInc = a.entrada.ListaIncidencia.Count;
+                }
+
+                if (a.peso == 0)
+                {
+                    a.peso = 1;
+                }
+
+                if (a.peso > 1 && !this.ponderado)
+                {
+                    this.ponderado = true;
+                }
+
+                a.saida.GrauSaida = a.saida.ListaAdjacencia.Count;
+                a.entrada.GrauEntrada = a.entrada.ListaIncidencia.Count;
+            } 
         }
 
         public Arco ProcuraArco(int idArco)
@@ -676,7 +679,7 @@ namespace GeradorGrafosCore
         {
             foreach(Vertice v in Vertices)
             {
-                if(v.GrauAdj == 0)
+                if(v.GrauSaida == 0)
                 {
                     foreach(Vertice v1 in Vertices)
                     {
@@ -692,7 +695,6 @@ namespace GeradorGrafosCore
                     }
                 }
             }
-
         }
 
         public void PageRank()
@@ -704,9 +706,9 @@ namespace GeradorGrafosCore
             int n = Vertices.Count;
 
 
-            this.HandleSinks();
+            //this.HandleSinks();
 
-            foreach(Vertice v in Vertices)
+            foreach(Vertice v in this.Vertices)
             {
                 v.PageRank.Add(1 / n);
             }
@@ -721,14 +723,13 @@ namespace GeradorGrafosCore
 
                     foreach (Vertice v1 in v.ListaIncidencia)
                     {
-                        PRIncidente += v1.PageRank[v1.PageRank.Count - 1] / v1.GrauAdj;
+                        PRIncidente += v1.PageRank[v1.PageRank.Count - 1] / v1.GrauSaida;
                     }
 
-                    double aux = ((1 - DFactor) / n) + DFactor * (PRIncidente);
+                    double aux = (1 - DFactor)  + DFactor * (PRIncidente);
 
                     v.PageRank.Add(aux);
-
-                    
+        
                 }
 
                 contInteracoes += 1;
