@@ -54,7 +54,6 @@ namespace Back_Atletica.Repository.Implementação
 
                 CriacaoDeNovosRelacionamentos(CursosId, ImagensIds, id);
 
-
                 _context.SaveChanges();
 
                 return new HttpRes(200, atletica);
