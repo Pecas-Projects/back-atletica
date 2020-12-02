@@ -558,6 +558,10 @@ namespace Back_Atletica.Data
                .Property(t => t.RegistrouEscalacao)
                .HasDefaultValue(false);
 
+            modelBuilder.Entity<TimeEscalado>()
+               .Property(t => t.PontuacaoJogo)
+               .HasDefaultValue(0);
+
             /*AtletaAtleticaModalidade*/
             modelBuilder.Entity<AtletaAtleticaModalidade>().HasKey(am => new { am.AtletaAtleticaModalidadeId });
 
@@ -616,12 +620,20 @@ namespace Back_Atletica.Data
                 .WithMany(f => f.AtletaAtleticaModalidadeTimeEscalados)
                 .HasForeignKey(amt => amt.FuncaoId);
 
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
+                .Property(p => p.Pontos)
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<AtletaAtleticaModalidadeTimeEscalado>()
+                .Property(p => p.Infracoes)
+                .HasDefaultValue(0);
+
         }
 
         public void Start()
         {
             this.Database.EnsureCreated();
-           // this.Database.Migrate();
+            // this.Database.Migrate();
         }
 
     }

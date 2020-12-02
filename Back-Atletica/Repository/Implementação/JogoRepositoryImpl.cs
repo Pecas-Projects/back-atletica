@@ -24,7 +24,7 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarCategorias()
         {
             List<JogoCategoria> categorias = _context.JogoCategorias.ToList();
-            
+
             return new HttpRes(200, categorias);
         }
 
@@ -73,6 +73,9 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(amj => amj.Jogo)
                     .ThenInclude(j => j.TimeEscalados)
                         .ThenInclude(te => te.AtletaAtleticaModalidadeTimeEscalados)
+                            .ThenInclude(aamte => aamte.AtletaAtleticaModalidade)
+                                .ThenInclude(aam => aam.Atleta)
+                                    .ThenInclude(aam => aam.Pessoa)
                 .Include(amj => amj.AtleticaModalidade)
                     .ThenInclude(am => am.Atletica)
                 .ToList();
@@ -128,36 +131,39 @@ namespace Back_Atletica.Repository.Implementação
                         jogosResponse.Add(jogoRes);
                     }
 
-                    AtleticaJogoModel atleticaJogo = new AtleticaJogoModel
+                    foreach (TimeEscalado time in amj.Jogo.TimeEscalados)
                     {
-                        AtleticaId = amj.AtleticaModalidade.AtleticaId,
-                        Nome = amj.AtleticaModalidade.Atletica.Nome,
-                        Pontos = 0
-                    };
-
-                    TimeEscalado time = amj.Jogo.TimeEscalados.SingleOrDefault(te => te.AtleticaId == atleticaJogo.AtleticaId);
-
-                    if (time != null)
-                    {
-                        foreach (AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado in time.AtletaAtleticaModalidadeTimeEscalados)
+                        if (time.AtleticaId == amj.AtleticaModalidade.AtleticaId)
                         {
-                            if (amj.AtleticaModalidade.AtleticaId == atleticaId)
+
+                            TimeResponseModel timeResponse = new TimeResponseModel
                             {
-                                AtletaJogoModel atletaJogo = new AtletaJogoModel();
-                                jogoRes.Atletas.Add(atletaJogo.Transform(atletaAtleticaModalidadeTimeEscalado));
-                            }
-                            atleticaJogo.Pontos += atletaAtleticaModalidadeTimeEscalado.Pontos;
+                                TimeId = time.TimeEscaladoId,
+                                AtleticaId = amj.AtleticaModalidade.AtleticaId,
+                                Nome = amj.AtleticaModalidade.Atletica.Nome,
+                                Pontos = time.PontuacaoJogo,
+                                RegistrouEscalacao = time.RegistrouEscalacao
+                            };
+
+                            foreach (AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado in time.AtletaAtleticaModalidadeTimeEscalados)
+                                if (amj.AtleticaModalidade.AtleticaId == atleticaId)
+                                {
+                                    AtletaJogoModel atletaJogo = new AtletaJogoModel();
+                                    timeResponse.Atletas.Add(atletaJogo.Transform(atletaAtleticaModalidadeTimeEscalado));
+                                }
+
+                            if (!jogoRes.Times.Any(t => t.TimeId == timeResponse.TimeId))
+                                jogoRes.Times.Add(timeResponse);
                         }
                     }
 
                     jogoRes.JogoId = amj.Jogo.JogoId;
                     jogoRes.DataHora = amj.Jogo.DataHora;
-                    jogoRes.Atleticas.Add(atleticaJogo);
                 }
             }
 
             foreach (JogoResponseModels jogoRes in jogosResponse.ToList())
-                if (!jogoRes.Atleticas.Any(a => a.AtleticaId == atleticaId))
+                if (!jogoRes.Times.Any(t => t.AtleticaId == atleticaId))
                     jogosResponse.Remove(jogoRes);
 
             return jogosResponse;

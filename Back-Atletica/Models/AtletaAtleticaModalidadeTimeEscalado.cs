@@ -15,8 +15,8 @@ namespace Back_Atletica.Models
         public int? FuncaoId { get; set; }
         public Funcao Funcao { get; set; }
         public int? Numero { get; set; }
-        public int? Infracoes { get; set; }
-        public int? Pontos { get; set; }
+        public int Infracoes { get; set; }
+        public int Pontos { get; set; }
         
     }
 }

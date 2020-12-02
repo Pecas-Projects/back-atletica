@@ -11,7 +11,7 @@ namespace Back_Atletica.Models
         public int AtleticaId { get; set; }
         public virtual Atletica Atletica { get; set; }
         public int JogoId { get; set; }
-        public int? PontuacaoJogo { get; set; }
+        public int PontuacaoJogo { get; set; }
         public bool RegistrouEscalacao { get; set; } //a atlética preencheu o forms de pós jogo
         public virtual Jogo Jogos { get; set; }
         public IList<AtletaAtleticaModalidadeTimeEscalado> AtletaAtleticaModalidadeTimeEscalados { get; set; }
