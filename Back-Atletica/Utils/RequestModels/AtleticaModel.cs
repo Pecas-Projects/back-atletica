@@ -56,6 +56,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Descricao { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
+        public string LinkProsel { get; set; }
         public CampusModel Campus { get; set; }
         public List<int> CursosIds { get; set; }
         public List<ImagemAtleticaModel> Imagens { get; set; }
@@ -67,6 +68,8 @@ namespace Back_Atletica.Utils.RequestModels
                 Nome = Nome,
                 Username = Username,
                 Descricao = Descricao,
+                Email = Email,
+                LinkProsel = LinkProsel,
                 Campus = Campus.Transform(),
                 Telefone = Telefone
             };
