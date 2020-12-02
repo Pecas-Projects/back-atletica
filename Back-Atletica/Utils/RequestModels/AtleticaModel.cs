@@ -54,6 +54,7 @@ namespace Back_Atletica.Utils.RequestModels
         public string Nome { get; set; }
         public string Username { get; set; }
         public string Descricao { get; set; }
+        public string Email { get; set; }
         public string Telefone { get; set; }
         public CampusModel Campus { get; set; }
         public List<int> CursosIds { get; set; }
