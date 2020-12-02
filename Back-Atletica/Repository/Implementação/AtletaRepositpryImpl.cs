@@ -266,38 +266,28 @@ namespace Back_Atletica.Repository.Implementação
             return new HttpRes(200, atletasFora);
         }
 
-        public HttpRes AdicionarAtletaTime(int atleticaId, int jogoId, AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado)
+        public HttpRes AdicionarAtletaTime(int timeId, List<AtletaAtleticaModalidadeTimeEscalado> atletaAtleticaModalidadeTimeEscalados)
         {
             try
             {
                 TimeEscalado time = _context.TimeEscalados
                     .Include(te => te.AtletaAtleticaModalidadeTimeEscalados)
-                    .SingleOrDefault(te => te.AtleticaId == atleticaId && te.JogoId == jogoId);
+                    .SingleOrDefault(te => te.TimeEscaladoId == timeId);
 
-            //    if (time == null)
-            //    {
-            //        time = new TimeEscalado
-            //        {
-            //            AtleticaId = atleticaId,
-            //              JogoId = jogoId
-            //          };
-            //          _context.TimeEscalados.Add(time);
-            //          _context.SaveChanges();
-            //     }
-
-                atletaAtleticaModalidadeTimeEscalado.TimeEscaladoId = time.TimeEscaladoId;
-                _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaAtleticaModalidadeTimeEscalado);
+                foreach (AtletaAtleticaModalidadeTimeEscalado atletaTime in atletaAtleticaModalidadeTimeEscalados)
+                {
+                    atletaTime.TimeEscaladoId = timeId;
+                    _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaTime);
+                }
 
                 _context.SaveChanges();
 
-                List<AtletaAtleticaModalidadeTimeEscalado> atletasTime =
-               _context.AtletaAtleticaModalidadeTimesEscalados.Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId).ToList();
-               
+                List<AtletaAtleticaModalidadeTimeEscalado> atletasTime = _context.AtletaAtleticaModalidadeTimesEscalados
+                    .Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId)
+                    .ToList();
 
                 foreach (AtletaAtleticaModalidadeTimeEscalado a in atletasTime)
-                {
                     time.PontuacaoJogo += (int)a.Pontos;
-                }
 
                 _context.SaveChanges();
                 time.RegistrouEscalacao = true;
@@ -316,7 +306,7 @@ namespace Back_Atletica.Repository.Implementação
                     this.CalculaRanking(aam[0].AtleticaModalidade.ModalidadeId);
                 }
 
-                return new HttpRes(200, atletaAtleticaModalidadeTimeEscalado);
+                return new HttpRes(204);
             }
             catch (Exception ex)
             {

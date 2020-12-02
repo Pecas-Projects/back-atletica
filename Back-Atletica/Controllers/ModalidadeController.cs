@@ -76,7 +76,7 @@ namespace Back_Atletica.Controllers
             return resultado.HttpResponse();
         }
 
-        
+        [Authorize]
         [Route("api/Modalidade/{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)

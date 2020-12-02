@@ -12,6 +12,7 @@ namespace Back_Atletica.Utils.RequestModels
             public string Rua { get; set; }
             public string Estado { get; set; }
             public string CEP { get; set; }
+            public string Complemento { get; set; }
             public FaculdadeModel Faculdade { get; set; }
 
             public Campus Transform()
@@ -24,7 +25,9 @@ namespace Back_Atletica.Utils.RequestModels
                     Rua = Rua,
                     Estado = Estado,
                     CEP = CEP,
+                    Complemento = Complemento,
                     Faculdade = Faculdade.Transform()
+
                 };
 
                 return campos;

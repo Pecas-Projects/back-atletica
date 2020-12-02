@@ -75,13 +75,28 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken();
+
+            if (tipo == "Reset")
+            {
+            token = new JwtSecurityToken(
                 issuer: Env.Issuer,
                 audience: Env.Issuer,
                 claims,
-                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials
                 );
+            }
+            else
+            {
+            token = new JwtSecurityToken(
+                issuer: Env.Issuer,
+                audience: Env.Issuer,
+                claims,
+                expires: DateTime.Now.AddYears(6000),
+                signingCredentials: credentials
+                );
+            }
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
@@ -102,13 +117,28 @@ namespace Back_Atletica.Repository.Implementação
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var token = new JwtSecurityToken(
-                issuer: Env.Issuer,
-                audience: Env.Issuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(tipo == "Reset" ? 30 : 480),
-                signingCredentials: credentials
-                );
+            var token = new JwtSecurityToken();
+
+            if (tipo == "Reset")
+            {
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddMinutes(60),
+                    signingCredentials: credentials
+                    );
+            }
+            else
+            {
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddHours(60000),
+                    signingCredentials: credentials
+                    );
+            }
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
@@ -193,12 +223,12 @@ namespace Back_Atletica.Repository.Implementação
 
                 var token = GerarTokenJWTAtletica(atletica, "Reset");
 
-                EnvioEmail mail = new EnvioEmail("Olympos", "olymposatleticas@gmail.com", "Ana", emailReceiver, "Teste De envio");
+                EnvioEmail mail = new EnvioEmail("Olympos", "olymposatleticas@gmail.com", "Ana", emailReceiver, "Ouvimos seu pedido de ajuda!");
 
                 mail.CreateEmail("Recuperação de senha Olympos",
                     "<h2>Olá " + atletica.Nome + " " + " este é um Email de recuperação de conta!</h2>"
-                    + "<h3>O link é valido apenas por 30 minutos</h3>"
-                    + "<a href=\"https://static8.depositphotos.com/1052928/952/i/450/depositphotos_9520406-stock-photo-duck-white.jpg" + "\">Clique aqui para restaurar a senha!</a>");
+                    + "<h3>O link é valido apenas por 1Hora</h3>"
+                    + "<a href=\"http://localhost:3000/" + token + "\">Clique aqui para restaurar a senha!</a>");
 
                 mail.ConnectSMTPServer("smtp.gmail.com", 587, "olymposatleticas@gmail.com", "olympos123");
 

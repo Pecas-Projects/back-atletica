@@ -47,6 +47,8 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.Campus.FaculdadeId = atletica.Campus.FaculdadeId;
 
                 _context.Entry(atleticaDados).CurrentValues.SetValues(atletica);
+                _context.Entry(atleticaDados.Campus).CurrentValues.SetValues(atletica.Campus);
+                _context.Entry(atleticaDados.Campus.Faculdade).CurrentValues.SetValues(atletica.Campus.Faculdade);
 
                 CriacaoDeNovosRelacionamentos(CursosId, ImagensIds, id);
 
@@ -111,6 +113,8 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(a => a.Pessoas)
                     .ThenInclude(a => a.Membro)
                         .ThenInclude(a => a.Imagem)
+                .Include(a => a.AtleticaCursos)
+                    .ThenInclude(c => c.Curso)
                 .SingleOrDefault(a => a.AtleticaId == id);
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -198,6 +202,7 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.PIN = new AtleticaPin().GerarPIN();
 
                 _context.Entry(atleticaDado).CurrentValues.SetValues(atletica);
+                _context.SaveChanges();
 
                 return new HttpRes(200, atletica);
 
@@ -220,6 +225,8 @@ namespace Back_Atletica.Repository.Implementação
                .Include(a => a.Pessoas)
                     .ThenInclude(a => a.Membro)
                          .ThenInclude(a => a.Imagem)
+              .Include(a => a.AtleticaCursos)
+                    .ThenInclude(c => c.Curso)
                .SingleOrDefault(a => a.Username == username);
 
             if (atletica == null) return new HttpRes(404, "Não existe nenhuma atlética com este id");
@@ -227,6 +234,14 @@ namespace Back_Atletica.Repository.Implementação
             AtleticaPorId result = new AtleticaPorId();
 
             return new HttpRes(200, result.Transform(atletica));
+        }
+
+        public HttpRes VerificacaoUsername(string username)
+        {
+            bool exist = _context.Atleticas.Any(a => a.Username.Equals(username));
+
+            if (exist) return new HttpRes(400, "Username ja esta em uso");
+            return new HttpRes(204);
         }
     }
 }
