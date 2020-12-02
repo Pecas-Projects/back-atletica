@@ -50,14 +50,14 @@ namespace Back_Atletica.Utils.RequestModels
         public class AgendaTreinoModel
         {
             public string DiaSemana { get; set; }
-            public TimeSpan? HoraInicio { get; set; }
+            public string HoraInicio { get; set; }
 
             public AgendaTreino Transform()
             {
                 AgendaTreino treino = new AgendaTreino
                 {
                     DiaSemana = DiaSemana,
-                    HoraInicio = HoraInicio
+                    HoraInicio = TimeSpan.Parse(HoraInicio)
                 };
 
                 return treino;
@@ -75,17 +75,13 @@ namespace Back_Atletica.Utils.RequestModels
 
             public int ImagemId { get; set; }
 
-            [Required]
-            public int AtleticaId { get; set; }
-
             public AtleticaModalidade Transform()
             {
                 AtleticaModalidade modalidade = new AtleticaModalidade
                 {
                     MembroId = this.CoordenadorId,
                     ModalidadeId = this.ModalidadeId,
-                    ImagemId = this.ImagemId,
-                    AtleticaId = this.AtleticaId
+                    ImagemId = this.ImagemId
                 };
 
                 if (modalidade.MembroId == 0) modalidade.MembroId = null;
