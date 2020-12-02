@@ -73,7 +73,7 @@ namespace Back_Atletica.Repository.Implementação
             try
             {
                 AtleticaModalidade modalidade = _context.AtleticaModalidades.SingleOrDefault(a => a.AtleticaModalidadeId == atleticaModalidadeId);
-               
+
                 if (modalidade == null)
                 {
                     return new HttpRes(404, "Modalidade não encontrada.");
@@ -112,7 +112,7 @@ namespace Back_Atletica.Repository.Implementação
                 .ToList();
 
             ModalidadesAtletica atleticaModalidades = new ModalidadesAtletica();
-           
+
             return new HttpRes(200, atleticaModalidades.Transform(atleticaModalidade));
         }
 
@@ -131,24 +131,40 @@ namespace Back_Atletica.Repository.Implementação
             if (modalidade == null) return new HttpRes(400, "Verifique os dados enviados");
 
             try
-             { 
+            {
                 modalidade.AtleticaModalidadeId = atleticaModalidadeId;
+
                 AtleticaModalidade modalidadeAtletica = _context.AtleticaModalidades
+                    .Include(am => am.AgendaTreinos)
                     .SingleOrDefault(m => m.AtleticaModalidadeId == atleticaModalidadeId);
 
-                if (modalidadeAtletica == null) 
+                if (modalidadeAtletica == null)
                     return new HttpRes(404, "Modalidade ou atlética não encontrada!");
+
+                modalidade.Ativo = modalidadeAtletica.Ativo;
+                modalidade.AtleticaId = modalidadeAtletica.AtleticaId;
+                modalidade.PosicaoRanking = modalidadeAtletica.PosicaoRanking;
 
                 _context.Entry(modalidadeAtletica).CurrentValues.SetValues(modalidade);
 
-                _context.SaveChanges();               
+                if (modalidadeAtletica.AgendaTreinos != null)
+                    _context.AgendaTreinos.RemoveRange(modalidadeAtletica.AgendaTreinos);
+
+                if (modalidade.AgendaTreinos != null)
+                    foreach (AgendaTreino treino in modalidade.AgendaTreinos)
+                    {
+                        treino.AtleticaModalidadeId = modalidade.AtleticaModalidadeId;
+                        _context.AgendaTreinos.Add(treino);
+                    }
+
+                _context.SaveChanges();
 
             }
             catch (Exception ex)
             {
-                if (ex.InnerException == null)                 
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
                 return new HttpRes(400, ex.InnerException.Message);
-            } 
+            }
 
             return new HttpRes(200, modalidade);
         }
@@ -161,7 +177,7 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes BuscarRanking(int modalidadeId)
         {
             List<AtleticaModalidadeResponse> amResponses = new List<AtleticaModalidadeResponse>();
-            List<AtleticaModalidade> atleticaModalidades = 
+            List<AtleticaModalidade> atleticaModalidades =
                 _context.AtleticaModalidades
                 .Include(am => am.Atletica).ThenInclude(a => a.ImagemAtleticas).ThenInclude(i => i.Imagem)
                 .Include(am => am.Atletica).ThenInclude(a => a.Campus)
