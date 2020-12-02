@@ -146,7 +146,7 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarTodos()
         {
-            return new HttpRes(200, _context.Atleticas.ToList());
+            return new HttpRes(200, _context.Atleticas.ToList().OrderBy(a => a.Nome));
         }
 
         public HttpRes Deletar(int atleticaId)
