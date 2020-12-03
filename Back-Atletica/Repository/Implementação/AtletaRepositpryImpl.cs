@@ -89,7 +89,8 @@ namespace Back_Atletica.Repository.Implementação
                             aam.AtleticaModalidadeId,
                             a.AtletaId,
                             p.PessoaId,
-                            p.Nome
+                            p.Nome,
+                            p.Sobrenome
                         };
 
             return new HttpRes(200, query);
