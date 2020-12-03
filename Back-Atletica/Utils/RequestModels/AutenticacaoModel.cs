@@ -8,12 +8,9 @@ namespace Back_Atletica.Utils.RequestModels
 
         public class EmailModel
         {
+            public string Tipo { get; set; }
             public string Email { get; set; }
 
-            public string Transform()
-            {
-                return Email;
-            }
         }
 
         public class SenhaResetarModel
