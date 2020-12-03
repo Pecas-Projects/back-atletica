@@ -11,6 +11,11 @@ namespace Back_Atletica.Utils.ResponseModels
     {
         public class ModalidadesAtletica
         {
+            public ModalidadesAtletica()
+            {
+                AgendaTreinos = new List<Treinos>();
+            }
+
             public int AtleticaModalidadeId { get; set; }
             public int ModalidadeId { get; set; }
             public string Modalidade { get; set; }

@@ -27,9 +27,9 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.LoginMembro(membro);
         }
 
-        public HttpRes MudancaSenha(int id, string senha)
+        public HttpRes MudancaSenha(int id, string senha, string tipo)
         {
-            return _repositorio.MudancaSenha(id, senha);
+            return _repositorio.MudancaSenha(id, senha, tipo);
         }
 
         public HttpRes RegistrarAtletica(Atletica atletica, List<int> cursosIds)
@@ -42,9 +42,9 @@ namespace Back_Atletica.Business.Implementação
             return _repositorio.RegistrarMembro(membro);
         }
 
-        public HttpRes ResetarSenhaAtletica(string email)
+        public HttpRes ResetarSenha(string email, string tipo)
         {
-            return _repositorio.ResetarSenhaAtletica(email);
+            return _repositorio.ResetarSenha(email, tipo);
         }
     }
 }

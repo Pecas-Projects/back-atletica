@@ -89,7 +89,8 @@ namespace Back_Atletica.Repository.Implementação
                             aam.AtleticaModalidadeId,
                             a.AtletaId,
                             p.PessoaId,
-                            p.Nome
+                            p.Nome,
+                            p.Sobrenome
                         };
 
             return new HttpRes(200, query);
@@ -259,7 +260,7 @@ namespace Back_Atletica.Repository.Implementação
             var atletasFora = _context.Atletas
                 .Include(a => a.Pessoa)
                 .Where(a => !atletasIds.Contains(a.AtletaId) && a.Pessoa.AtleticaId == atleticaId)
-                .Select(a => new { a.AtletaId, a.PessoaId, a.Pessoa.Nome })
+                .Select(a => new { a.AtletaId, a.PessoaId, a.Pessoa.Nome, a.Pessoa.Sobrenome })
                 .Distinct()
                 .ToList();
 

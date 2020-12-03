@@ -57,7 +57,7 @@ namespace Back_Atletica.Utils.ResponseModels
                 CampusResponseModel campus = new CampusResponseModel();
                 a.Campus = campus.Transform(atletica.Campus);
             }
-            if (atletica.ImagemAtleticas.Count > 0)
+            if (atletica.ImagemAtleticas != null && atletica.ImagemAtleticas.Count > 0)
             {
                 ImagemAtleticasResponseModel img = new ImagemAtleticasResponseModel();
 

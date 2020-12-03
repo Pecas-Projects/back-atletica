@@ -93,7 +93,7 @@ namespace Back_Atletica.Repository.Implementação
                 issuer: Env.Issuer,
                 audience: Env.Issuer,
                 claims,
-                expires: DateTime.Now.AddYears(6000),
+                expires: DateTime.Now.AddHours(60000),
                 signingCredentials: credentials
                 );
             }
@@ -209,7 +209,7 @@ namespace Back_Atletica.Repository.Implementação
             }
         }
 
-        public HttpRes ResetarSenhaAtletica(string email)
+        public HttpRes ResetarSenha(string email, string tipo)
         {
             try
             {
@@ -217,22 +217,44 @@ namespace Back_Atletica.Repository.Implementação
 
                 string emailReceiver = endEmail.Address;
 
-                Atletica atletica = _context.Atleticas.SingleOrDefault(u => u.Email == emailReceiver);
+                if(tipo.Equals("A"))
+                {
+                    Atletica atletica = _context.Atleticas.SingleOrDefault(u => u.Email == emailReceiver);
 
-                if (atletica == null) return new HttpRes(404);
+                    if (atletica == null) return new HttpRes(404);
 
-                var token = GerarTokenJWTAtletica(atletica, "Reset");
+                    var token = GerarTokenJWTAtletica(atletica, "Reset");
+                    EnvioEmail mail = new EnvioEmail("Olympos", "olymposatleticas@gmail.com", "Ana", emailReceiver, "Ouvimos seu pedido de ajuda!");
 
-                EnvioEmail mail = new EnvioEmail("Olympos", "olymposatleticas@gmail.com", "Ana", emailReceiver, "Ouvimos seu pedido de ajuda!");
+                    mail.CreateEmail("Recuperação de senha Olympos",
+                        "<h2>Olá " + atletica.Nome + " " + " este é um Email de recuperação de conta!</h2>"
+                        + "<h3>O link é valido apenas por 1 Hora</h3>"
+                        + "<a href=\"http://localhost:3000/" + token + "\">Clique aqui para restaurar a senha!</a>");
 
-                mail.CreateEmail("Recuperação de senha Olympos",
-                    "<h2>Olá " + atletica.Nome + " " + " este é um Email de recuperação de conta!</h2>"
-                    + "<h3>O link é valido apenas por 1Hora</h3>"
-                    + "<a href=\"http://localhost:3000/" + token + "\">Clique aqui para restaurar a senha!</a>");
+                    mail.ConnectSMTPServer("smtp.gmail.com", 587, "olymposatleticas@gmail.com", "olympos123");
 
-                mail.ConnectSMTPServer("smtp.gmail.com", 587, "olymposatleticas@gmail.com", "olympos123");
+                    mail.SendEmail();
+                }
+                else if (tipo.Equals("M"))
+                {
+                    Membro membro = _context.Membros.Include(p => p.Pessoa).SingleOrDefault(u => u.Pessoa.Email == emailReceiver);
 
-                mail.SendEmail();
+                    if (membro == null) return new HttpRes(404);
+
+                    var token = GerarTokenJWTMembro(membro, "Reset");
+                    EnvioEmail mail = new EnvioEmail("Olympos", "olymposatleticas@gmail.com", "Ana", emailReceiver, "Ouvimos seu pedido de ajuda!");
+
+                    mail.CreateEmail("Recuperação de senha Olympos",
+                        "<h2>Olá " + membro.Pessoa.Nome + " " + " este é um Email de recuperação de conta!</h2>"
+                        + "<h3>O link é valido apenas por 1 Hora</h3>"
+                        + "<a href=\"http://localhost:3000/" + token + "\">Clique aqui para restaurar a senha!</a>");
+
+                    mail.ConnectSMTPServer("smtp.gmail.com", 587, "olymposatleticas@gmail.com", "olympos123");
+
+                    mail.SendEmail();
+                }
+
+               
 
                 return new HttpRes(204);
             }
@@ -242,20 +264,34 @@ namespace Back_Atletica.Repository.Implementação
             }
         }
 
-        public HttpRes MudancaSenha(int id, string senha)
+        public HttpRes MudancaSenha(int id, string senha, string tipo)
         {
             Env settings = new Env();
             try
             {
-                Atletica atletica = _context.Atleticas.SingleOrDefault(u => u.AtleticaId == id);
+                if (tipo.Equals("A"))
+                {
+                    Atletica atletica = _context.Atleticas.SingleOrDefault(u => u.AtleticaId == id);
 
-                Atletica atleticaNova = atletica;
+                    Atletica atleticaNova = atletica;
 
-                atleticaNova.Senha = settings.Encriptografia(atletica.Senha);
+                    atleticaNova.Senha = settings.Encriptografia(senha);
 
-                _context.Entry(atletica).CurrentValues.SetValues(atleticaNova);
+                    _context.Entry(atletica).CurrentValues.SetValues(atleticaNova);
 
-                _context.SaveChanges();
+                    _context.SaveChanges();
+                }
+                else if (tipo.Equals("M"))
+                {
+                    Membro membro = _context.Membros.SingleOrDefault(m => m.MembroId == id);
+
+                    Membro membroNovo = membro;
+
+                    membroNovo.Senha = settings.Encriptografia(senha);
+
+                    _context.Entry(membro).CurrentValues.SetValues(membroNovo);
+                    _context.SaveChanges();
+                }
 
                 return new HttpRes(200);
             }
