@@ -279,14 +279,8 @@ namespace Back_Atletica.Repository.Implementação
                 {
                     atletaTime.TimeEscaladoId = timeId;
                     _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaTime);
-                }
-
-                List<AtletaAtleticaModalidadeTimeEscalado> atletasTime = _context.AtletaAtleticaModalidadeTimesEscalados
-                    .Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId)
-                    .ToList();
-
-                foreach (AtletaAtleticaModalidadeTimeEscalado a in atletasTime)
-                    time.PontuacaoJogo += (int)a.Pontos;
+                    time.PontuacaoJogo += atletaTime.Pontos;
+                }   
 
                 _context.SaveChanges();
                 time.RegistrouEscalacao = true;
@@ -294,7 +288,7 @@ namespace Back_Atletica.Repository.Implementação
 
                 Jogo j = _context.Jogos.SingleOrDefault(j => j.JogoId == time.JogoId);
 
-                if (j.Finalizado)
+                 if (j.Finalizado)
                 {
                     List<AtletaAtleticaModalidade> aam =
                         _context.AtletaAtleticaModalidades
@@ -381,7 +375,11 @@ namespace Back_Atletica.Repository.Implementação
             var jogos = from amj in _context.AtleticaModalidadeJogos
                         join
                         am in _context.AtleticaModalidades on amj.AtleticaModalidadeId equals am.AtleticaModalidadeId
-                        where am.ModalidadeId == modalidadeId
+                        join 
+                        j in _context.Jogos on amj.JogoId equals j.JogoId
+                        join
+                        jc in _context.JogoCategorias on j.JogoCategoriaId equals jc.JogoCategoriaId
+                        where am.ModalidadeId == modalidadeId && jc.Nome != "Treino" && j.Finalizado == true
                         select new
                         {
                             amj.AtleticaModalidadeId,

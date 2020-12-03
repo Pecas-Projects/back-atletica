@@ -16,8 +16,8 @@ namespace GeradorGrafosCore
         public int PosY { get; set; }
         public List<double> PageRank { get; set; }
         public int PosicaoRank { get; set; }
-        public int GrauAdj { get; set; }
-        public int GrauInc { get; set; }
+        public int GrauSaida { get; set; }
+        public int GrauEntrada { get; set; }
 
 
         public List<Vertice> ListaAdjacencia { get; set; }
@@ -30,8 +30,8 @@ namespace GeradorGrafosCore
             this.ListaIncidencia = new List<Vertice>();
             this.PageRank = new List<double>();
             this.id = 1;
-            this.GrauInc = 0;
-            this.GrauAdj = 0;
+            this.GrauEntrada = 0;
+            this.GrauSaida = 0;
             AtualizaCoordenadas();
         }
         

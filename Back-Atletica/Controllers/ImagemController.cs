@@ -20,10 +20,9 @@ namespace Back_Atletica.Controllers
             _ImagemBusiness = img;
         }
 
-        [Authorize]
         [Route("api/Imagem/Upload")]
         [HttpPost]
-        public IActionResult UploadImagemProduto([FromForm] IFormFile value)
+        public IActionResult UploadImagem([FromForm] IFormFile value)
         {
             HttpRes result = _ImagemBusiness.Upload(value);
 

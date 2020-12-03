@@ -13,7 +13,7 @@ namespace Back_Atletica.Utils.RequestModels
         {
             [Required]
             public int AtletaAtleticaModalidadeId { get; set; }
-            public int FuncaoId { get; set; }
+            public FuncaoModel Funcao { get; set; }
             public int Numero { get; set; }
             public int Pontos { get; set; }
             public int Infracoes { get; set; }
@@ -22,13 +22,11 @@ namespace Back_Atletica.Utils.RequestModels
                 AtletaAtleticaModalidadeTimeEscalado atletaAtleticaModalidadeTimeEscalado = new AtletaAtleticaModalidadeTimeEscalado
                 {
                     AtletaAtleticaModalidadeId = AtletaAtleticaModalidadeId,
-                    FuncaoId = FuncaoId,
+                    Funcao = Funcao == null ? null : Funcao.Transform(),
                     Numero = Numero,
                     Pontos = Pontos,
                     Infracoes = Infracoes
                 };
-
-                if (atletaAtleticaModalidadeTimeEscalado.FuncaoId == 0) atletaAtleticaModalidadeTimeEscalado.FuncaoId = null;
 
                 return atletaAtleticaModalidadeTimeEscalado;
             }
