@@ -279,16 +279,8 @@ namespace Back_Atletica.Repository.Implementação
                 {
                     atletaTime.TimeEscaladoId = timeId;
                     _context.AtletaAtleticaModalidadeTimesEscalados.Add(atletaTime);
-                }
-
-                _context.SaveChanges();
-
-                List<AtletaAtleticaModalidadeTimeEscalado> atletasTime = _context.AtletaAtleticaModalidadeTimesEscalados
-                    .Where(amt => amt.TimeEscaladoId == time.TimeEscaladoId)
-                    .ToList();
-
-                foreach (AtletaAtleticaModalidadeTimeEscalado a in atletasTime)
-                    time.PontuacaoJogo += (int)a.Pontos;
+                    time.PontuacaoJogo += atletaTime.Pontos;
+                }   
 
                 _context.SaveChanges();
                 time.RegistrouEscalacao = true;
