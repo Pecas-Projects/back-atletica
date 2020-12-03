@@ -71,18 +71,17 @@ namespace Back_Atletica.Controllers
             return result.HttpResponse();
         }
 
-        [Route("api/ReseteSenha/Atletica")]
+        [Route("api/ReseteSenha")]
         [HttpPost]
-        public IActionResult ResetarSenhaAtletica([FromBody] EmailModel email)
+        public IActionResult ResetarSenhaAtletica([FromBody] EmailModel value)
         {
-            string data = email.Transform();
-            var result = _AutenticacaoBusiness.ResetarSenhaAtletica(data);
+            HttpRes result = _AutenticacaoBusiness.ResetarSenha(value.Email, value.Tipo);
 
             return result.HttpResponse();
         }
 
         [Authorize]
-        [Route("api/MudancaSenha/Atletica")]
+        [Route("api/MudancaSenha")]
         [HttpPost]
         public IActionResult MudancaSenha([FromBody] SenhaResetarModel senha)
         {
@@ -90,9 +89,11 @@ namespace Back_Atletica.Controllers
 
             var id = HttpToken.GetUserId(HttpContext);
 
+            var tipo = HttpToken.GetUserType(HttpContext);
+
             if (HttpToken.GetTokenType(HttpContext) != "Reset") return BadRequest("Token Invalido");
 
-            var result = _AutenticacaoBusiness.MudancaSenha((int)id, data);
+            var result = _AutenticacaoBusiness.MudancaSenha((int)id, data, tipo);
 
             return result.HttpResponse();
         }
