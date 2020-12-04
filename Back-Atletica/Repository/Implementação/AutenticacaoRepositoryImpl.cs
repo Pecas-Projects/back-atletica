@@ -43,7 +43,10 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes LoginMembro(Membro membro)
         {
-            Membro dadosMembro = _context.Membros.Include(m => m.Pessoa).FirstOrDefault(p => p.Pessoa.Email == membro.Pessoa.Email);
+            Membro dadosMembro = _context.Membros
+                .Include(m => m.Pessoa)
+                    .ThenInclude(p => p.Atletica)
+                .FirstOrDefault(p => p.Pessoa.Email == membro.Pessoa.Email);
 
             if (dadosMembro == null || !BCrypt.Net.BCrypt.Verify(membro.Senha, dadosMembro.Senha)) return new HttpRes(400, "Email ou senha incorretos");
 
@@ -79,23 +82,23 @@ namespace Back_Atletica.Repository.Implementação
 
             if (tipo == "Reset")
             {
-            token = new JwtSecurityToken(
-                issuer: Env.Issuer,
-                audience: Env.Issuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: credentials
-                );
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddMinutes(60),
+                    signingCredentials: credentials
+                    );
             }
             else
             {
-            token = new JwtSecurityToken(
-                issuer: Env.Issuer,
-                audience: Env.Issuer,
-                claims,
-                expires: DateTime.Now.AddHours(60000),
-                signingCredentials: credentials
-                );
+                token = new JwtSecurityToken(
+                    issuer: Env.Issuer,
+                    audience: Env.Issuer,
+                    claims,
+                    expires: DateTime.Now.AddHours(60000),
+                    signingCredentials: credentials
+                    );
             }
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
@@ -156,7 +159,7 @@ namespace Back_Atletica.Repository.Implementação
                 atletica.Senha = encrip;
                 atletica.PIN = new AtleticaPin().GerarPIN();
 
-                foreach(int i in cursosIds)
+                foreach (int i in cursosIds)
                 {
                     _context.Add(new AtleticaCurso { CursoId = i, Atletica = atletica });
                 }
@@ -170,7 +173,7 @@ namespace Back_Atletica.Repository.Implementação
 
                 return new HttpRes(201, atletica);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
 
@@ -186,7 +189,7 @@ namespace Back_Atletica.Repository.Implementação
             {
                 Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.PIN.Equals(membro.Pessoa.Atletica.PIN));
 
-                if(atletica == null)
+                if (atletica == null)
                 {
                     return new HttpRes(404, "Atletica não encontrada");
                 }
@@ -201,7 +204,7 @@ namespace Back_Atletica.Repository.Implementação
                 return new HttpRes(201, membro);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.InnerException == null) return new HttpRes(400, ex.Message);
 
@@ -217,7 +220,7 @@ namespace Back_Atletica.Repository.Implementação
 
                 string emailReceiver = endEmail.Address;
 
-                if(tipo.Equals("A"))
+                if (tipo.Equals("A"))
                 {
                     Atletica atletica = _context.Atleticas.SingleOrDefault(u => u.Email == emailReceiver);
 
@@ -254,7 +257,7 @@ namespace Back_Atletica.Repository.Implementação
                     mail.SendEmail();
                 }
 
-               
+
 
                 return new HttpRes(204);
             }
