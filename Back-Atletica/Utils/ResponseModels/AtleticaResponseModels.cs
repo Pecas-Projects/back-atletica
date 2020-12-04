@@ -171,6 +171,7 @@ namespace Back_Atletica.Utils.ResponseModels
 
     public class ImagemResponseModel
     {
+        public int ImagemId { get; set; }
         public string Path { get; set; }
         public string Extensao { get; set; }
 
@@ -178,6 +179,7 @@ namespace Back_Atletica.Utils.ResponseModels
         {
             return new ImagemResponseModel
             {
+                ImagemId = img.ImagemId,
                 Extensao = img.Extensao,
                 Path = img.Path
             };
