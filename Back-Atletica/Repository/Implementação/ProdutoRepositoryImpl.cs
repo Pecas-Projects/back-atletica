@@ -112,20 +112,29 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            var produto = _context.Produtos.Find(id);
-            if (produto == null)
+            try
             {
-                return new HttpRes(404, "Não existe nenhum produto com este id");
+                var produto = _context.Produtos.Include(i => i.Imagem).SingleOrDefault(p => p.ProdutoId == id);
+                if (produto == null)
+                {
+                    return new HttpRes(404, "Não existe nenhum produto com este id");
+                }
+                // Remove a imagem do produto também
+                //Imagem img = new Imagem { ImagemId = produto.ImagemId };
+                //_context.Imagens.Attach(img);
+                //_context.Imagens.Remove(img);
+
+                _context.Remove(produto);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
+
             }
-            // Remove a imagem do produto também
-            Imagem img = new Imagem { ImagemId = produto.ImagemId };
-            _context.Imagens.Attach(img);
-            _context.Imagens.Remove(img);
-
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
-
-            return new HttpRes(204);
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public bool existeProduto(int id)

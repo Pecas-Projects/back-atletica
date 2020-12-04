@@ -229,7 +229,7 @@ namespace Back_Atletica.Repository.Implementação
                     mail.CreateEmail("Recuperação de senha Olympos",
                         "<h2>Olá " + atletica.Nome + " " + " este é um Email de recuperação de conta!</h2>"
                         + "<h3>O link é valido apenas por 1 Hora</h3>"
-                        + "<a href=\"http://localhost:3000/" + token + "\">Clique aqui para restaurar a senha!</a>");
+                        + "<a href=\"http://localhost:3000/RedefinirSenha/" + token + "\">Clique aqui para restaurar a senha!</a>");
 
                     mail.ConnectSMTPServer("smtp.gmail.com", 587, "olymposatleticas@gmail.com", "olympos123");
 
