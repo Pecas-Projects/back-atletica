@@ -80,7 +80,7 @@ namespace Back_Atletica.Controllers
             return result.HttpResponse();
         }
 
-        [Authorize]
+        
         [Route("api/MudancaSenha")]
         [HttpPost]
         public IActionResult MudancaSenha([FromBody] SenhaResetarModel senha)
