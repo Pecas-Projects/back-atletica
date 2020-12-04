@@ -45,7 +45,7 @@ namespace Back_Atletica.Utils.ResponseModels
                         ModalidadeId = a.Modalidade.ModalidadeId,
                         Modalidade = a.Modalidade.Nome + genero,
                         ImagemModalidade = a.Imagem != null ? img.Transform(a.Imagem) : null,
-                        Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome : null,
+                        Coordenador = a.Membro != null ? a.Membro.Pessoa.Nome + " " + a.Membro.Pessoa.Sobrenome : null,
                         CoordenadorId = a.MembroId
                     };
 
