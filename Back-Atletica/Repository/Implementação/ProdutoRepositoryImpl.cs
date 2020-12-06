@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Back_Atletica.Utils.ResponseModels.ProdutoResponseModel;
 
 namespace Back_Atletica.Repository.Implementação
 {
@@ -74,12 +75,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarPorId(int id)
         {
-            var produto = _context.Produtos.Find(id);
+            var produto = _context.Produtos
+                .Include(p => p.Imagem)
+                .SingleOrDefault(p => p.ProdutoId == id);
+
             if (produto == null)
             {
                 return new HttpRes(404, "Não existe nenhum produto com este id");
             }
-            return new HttpRes(200, produto);
+
+            ProdutoPorId result = new ProdutoPorId();
+
+            return new HttpRes(200, result.Transform(produto));
         }
 
         public HttpRes BuscarPorNome(int atleticaId, string nome)
