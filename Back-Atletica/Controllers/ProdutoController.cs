@@ -40,13 +40,14 @@ namespace Back_Produto.Controllers
             return resultado.HttpResponse();
         }
 
-        //[Route("api/Produto/{id}")]
-        //[HttpGet]
-        //public IActionResult BuscarPorId(int id)
-        //{
-        //    var resultado = _ProdutoBusiness.BuscarPorId(id);
-        //    return resultado.HttpResponse();
-        //}
+        [Authorize]
+        [Route("api/Produto/{id}")]
+        [HttpGet]
+        public IActionResult BuscarPorId(int id)
+        {
+            var resultado = _ProdutoBusiness.BuscarPorId(id);
+            return resultado.HttpResponse();
+        }
 
         //[Route("api/Produto/{atleticaId}/{nome}")]
         //[HttpGet]
