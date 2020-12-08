@@ -124,28 +124,33 @@ namespace Back_Atletica.Repository.Implementação
                     return new HttpRes(404, "Não existe membro com este id");
                 }
 
-                Membro membro = new Membro();
-                Pessoa pessoa = new Pessoa();
+                Membro membro = _context.Membros
+                    .Include(m => m.AtleticaModalidades)
+                    .Include(m => m.Pessoa)
+                        .ThenInclude(p => p.Atletica)
+                    .SingleOrDefault(m => m.MembroId == id);
 
+                ICollection<AtleticaModalidade> atleticaModalidades = membro.AtleticaModalidades.ToArray();
 
-                membro = _context.Membros.SingleOrDefault(m => m.MembroId == id);
-                pessoa = _context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
-
-                if (pessoa.Tipo == "AM")
+                foreach (AtleticaModalidade atleticaModalidade in atleticaModalidades)
                 {
-                    pessoa.Tipo = "A";
+                    atleticaModalidade.MembroId = null;
+                    _context.Entry(atleticaModalidade).CurrentValues.SetValues(atleticaModalidade);
                 }
-                else if (pessoa.Tipo == "M")
+
+                if (membro.Pessoa.Tipo == "AM")
                 {
-                    _context.Pessoas.Remove(pessoa);
+                    membro.Pessoa.Tipo = "A";
+                }
+                else if (membro.Pessoa.Tipo == "M")
+                {
+                    _context.Pessoas.Remove(membro.Pessoa);
                 }
 
                 _context.Membros.Remove(membro);
-                pessoa.Atletica.PIN = new AtleticaPin().GerarPIN();
+                membro.Pessoa.Atletica.PIN = new AtleticaPin().GerarPIN();
 
                 _context.SaveChanges();
-
-
 
                 return new HttpRes(204);
             }

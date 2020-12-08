@@ -191,7 +191,7 @@ namespace Back_Atletica.Repository.Implementação
                 .Include(am => am.Atletica).ThenInclude(a => a.ImagemAtleticas).ThenInclude(i => i.Imagem)
                 .Include(am => am.Atletica).ThenInclude(a => a.Campus)
                 .ThenInclude(c => c.Faculdade)
-                .Where(am => am.ModalidadeId == modalidadeId)
+                .Where(am => am.ModalidadeId == modalidadeId && am.PosicaoRanking != null)
                 .ToList();
 
             foreach (AtleticaModalidade am in atleticaModalidades)
