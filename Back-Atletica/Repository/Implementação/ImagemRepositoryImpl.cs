@@ -21,20 +21,27 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Delete(int imagemId)
         {
-            Imagem imagem = _context.Imagens.SingleOrDefault(i => i.ImagemId == imagemId);
+            try
+            {
+                Imagem imagem = _context.Imagens.SingleOrDefault(i => i.ImagemId == imagemId);
 
-            if (imagem == null) return new HttpRes(404, "Imagem não encontrada");
+                if (imagem == null) return new HttpRes(404, "Imagem não encontrada");
 
-            Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
-            Cloudinary cloudinary = new Cloudinary(account);
+                Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
+                Cloudinary cloudinary = new Cloudinary(account);
 
-            var deletionParams = new DeletionParams(imagem.PublicId);
-            var deletionResult = cloudinary.Destroy(deletionParams);
+                var deletionParams = new DeletionParams(imagem.PublicId);
+                var deletionResult = cloudinary.Destroy(deletionParams);
 
-            if (deletionResult.Result.Equals("ok")) return new HttpRes(204);
+                if (deletionResult.Result.Equals("ok")) return new HttpRes(204);
 
-            else return new HttpRes(400, "Erro ao apagar a imagem");
-
+                else return new HttpRes(400, "Erro ao apagar a imagem");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes Upload(IFormFile Imagem)
@@ -73,7 +80,7 @@ namespace Back_Atletica.Repository.Implementação
 
                 return new HttpRes(201, img);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var deletionParams = new DeletionParams(img.PublicId);
                 var deletionResult = cloudinary.Destroy(deletionParams);

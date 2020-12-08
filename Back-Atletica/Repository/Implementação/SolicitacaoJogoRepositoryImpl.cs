@@ -40,8 +40,6 @@ namespace Back_Atletica.Repository.Implementação
             }
 
             return new HttpRes(200, solicitacaoJogoResponses);
-
-            return new HttpRes(200, solicitacoesJogo);
         }
 
         public HttpRes CriarSolicitacaoJogo(SolicitacaoJogo solicitacaoJogo)

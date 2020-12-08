@@ -20,14 +20,14 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Atualizar(int timeId, TimeEscalado time)
         {
-            if(timeId != time.TimeEscaladoId)
+            if (timeId != time.TimeEscaladoId)
             {
                 return new HttpRes(400, "O id passado não é o mesmo do objeto em questão");
             }
 
             context.Entry(time).State = EntityState.Modified;
 
-            try 
+            try
             {
                 context.SaveChanges();
             }
@@ -81,10 +81,18 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes CriarTime(TimeEscalado time)
         {
-            context.TimeEscalados.Add(time);
-            context.SaveChanges();
+            try
+            {
+                context.TimeEscalados.Add(time);
+                context.SaveChanges();
 
-            return new HttpRes(200, time);
+                return new HttpRes(200, time);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes Deletar(int timeId)
@@ -101,8 +109,8 @@ namespace Back_Atletica.Repository.Implementação
                 timeEscalado = context.TimeEscalados.Find(timeId);
 
                 context.TimeEscalados.Remove(timeEscalado);
-                context.SaveChanges();             
-                
+                context.SaveChanges();
+
             }
             catch
             {

@@ -66,28 +66,44 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Publicacao publicacao)
         {
-            _context.Publicacoes.Add(publicacao);
-            _context.SaveChanges();
+            try
+            {
+                _context.Publicacoes.Add(publicacao);
+                _context.SaveChanges();
 
-            return new HttpRes(200, publicacao);
+                return new HttpRes(200, publicacao);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes Deletar(int id)
         {
-            var publicacao = _context.Publicacoes.Find(id);
-            if (publicacao == null)
+            try
             {
-                return new HttpRes(404, "Não existe nenhum publicação com este id");
+                var publicacao = _context.Publicacoes.Find(id);
+                if (publicacao == null)
+                {
+                    return new HttpRes(404, "Não existe nenhum publicação com este id");
+                }
+                // Remove a imagem da publicação também
+                Imagem img = new Imagem { ImagemId = publicacao.ImagemId };
+                _context.Imagens.Attach(img);
+                _context.Imagens.Remove(img);
+
+                _context.Publicacoes.Remove(publicacao);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
             }
-            // Remove a imagem da publicação também
-            Imagem img = new Imagem { ImagemId = publicacao.ImagemId };
-            _context.Imagens.Attach(img);
-            _context.Imagens.Remove(img);
-
-            _context.Publicacoes.Remove(publicacao);
-            _context.SaveChanges();
-
-            return new HttpRes(204);
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public bool existePublicacao(int id)
