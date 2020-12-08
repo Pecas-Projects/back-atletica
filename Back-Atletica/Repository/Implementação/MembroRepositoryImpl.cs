@@ -39,7 +39,7 @@ namespace Back_Atletica.Repository.Implementação
                 membro.PessoaId = membroDate.PessoaId;
                 membro.Pessoa.PessoaId = membroDate.PessoaId;
 
-                if(membro.ImagemId != membroDate.ImagemId)
+                if (membro.ImagemId != membroDate.ImagemId)
                 {
                     Account account = new Account(Env.CLOUD_NAME, Env.API_KEY, Env.API_SECRET);
                     Cloudinary cloudinary = new Cloudinary(account);
@@ -78,12 +78,12 @@ namespace Back_Atletica.Repository.Implementação
 
             membros = _context.Membros.Include(m => m.Pessoa)
                 .Where(m => m.Pessoa.AtleticaId == atleticaId &&
-                (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) || 
+                (m.Pessoa.Nome.ToLower().Contains(nome.ToLower()) ||
                 m.Pessoa.Sobrenome.ToLower().Contains(nome.ToLower()) ||
                 (m.Pessoa.Nome + " " + m.Pessoa.Sobrenome).ToLower()
-                .Contains(nome.ToLower()) ))
-                .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
-                nome.ToUpper() + "%") ? 1 : EF.Functions.Like(m.Pessoa.Nome.ToUpper(), 
+                .Contains(nome.ToLower())))
+                .OrderBy(m => EF.Functions.Like(m.Pessoa.Nome.ToUpper(),
+                nome.ToUpper() + "%") ? 1 : EF.Functions.Like(m.Pessoa.Nome.ToUpper(),
                 "%" + nome.ToUpper()) ? 3 : 2)
                 .ToList();
 
@@ -117,44 +117,52 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Deletar(int id)
         {
-            if (!existeMembro(id))
+            try
             {
-                return new HttpRes(404, "Não existe membro com este id");
+                if (!existeMembro(id))
+                {
+                    return new HttpRes(404, "Não existe membro com este id");
+                }
+
+                Membro membro = new Membro();
+                Pessoa pessoa = new Pessoa();
+
+
+                membro = _context.Membros.SingleOrDefault(m => m.MembroId == id);
+                pessoa = _context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
+
+                if (pessoa.Tipo == "AM")
+                {
+                    pessoa.Tipo = "A";
+                }
+                else if (pessoa.Tipo == "M")
+                {
+                    _context.Pessoas.Remove(pessoa);
+                }
+
+                _context.Membros.Remove(membro);
+                pessoa.Atletica.PIN = new AtleticaPin().GerarPIN();
+
+                _context.SaveChanges();
+
+
+
+                return new HttpRes(204);
             }
-
-            Membro membro = new Membro();
-            Pessoa pessoa = new Pessoa();
-            
-
-            membro = _context.Membros.SingleOrDefault(m => m.MembroId == id);
-            pessoa = _context.Pessoas.Include(p => p.Atletica).SingleOrDefault(p => p.PessoaId == membro.PessoaId);
-
-            if(pessoa.Tipo == "AM")
+            catch (Exception ex)
             {
-                pessoa.Tipo = "A";
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
-            else if(pessoa.Tipo == "M")
-            {
-                _context.Pessoas.Remove(pessoa);
-            }
-
-            _context.Membros.Remove(membro);
-            pessoa.Atletica.PIN = new AtleticaPin().GerarPIN();
-
-            _context.SaveChanges();
-
-            
-
-            return new HttpRes(204);
         }
 
         public bool existeMembro(Membro membro)
         {
 
             return _context.Membros
-                .Any(m => m.Pessoa.Nome == membro.Pessoa.Nome && 
+                .Any(m => m.Pessoa.Nome == membro.Pessoa.Nome &&
                 m.Pessoa.Sobrenome == membro.Pessoa.Sobrenome);
-                       
+
         }
 
         public bool existeMembro(int membroId)

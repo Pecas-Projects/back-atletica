@@ -21,15 +21,24 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes Criar(Curso curso)
         {
-            if (!existeCurso(curso))
+            try
             {
-                context.Add(curso);
-                context.SaveChanges();
+                if (!existeCurso(curso))
+                {
+                    context.Add(curso);
+                    context.SaveChanges();
 
-                return new HttpRes(201, curso);
+                    return new HttpRes(201, curso);
+                }
+
+                return new HttpRes(400, "O curso já existe!");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
             }
 
-            return new HttpRes(400, "O curso já existe!");
         }
 
         public bool existeCurso(Curso curso)
@@ -51,16 +60,9 @@ namespace Back_Atletica.Repository.Implementação
         {
             List<Curso> cursos = new List<Curso>();
 
-            try
-            {
-                cursos = context.Cursos
-                    .OrderBy(c => c.Nome)
-                    .ToList();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            cursos = context.Cursos
+                .OrderBy(c => c.Nome)
+                .ToList();
 
             return new HttpRes(200, cursos);
         }
@@ -70,14 +72,7 @@ namespace Back_Atletica.Repository.Implementação
         {
             Curso curso = new Curso();
 
-            try
-            {
-                curso = context.Cursos.Find(id);
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            curso = context.Cursos.Find(id);
 
             return new HttpRes(200, curso);
         }
@@ -86,17 +81,10 @@ namespace Back_Atletica.Repository.Implementação
         {
             var cursos = new List<Curso>();
 
-            try
-            {
-                cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper()))
-                    .OrderBy(c => EF.Functions.Like(c.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
-                    EF.Functions.Like(c.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
-                    .ToList();
-            }
-            catch
-            {
-                return new HttpRes(404, "Erro ao conectar com o banco!");
-            }
+            cursos = context.Cursos.Where(c => c.Nome.ToUpper().Contains(nome.ToUpper()))
+                .OrderBy(c => EF.Functions.Like(c.Nome.ToUpper(), nome.ToUpper() + "%") ? 1 :
+                EF.Functions.Like(c.Nome.ToUpper(), "%" + nome.ToUpper()) ? 3 : 2)
+                .ToList();
 
             return new HttpRes(200, cursos);
         }

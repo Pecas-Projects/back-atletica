@@ -159,11 +159,19 @@ namespace Back_Atletica.Repository.Implementação
             {
                 return new HttpRes(404, "Atletica não encontrada");
             }
+            try
+            {
+                _context.Atleticas.Remove(atletica);
+                _context.SaveChanges();
 
-            _context.Atleticas.Remove(atletica);
-            _context.SaveChanges();
+                return new HttpRes(204);
+            }
+            catch (Exception ex)
+            {
 
-            return new HttpRes(204);
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public bool existeAtletica(int id)
@@ -178,18 +186,6 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes RemoverMembro(int membroId, int atleticaId)
         {
-            try
-            {
-                bool exist = _context.Pessoas.Any(a => a.Membro.MembroId == membroId && a.AtleticaId == atleticaId);
-                if (!exist) return new HttpRes(404, "Membro não encontrado");
-
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
-                return new HttpRes(400, ex.InnerException.Message);
-            }
             throw new NotImplementedException();
         }
 

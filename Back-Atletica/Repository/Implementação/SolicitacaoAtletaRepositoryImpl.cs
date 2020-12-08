@@ -31,7 +31,7 @@ namespace Back_Atletica.Repository.Implementação
 
             List<SolicitacaoAtletaResponse> solicitacaoAtletaResponses = new List<SolicitacaoAtletaResponse>();
 
-            foreach(SolicitacaoAtleta solicitacao in solicitacoesAtleta)
+            foreach (SolicitacaoAtleta solicitacao in solicitacoesAtleta)
             {
                 SolicitacaoAtletaResponse s = new SolicitacaoAtletaResponse();
                 solicitacaoAtletaResponses.Add(s.Transform(solicitacao));
@@ -43,7 +43,7 @@ namespace Back_Atletica.Repository.Implementação
         public HttpRes CriarSolicitacaoAtletas(SolicitacaoAtleta solicitacaoAtleta, List<int> ModalidadesId)
         {
             Atletica atletica = _context.Atleticas.SingleOrDefault(a => a.AtleticaId == solicitacaoAtleta.AtleticaId);
-            if(atletica == null)
+            if (atletica == null)
             {
                 return new HttpRes(404, "Atletica não encontrada");
             }
@@ -58,28 +58,28 @@ namespace Back_Atletica.Repository.Implementação
             {
                 return new HttpRes(404, "Solicitação inválida");
             }
-                try
-                {
-                    solicitacaoAtleta.AtleticaId = solicitacaoAtleta.AtleticaId;
-                    _context.SolicitacaoAtletas.Add(solicitacaoAtleta);
-                    _context.SaveChanges();
+            try
+            {
+                solicitacaoAtleta.AtleticaId = solicitacaoAtleta.AtleticaId;
+                _context.SolicitacaoAtletas.Add(solicitacaoAtleta);
+                _context.SaveChanges();
 
-                    foreach (int modalidadeId in ModalidadesId)
-                    {
-                        SolicitacaoAtletaModalidade solicitacaoAtletaModalidade = new SolicitacaoAtletaModalidade();
-                        solicitacaoAtletaModalidade.SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId;
-                        solicitacaoAtletaModalidade.ModalidadeId = modalidadeId;
-                        _context.SolicitacaoAtletaModalidades.Add(solicitacaoAtletaModalidade);
-                    }
-                    _context.SaveChanges();
-                }
-                catch (Exception ex)
+                foreach (int modalidadeId in ModalidadesId)
                 {
-                    if (ex.InnerException == null) return new HttpRes(400, ex.Message);
-                    return new HttpRes(400, ex.InnerException.Message);
+                    SolicitacaoAtletaModalidade solicitacaoAtletaModalidade = new SolicitacaoAtletaModalidade();
+                    solicitacaoAtletaModalidade.SolicitacaoAtletaId = solicitacaoAtleta.SolicitacaoAtletaId;
+                    solicitacaoAtletaModalidade.ModalidadeId = modalidadeId;
+                    _context.SolicitacaoAtletaModalidades.Add(solicitacaoAtletaModalidade);
                 }
-            
-            
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
+
             return new HttpRes(200, solicitacaoAtleta);
         }
 

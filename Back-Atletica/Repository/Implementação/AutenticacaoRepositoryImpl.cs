@@ -24,43 +24,60 @@ namespace Back_Atletica.Repository.Implementação
         }
         public HttpRes LoginAtletica(Atletica atletica)
         {
-            Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
-
-            if (atleticaDados == null || !BCrypt.Net.BCrypt.Verify(atletica.Senha, atleticaDados.Senha)) return new HttpRes(400, "Email ou senha incorretos");
-
-            atleticaDados.Senha = "";
-
-            var token = GerarTokenJWTAtletica(atleticaDados, "Login");
-
-            var loginDados = new
+            try
             {
-                Atletica = atleticaDados,
-                token = token
-            };
+                Atletica atleticaDados = _context.Atleticas.FirstOrDefault(p => p.Email == atletica.Email);
 
-            return new HttpRes(200, "Logado com sucesso", loginDados);
+                if (atleticaDados == null || !BCrypt.Net.BCrypt.Verify(atletica.Senha, atleticaDados.Senha)) return new HttpRes(400, "Email ou senha incorretos");
+
+                atleticaDados.Senha = "";
+
+                var token = GerarTokenJWTAtletica(atleticaDados, "Login");
+
+                var loginDados = new
+                {
+                    Atletica = atleticaDados,
+                    token = token
+                };
+
+                return new HttpRes(200, "Logado com sucesso", loginDados);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes LoginMembro(Membro membro)
         {
-            Membro dadosMembro = _context.Membros
-                .Include(m => m.Pessoa)
-                    .ThenInclude(p => p.Atletica)
-                .FirstOrDefault(p => p.Pessoa.Email == membro.Pessoa.Email);
-
-            if (dadosMembro == null || !BCrypt.Net.BCrypt.Verify(membro.Senha, dadosMembro.Senha)) return new HttpRes(400, "Email ou senha incorretos");
-
-            membro.Senha = "";
-
-            var token = GerarTokenJWTMembro(dadosMembro, "Login");
-
-            var loginDados = new
+            try
             {
-                Atletica = dadosMembro,
-                token = token
-            };
+                Membro dadosMembro = _context.Membros
+                                .Include(m => m.Pessoa)
+                                    .ThenInclude(p => p.Atletica)
+                                .FirstOrDefault(p => p.Pessoa.Email == membro.Pessoa.Email);
 
-            return new HttpRes(200, loginDados);
+                if (dadosMembro == null || !BCrypt.Net.BCrypt.Verify(membro.Senha, dadosMembro.Senha)) return new HttpRes(400, "Email ou senha incorretos");
+
+                membro.Senha = "";
+
+                var token = GerarTokenJWTMembro(dadosMembro, "Login");
+
+                var loginDados = new
+                {
+                    Atletica = dadosMembro,
+                    token = token
+                };
+
+                return new HttpRes(200, loginDados);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
+
         }
 
         private object GerarTokenJWTMembro(Membro membro, string tipo)

@@ -55,8 +55,8 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes BuscarEvento(int eventoId)
         {
-            Evento evento= _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
-            if(evento == null)
+            Evento evento = _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
+            if (evento == null)
             {
                 return new HttpRes(404, "Evento não encontrado");
             }
@@ -76,33 +76,49 @@ namespace Back_Atletica.Repository.Implementação
 
         public HttpRes CriarEvento(Evento evento, int atleticaId)
         {
-            Atletica atletica = new Atletica();
-
-            atletica = _context.Atleticas.SingleOrDefault(e => e.AtleticaId == atleticaId);
-            if (atletica == null)
+            try
             {
-                return new HttpRes(404, "Atletica não encontrada");
-            }
-            evento.AtleticaId = atleticaId;
-            
-            _context.Eventos.Add(evento);
-            _context.SaveChanges();
+                Atletica atletica = new Atletica();
 
-            return new HttpRes(200, evento);
+                atletica = _context.Atleticas.SingleOrDefault(e => e.AtleticaId == atleticaId);
+                if (atletica == null)
+                {
+                    return new HttpRes(404, "Atletica não encontrada");
+                }
+                evento.AtleticaId = atleticaId;
+
+                _context.Eventos.Add(evento);
+                _context.SaveChanges();
+
+                return new HttpRes(200, evento);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
 
         public HttpRes DeletarEvento(int eventoId)
         {
-            var evento = _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
-            if (evento == null)
+            try
             {
-                return new HttpRes(404, "Evento não encontrado");
+                var evento = _context.Eventos.SingleOrDefault(e => e.EventoId == eventoId);
+                if (evento == null)
+                {
+                    return new HttpRes(404, "Evento não encontrado");
+                }
+
+                _context.Eventos.Remove(evento);
+                _context.SaveChanges();
+
+                return new HttpRes(204);
             }
-
-            _context.Eventos.Remove(evento);
-            _context.SaveChanges();
-
-            return new HttpRes(204);
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null) return new HttpRes(400, ex.Message);
+                return new HttpRes(400, ex.InnerException.Message);
+            }
         }
     }
 }
