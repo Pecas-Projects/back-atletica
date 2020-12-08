@@ -47,8 +47,11 @@ namespace Back_Atletica.Utils.ResponseModels
                     List<PessoaResponseModel> list = new List<PessoaResponseModel>();
                     foreach (Pessoa p in atletica.Pessoas)
                     {
-                        PessoaResponseModel m = new PessoaResponseModel().Transform(p);
-                        if (m != null) list.Add(m);
+                        if (p.Tipo.Contains("M"))
+                        {
+                            PessoaResponseModel m = new PessoaResponseModel().Transform(p);
+                            if (m != null) list.Add(m);
+                        }
                     }
                     a.Membros = list;
                 }
