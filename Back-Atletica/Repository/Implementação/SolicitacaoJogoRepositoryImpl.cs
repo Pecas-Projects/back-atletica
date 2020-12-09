@@ -58,7 +58,7 @@ namespace Back_Atletica.Repository.Implementação
 
             AtleticaModalidade atleticaModalidade =
                 _context.AtleticaModalidades
-                .SingleOrDefault(am => am.AtleticaId == atletica.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId);
+                .SingleOrDefault(am => am.AtleticaId == atletica.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId && am.Ativo == true);
 
             if (atleticaModalidade == null)
             {
@@ -67,7 +67,7 @@ namespace Back_Atletica.Repository.Implementação
 
             AtleticaModalidade atleticaModalidadeConvidada =
                 _context.AtleticaModalidades
-                .SingleOrDefault(am => am.AtleticaId == atleticaConvidada.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId);
+                .SingleOrDefault(am => am.AtleticaId == atleticaConvidada.AtleticaId && am.ModalidadeId == solicitacaoJogo.ModalidadeId && am.Ativo == true);
 
             if (atleticaModalidadeConvidada == null)
             {

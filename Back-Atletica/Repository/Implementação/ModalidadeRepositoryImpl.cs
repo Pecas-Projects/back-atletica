@@ -41,7 +41,21 @@ namespace Back_Atletica.Repository.Implementação
         {
             try
             {
-                _context.AtleticaModalidades.Add(modalidade);
+                AtleticaModalidade atleticaModalidade = _context.AtleticaModalidades
+                    .SingleOrDefault(am => am.AtleticaId == modalidade.AtleticaId && am.ModalidadeId == modalidade.ModalidadeId);
+
+                if (atleticaModalidade == null)
+                {
+                    _context.AtleticaModalidades.Add(modalidade);
+                }
+                else if (atleticaModalidade.Ativo)
+                    return new HttpRes(404, "Esta modalidade já foi adicionada à sua atlética");
+                else if (!atleticaModalidade.Ativo)
+                {
+                    atleticaModalidade.Ativo = true;
+                    _context.Entry(atleticaModalidade).CurrentValues.SetValues(atleticaModalidade);
+                }
+
                 _context.SaveChanges();
             }
             catch (Exception ex)
