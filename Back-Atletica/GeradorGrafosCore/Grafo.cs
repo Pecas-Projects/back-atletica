@@ -130,12 +130,6 @@ namespace GeradorGrafosCore
                 a.saida.ListaAdjacencia.Add(a.entrada);
                 a.entrada.ListaIncidencia.Add(a.saida);
 
-                if (!this.dirigido)
-                {
-                    a.entrada.ListaAdjacencia.Add(a.saida);
-
-                }
-
                 if (a.peso == 0)
                 {
                     a.peso = 1;
@@ -703,14 +697,15 @@ namespace GeradorGrafosCore
             double DFactor = 0.85;
             bool done = false;
             int contInteracoes = 0;
-            int n = Vertices.Count;
+            double n = Vertices.Count;
 
 
             //this.HandleSinks();
 
             foreach(Vertice v in this.Vertices)
             {
-                v.PageRank.Add(1 / n);
+                double aux = 1.0 / n;
+                v.PageRank.Add(aux);
             }
 
             while (!done)
